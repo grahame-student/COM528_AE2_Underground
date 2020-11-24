@@ -20,4 +20,4 @@ jobs:
           java-version: 1.8
       - name: Build project
         run: mvn -B package --file pom.xml
-        working-directory: myPracticeCourseWork/_week_0/template_project
+        
