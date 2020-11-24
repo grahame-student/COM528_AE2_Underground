@@ -39,10 +39,8 @@
 
 #lunderground-controller-menu {
   display: inline-block;
-
   background-color: var(--colour-4th);
   color: var(--colour-1st);
-
   margin: 7em auto 0;
 }
 
