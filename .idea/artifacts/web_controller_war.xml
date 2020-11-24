@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="web-controller:war">
+    <output-path>$PROJECT_DIR$/web-controller/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>web-controller</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="web-controller.war">
+      <element id="artifact" artifact-name="web-controller:war exploded" />
+    </root>
+  </artifact>
+</component>
