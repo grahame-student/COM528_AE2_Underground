@@ -8,6 +8,18 @@
         <link rel="stylesheet" type="text/css" href="css/underground.css">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div id="wrapper">
+            <%@ include file="common/header.jsp" %>
+
+            <div id="main-content">
+                <nav id="lunderground-controller-menu">
+                    <menu>
+                        <li class="controller-button"><a href="#">Manage Stations</a></li>
+                    </menu>
+                </nav>
+            </div>
+
+            <%@ include file="common/footer.jsp" %>
+        </div>
     </body>
 </html>
