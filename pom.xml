@@ -5,6 +5,9 @@
     <groupId>underground.solent.ac.uk</groupId>
     <artifactId>library</artifactId>
     <version>1.1-SNAPSHOT</version>
+    <modules>
+        <module>web-controller</module>
+    </modules>
     <packaging>pom</packaging>
 
     <properties>
@@ -72,7 +75,7 @@
                 <artifactId>jersey-container-servlet</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
-            
+
             <!-- this library allows jaxb classes to be treated as json -->
             <dependency>
                 <groupId>org.glassfish.jersey.media</groupId>
@@ -108,7 +111,7 @@
                 <artifactId>log4j-slf4j-impl</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
-            
+
             <!-- Log4j web required to run in a servelet context  -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -132,7 +135,7 @@
                 <artifactId>jaxb-runtime</artifactId>
                 <version>${jaxb-runtime.version}</version>
             </dependency>
-            
+
             <!-- needed by Hibernate for java 11 -->
             <dependency>
                 <groupId>org.javassist</groupId>

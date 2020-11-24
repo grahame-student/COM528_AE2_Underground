@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Underground.iml" filepath="$PROJECT_DIR$/Underground.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web-controller/web-controller.iml" filepath="$PROJECT_DIR$/web-controller/web-controller.iml" />
     </modules>
   </component>
 </project>
