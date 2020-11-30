@@ -14,7 +14,7 @@
             <div id="main-content">
                 <nav id="lunderground-controller-menu">
                     <menu>
-                        <li class="controller-button"><a href="#">Manage Stations</a></li>
+                        <li class="controller-button"><a href="manage-stations">Manage Stations</a></li>
                     </menu>
                 </nav>
             </div>

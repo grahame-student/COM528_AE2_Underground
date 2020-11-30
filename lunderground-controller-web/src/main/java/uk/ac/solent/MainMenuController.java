@@ -1,24 +1,22 @@
 package uk.ac.solent;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+// import org.springframework.ui.ModelMap; // To be used later on
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainMenuController
+public final class MainMenuController
 {
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String mainPage()
+    public final String mainPage()
     {
-        // return the name of the file to be loaded "hello_world.jsp"
         return "index";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String testPage()
+    @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
+    public final String manageStationsPage()
     {
-        // return the name of the file to be loaded "hello_world.jsp"
-        return "test";
+        return "manage-stations";
     }
 }
