@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="web-controller" />
+        <module name="lunderground-controller-web" />
+        <module name="londerground-controller-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Underground" target="1.8" />
-      <module name="web-controller" target="1.7" />
+      <module name="londerground-controller-web" target="1.7" />
+      <module name="lunderground" target="1.8" />
+      <module name="lunderground-controller-web" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

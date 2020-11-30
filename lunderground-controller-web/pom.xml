@@ -3,16 +3,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>underground</artifactId>
-        <groupId>underground.solent.ac.uk</groupId>
+        <artifactId>lunderground</artifactId>
+        <groupId>uk.ac.solent</groupId>
         <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web-controller</artifactId>
+    <artifactId>lunderground-controller-web</artifactId>
     <packaging>war</packaging>
 
-    <name>web-controller Maven Webapp</name>
+    <name>lunderground-controller-web Maven Webapp</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,10 +29,15 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.2.11.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>web-controller</finalName>
+        <finalName>lunderground-controller-web</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
@@ -61,17 +68,6 @@
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>1.7.6</version>
-                    <configuration>
-                        <container>
-                            <containerId>tomcat9x</containerId>
-                            <type>embedded</type>
-                        </container>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

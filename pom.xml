@@ -2,12 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>underground.solent.ac.uk</groupId>
-    <artifactId>underground</artifactId>
+    <groupId>uk.ac.solent</groupId>
+    <artifactId>lunderground</artifactId>
     <version>1.1-SNAPSHOT</version>
-    <modules>
-        <module>web-controller</module>
-    </modules>
     <packaging>pom</packaging>
 
     <properties>
@@ -32,10 +29,11 @@
         <cglib-nodep.version>3.2.12</cglib-nodep.version>
     </properties>
 
-    <!-- Not needed at this point in time
     <modules>
+        <module>lunderground-controller-web</module>
+    </modules>
+    <!-- Not needed at this point in time
         <module>model</module>
-        <module>dao-jaxb</module>
         <module>service</module>
         <module>web</module>
         <module>rest-client</module>
