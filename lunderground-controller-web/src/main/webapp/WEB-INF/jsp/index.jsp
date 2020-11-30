@@ -5,11 +5,11 @@
         <meta charset="UTF-8">
         <meta name="description" content="Controller to manage underground resources">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../../../resources/css/underground.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/underground.css">
     </head>
     <body>
         <div id="wrapper">
-            <%@ include file="resources/common/header.jsp" %>
+            <%@ include file="common/header.jsp" %>
 
             <div id="main-content">
                 <nav id="lunderground-controller-menu">
@@ -19,7 +19,7 @@
                 </nav>
             </div>
 
-            <%@ include file="resources/common/footer.jsp" %>
+            <%@ include file="common/footer.jsp" %>
         </div>
     </body>
 </html>
