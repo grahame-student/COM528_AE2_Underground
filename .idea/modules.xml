@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/jpa-dao/jpa-dao.iml" filepath="$PROJECT_DIR$/jpa-dao/jpa-dao.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/londerground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/londerground-controller-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground.iml" filepath="$PROJECT_DIR$/lunderground.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" />
