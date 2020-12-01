@@ -15,7 +15,7 @@
         <slf4j.version>1.7.30</slf4j.version>
         <jersey.version>2.32</jersey.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <jsp-api.version>2.1</jsp-api.version>
+        <jsp-api.version>2.2</jsp-api.version>
         <junit.version>4.12</junit.version>
         <hamcrest-core.version>2.2</hamcrest-core.version>
         <maven.surefire.plugin.version>2.18</maven.surefire.plugin.version>
