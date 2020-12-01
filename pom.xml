@@ -31,6 +31,8 @@
 
     <modules>
         <module>lunderground-controller-web</module>
+        <module>model</module>
+        <module>service</module>
     </modules>
     <!-- Not needed at this point in time
         <module>model</module>

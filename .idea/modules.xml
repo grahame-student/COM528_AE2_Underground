@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/londerground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/londerground-controller-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground.iml" filepath="$PROJECT_DIR$/lunderground.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
     </modules>
   </component>
 </project>

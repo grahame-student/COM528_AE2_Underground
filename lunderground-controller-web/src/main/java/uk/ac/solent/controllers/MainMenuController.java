@@ -1,4 +1,4 @@
-package uk.ac.solent;
+package uk.ac.solent.controllers;
 
 import org.springframework.stereotype.Controller;
 // import org.springframework.ui.ModelMap; // To be used later on
@@ -18,7 +18,7 @@ public final class MainMenuController
      * @return Return the .jsp to use for the root of the web app
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String mainPage()
+    public String getMainPage()
     {
         return "index";
     }
@@ -29,7 +29,7 @@ public final class MainMenuController
      * @return Return the .jsp to use for manage underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
-    public String manageStationsPage()
+    public String getManageStationsPage()
     {
         return "manage-stations";
     }
