@@ -30,10 +30,11 @@ public final class MainMenuController
     /**
      * Link to the page responsible for managing underground stations.
      *
+     * @param map attributes map, used to inject data into the view
      * @return Return the .jsp to use for manage underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
-    public String getManageStationsPage(ModelMap map)
+    public String getManageStationsPage(final ModelMap map)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());

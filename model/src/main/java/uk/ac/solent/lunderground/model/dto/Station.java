@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Station
+public final class Station
 {
     private Long id;
     private String name;
@@ -24,9 +24,9 @@ public class Station
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(final Long newId)
     {
-        this.id = id;
+        this.id = newId;
     }
 
     public String getName()
@@ -34,9 +34,9 @@ public class Station
         return name;
     }
 
-    public void setName(String name)
+    public void setName(final String newNAme)
     {
-        this.name = name;
+        this.name = newNAme;
     }
 
     public int getZone()
@@ -44,9 +44,9 @@ public class Station
         return zone;
     }
 
-    public void setZone(int zone)
+    public void setZone(final int newZone)
     {
-        this.zone = zone;
+        this.zone = newZone;
     }
 
     @Override

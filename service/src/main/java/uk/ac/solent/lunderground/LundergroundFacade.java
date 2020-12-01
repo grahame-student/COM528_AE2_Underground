@@ -6,7 +6,7 @@ import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 import java.util.List;
 
-public class LundergroundFacade implements LundergroundServiceFacade
+public final class LundergroundFacade implements LundergroundServiceFacade
 {
     private StationDao stationDao = null;
 

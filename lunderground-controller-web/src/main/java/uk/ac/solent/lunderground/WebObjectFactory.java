@@ -3,9 +3,13 @@ package uk.ac.solent.lunderground;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 
-public class WebObjectFactory
+public final class WebObjectFactory
 {
     private static LundergroundServiceFacade lundergroundFacade = null;
+
+    private WebObjectFactory()
+    {
+    }
 
     public static LundergroundServiceFacade getServiceFacade()
     {

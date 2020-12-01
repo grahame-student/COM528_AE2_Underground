@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class DaoFactoryJpa implements DaoFactory
+public final class DaoFactoryJpa implements DaoFactory
 {
     private static final String PERSISTENCE_UNIT_NAME = "lundergroundPersistence";
 

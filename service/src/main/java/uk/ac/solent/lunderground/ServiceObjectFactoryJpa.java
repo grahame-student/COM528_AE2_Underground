@@ -5,7 +5,7 @@ import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 
-public class ServiceObjectFactoryJpa implements ServiceObjectFactory
+public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
 {
     private final LundergroundServiceFacade lundergroundFacade;
     private DaoFactory daoFactory = null;

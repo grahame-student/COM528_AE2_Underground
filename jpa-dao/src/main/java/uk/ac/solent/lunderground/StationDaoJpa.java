@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class StationDaoJpa implements StationDao
+public final class StationDaoJpa implements StationDao
 {
     private final EntityManager entityManager;
 
