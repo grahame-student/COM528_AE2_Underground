@@ -19,6 +19,7 @@
           </element>
           <element id="library" level="project" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" />
           <element id="library" level="project" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" />
+          <element id="library" level="project" name="Maven: javax:javaee-web-api:7.0" />
           <element id="archive" name="service-1.1-SNAPSHOT.jar">
             <element id="module-output" name="service" />
           </element>
@@ -35,7 +36,6 @@
           <element id="library" level="project" name="Maven: org.eclipse.persistence:org.eclipse.persistence.asm:2.7.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derby:10.9.1.0" />
           <element id="library" level="project" name="Maven: org.apache.derby:derbytools:10.9.1.0" />
-          <element id="library" level="project" name="Maven: javax:javaee-web-api:7.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.11.RELEASE" />
