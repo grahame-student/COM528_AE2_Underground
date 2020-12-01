@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>lunderground</artifactId>
-        <groupId>uk.ac.solent</groupId>
+        <groupId>uk.ac.solent.lunderground</groupId>
         <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>model</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <junit.version>4.13.1</junit.version>

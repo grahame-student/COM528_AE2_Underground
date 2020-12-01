@@ -1,4 +1,4 @@
-package uk.ac.solent.controllers;
+package uk.ac.solent.lunderground.controllers;
 
 import org.springframework.stereotype.Controller;
 // import org.springframework.ui.ModelMap; // To be used later on
@@ -31,6 +31,8 @@ public final class MainMenuController
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
     public String getManageStationsPage()
     {
+        
+
         return "manage-stations";
     }
 }
