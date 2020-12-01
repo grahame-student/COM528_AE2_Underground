@@ -10,9 +10,9 @@ public final class LundergroundFacade implements LundergroundServiceFacade
 {
     private StationDao stationDao = null;
 
-    public void setStationDao(StationDao stationDao)
+    public void setStationDao(final StationDao newStationDao)
     {
-        this.stationDao = stationDao;
+        this.stationDao = newStationDao;
     }
 
     @Override

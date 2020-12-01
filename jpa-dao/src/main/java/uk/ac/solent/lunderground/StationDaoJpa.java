@@ -11,7 +11,7 @@ public final class StationDaoJpa implements StationDao
 {
     private final EntityManager entityManager;
 
-    public StationDaoJpa(EntityManager em)
+    public StationDaoJpa(final EntityManager em)
     {
         this.entityManager = em;
     }
