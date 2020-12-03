@@ -36,8 +36,6 @@
         <module>jpa-dao</module>
     </modules>
     <!-- Not needed at this point in time
-        <module>model</module>
-        <module>service</module>
         <module>web</module>
         <module>rest-client</module>
     </modules>
