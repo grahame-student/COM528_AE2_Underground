@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface StationDao
 {
+    /**
+     * Get a list of all stations that exist.
+     * @return
+     */
     List<Station> retrieveAll();
 }
