@@ -11,7 +11,7 @@ import java.util.List;
 public final class StationDaoJpa implements StationDao
 {
     /**
-     * Entity manager used for persistence
+     * Entity manager used for persistence.
      */
     private final EntityManager entityManager;
 
