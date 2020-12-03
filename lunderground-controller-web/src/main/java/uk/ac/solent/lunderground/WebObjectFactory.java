@@ -16,7 +16,7 @@ public final class WebObjectFactory
     }
 
     /**
-     * Provide access to the London Underground Ticket System facade
+     * Provide access to the London Underground Ticket System facade.
      * @return London Underground Service Facade instance that can be used to access the available services.
      */
     public static LundergroundServiceFacade getServiceFacade()

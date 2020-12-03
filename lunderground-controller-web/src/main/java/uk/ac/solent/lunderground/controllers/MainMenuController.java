@@ -14,6 +14,9 @@ import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 @Controller
 public final class MainMenuController
 {
+    /**
+     * Reference to the London Underground Service Facade used to access the service available.
+     */
     private LundergroundServiceFacade lunderGroundFacade = null;
 
     /**
