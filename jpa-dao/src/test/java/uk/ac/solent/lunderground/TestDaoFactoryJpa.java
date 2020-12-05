@@ -9,8 +9,11 @@ import static org.hamcrest.Matchers.instanceOf;
 
 public class TestDaoFactoryJpa
 {
+    /**
+     * Test that a StationDaoJpa instance is created when getStation() is called.
+     */
     @Test
-    public void GetStationDao_Returns_StationDaoJpaInstance()
+    public void getStationDaoReturnsStationDaoJpaInstance()
     {
         DaoFactory factory = new DaoFactoryJpa();
 
