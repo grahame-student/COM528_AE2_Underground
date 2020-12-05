@@ -17,7 +17,7 @@
       <module name="jpa-dao" target="1.8" />
       <module name="londerground-controller-web" target="1.7" />
       <module name="lunderground" target="1.8" />
-      <module name="lunderground-controller-web" target="1.7" />
+      <module name="lunderground-controller-web" target="1.8" />
       <module name="model" target="1.8" />
       <module name="service" target="1.8" />
     </bytecodeTargetLevel>
