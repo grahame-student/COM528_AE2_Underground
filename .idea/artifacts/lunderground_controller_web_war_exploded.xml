@@ -14,7 +14,7 @@
           <element id="module-output" name="lunderground-controller-web" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="model-1.1-SNAPSHOT.jar">
+          <element id="archive" name="uk.ac.solent.lunderground.model-model-1.1-SNAPSHOT.jar">
             <element id="module-output" name="model" />
           </element>
           <element id="library" level="project" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3" />
@@ -23,7 +23,10 @@
           <element id="archive" name="service-1.1-SNAPSHOT.jar">
             <element id="module-output" name="service" />
           </element>
-          <element id="library" level="project" name="Maven: uk.ac.solent.lunderground:jpa-dao:1.1-SNAPSHOT" />
+          <element id="archive" name="jpa-dao-1.1-SNAPSHOT.jar">
+            <element id="module-output" name="jpa-dao" />
+          </element>
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/uk/ac/solent/lunderground/model/1.1-SNAPSHOT/model-1.1-SNAPSHOT.jar" output-file-name="uk.ac.solent.lunderground-model-1.1-SNAPSHOT.jar" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:eclipselink:2.7.0" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" />

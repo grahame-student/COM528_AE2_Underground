@@ -46,7 +46,8 @@
     <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
     <orderEntry type="module" module-name="service" />
-    <orderEntry type="library" name="Maven: uk.ac.solent.lunderground:jpa-dao:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="jpa-dao" />
+    <orderEntry type="library" name="Maven: uk.ac.solent.lunderground:model:1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:eclipselink:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" level="project" />
