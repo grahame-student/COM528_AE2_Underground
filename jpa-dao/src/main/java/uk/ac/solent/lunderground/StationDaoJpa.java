@@ -33,7 +33,7 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
-    public void addStation(Station newStation)
+    public void addStation(final Station newStation)
     {
         entityManager.getTransaction().begin();
         entityManager.persist(newStation);

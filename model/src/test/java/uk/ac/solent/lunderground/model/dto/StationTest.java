@@ -7,10 +7,22 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class StationTest
 {
+    /**
+     * ID number to use for tests, specific number is not important.
+     */
     private static final long SOME_ID = 123;
-    private static final int SOME_ZONE = 123;
+    /**
+     * Zone number to use for tests, specific number is not important.
+     */
+    private static final int SOME_ZONE = 3;
+    /**
+     * Station name to use for tests, specific value is not important.
+     */
     private static final String SOME_NAME = "some name";
 
+    /**
+     * Check that the Station ID can be set and retrieved.
+     */
     @Test
     public void setIdSetsIdToPassedInValue()
     {
@@ -21,6 +33,9 @@ public class StationTest
         assertThat(station.getId(), equalTo(SOME_ID));
     }
 
+    /**
+     * Check that the Station name can be set and retrieved.
+     */
     @Test
     public void setNameSetsNameToPassedInValue()
     {
@@ -31,6 +46,9 @@ public class StationTest
         assertThat(station.getName(), equalTo(SOME_NAME));
     }
 
+    /**
+     * Check that the Station zone can be set and retrieved.
+     */
     @Test
     public void setZoneSetsZoneToPassedInValue()
     {
@@ -41,10 +59,13 @@ public class StationTest
         assertThat(station.getZone(), equalTo(SOME_ZONE));
     }
 
+    /**
+     * Check that the String representation is formatted as expected.
+     */
     @Test
     public void toStringReturnsInformativeString()
     {
-        String EXPECTED_STRING = "Station{name=null, zone=0, id=null}";
+        final String EXPECTED_STRING = "Station{name=null, zone=0, id=null}";
         Station station = new Station();
 
         assertThat(station.toString(), equalTo(EXPECTED_STRING));

@@ -7,8 +7,17 @@ import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 
 public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
 {
+    /**
+     * Instance of the LundergroundServiceFacade to use to access the London underground service.
+     */
     private final LundergroundServiceFacade lundergroundFacade;
+    /**
+     * Instance of the DaoFactory to use when creating Dao objects.
+     */
     private DaoFactory daoFactory = null;
+    /**
+     * Instance of the StationDao to use when accessing Station functionality
+     */
     private StationDao stationDao = null;
 
     public ServiceObjectFactoryJpa()

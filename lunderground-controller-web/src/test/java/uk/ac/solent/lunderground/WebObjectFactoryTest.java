@@ -9,6 +9,9 @@ import static org.hamcrest.Matchers.instanceOf;
 
 public class WebObjectFactoryTest
 {
+    /**
+     * Check that the correct type of facade is created.
+     */
     @Test
     public void getServiceFacadeReturnsInstanceOfLundergroundFacade()
     {
@@ -17,6 +20,9 @@ public class WebObjectFactoryTest
         assertThat(facade, instanceOf(LundergroundFacade.class));
     }
 
+    /**
+     * Check that the same instance of the facade is returned each time one is requested.
+     */
     @Test
     public void getServiceFacadeReturnsSameInstanceWhenCalledMultipleTimes()
     {
@@ -24,7 +30,7 @@ public class WebObjectFactoryTest
 
         LundergroundServiceFacade facade2 = WebObjectFactory.getServiceFacade();
 
-        Boolean same_instance = (facade1 == facade2);
-        assertThat(same_instance, equalTo(true));
+        Boolean sameInstance = (facade1 == facade2);
+        assertThat(sameInstance, equalTo(true));
     }
 }

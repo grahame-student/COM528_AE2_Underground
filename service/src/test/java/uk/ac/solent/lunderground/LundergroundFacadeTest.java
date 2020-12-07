@@ -1,12 +1,17 @@
 package uk.ac.solent.lunderground;
 
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 
 import uk.ac.solent.lunderground.model.dao.StationDao;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 public class LundergroundFacadeTest
 {
+    /**
+     * Check that the configured StationDao is used to access the underlying database.
+     */
     @Test
     public void setStationDaoSetsStationDaoToUseWhenRetrievingStationDetails()
     {

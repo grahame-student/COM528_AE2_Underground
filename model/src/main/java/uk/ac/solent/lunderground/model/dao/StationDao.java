@@ -12,7 +12,14 @@ public interface StationDao
      */
     List<Station> retrieveAll();
 
+    /**
+     * Add the passed in Station to the persistence database.
+     * @param newStation The Station to be saved to the database
+     */
     void addStation(Station newStation);
 
+    /**
+     * Remove all Station instances from the database.
+     */
     void deleteAll();
 }

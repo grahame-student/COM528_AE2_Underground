@@ -22,16 +22,36 @@ public class StationDaoJpaTest
      *  slow
      */
 
+    /**
+     * Station name used for test purposes, specific value is unimportant.
+     */
     private static final String SOME_STATION = "some station";
+    /**
+     * Zone number used for testing purposes, specific value is unimportant.
+     */
     private static final int SOME_ZONE = 1;
 
+    /**
+     * Zero items in a list.
+     */
     private static final int ZERO_ITEMS = 0;
+    /**
+     * 2 items in a list.
+     */
     private static final int TWO_ITEMS = 2;
 
+    /**
+     * Used to hold a reference to the StationDao instance being tested.
+     */
     private StationDao stationDao;
 
+    /**
+     * Setup used to initialise the test environment before each test case.
+     * - Initialises the StationDao instance to be tested
+     * - Removes all of the stations from the persistence database
+     */
     @Before
-    public void Setup()
+    public void setup()
     {
         // Remove everything from the database before each test to ensure that
         // each unit test is as atomic as possible
@@ -40,6 +60,9 @@ public class StationDaoJpaTest
         stationDao.deleteAll();
     }
 
+    /**
+     * Check that the addStation method saves the passed in station to the database.
+     */
     @Test
     public void addStationAddsPassedInStationToPersistenceDatabase()
     {
@@ -52,6 +75,9 @@ public class StationDaoJpaTest
         assertThat(stationList, hasItem(testStation));
     }
 
+    /**
+     * Check that the persisted Stations can be retrieved from the database.
+     */
     @Test
     public void retrieveAllReturnsListOfAddedStations()
     {
@@ -70,6 +96,9 @@ public class StationDaoJpaTest
         assertThat(stationList.size(), equalTo(TWO_ITEMS));
     }
 
+    /**
+     * Check that all stations can be removed from the persistence database.
+     */
     @Test
     public void deleteAllRemovesAllStationsFromTheDatabase()
     {
