@@ -1,10 +1,8 @@
-package uk.ac.solent.lunderground;
+package uk.ac.solent.lunderground.service;
 
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
-import uk.ac.solent.lunderground.service.LundergroundFacade;
-import uk.ac.solent.lunderground.service.ServiceObjectFactoryJpa;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;

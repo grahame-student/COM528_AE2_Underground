@@ -23,7 +23,7 @@
           <element id="archive" name="service-1.1-SNAPSHOT.jar">
             <element id="module-output" name="service" />
           </element>
-          <element id="archive" name="jpa-dao-1.1-SNAPSHOT.jar">
+          <element id="archive" name="jpadao-1.1-SNAPSHOT.jar">
             <element id="module-output" name="jpadao" />
           </element>
           <element id="library" level="project" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" />
