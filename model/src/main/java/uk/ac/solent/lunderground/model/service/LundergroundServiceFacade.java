@@ -11,4 +11,6 @@ public interface LundergroundServiceFacade
      * @return List of Stations containing all the stations
      */
     List<Station> getAllStations();
+
+    void addStation(String stationName, int zoneNumber);
 }
