@@ -34,25 +34,25 @@
             <groupId>uk.ac.solent.lunderground</groupId>
             <artifactId>model</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground</groupId>
             <artifactId>jpa-dao</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground</groupId>
             <artifactId>service</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground</groupId>
             <artifactId>lunderground-controller-web</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
