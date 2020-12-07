@@ -28,7 +28,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and install project with Maven
-        run: mvn -B install --file pom.xml
+        run: mvn -B clean install
 
       - name: Verify with Maven
         run: mvn -B test jacoco:report-aggregate
