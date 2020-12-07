@@ -170,6 +170,23 @@
         <cglib-nodep.version>3.3.0</cglib-nodep.version>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <!-- Environment Settings -->
     <!-- Fix for using maven https in netbeans  -->
     <repositories>

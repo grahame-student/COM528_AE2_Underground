@@ -16,19 +16,19 @@
             <groupId>uk.ac.solent.lunderground.model</groupId>
             <artifactId>model</artifactId>
             <version>1.1-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground.jpadao</groupId>
             <artifactId>jpadao</artifactId>
             <version>1.1-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground.service</groupId>
             <artifactId>service</artifactId>
             <version>1.1-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground.controllerweb</groupId>
