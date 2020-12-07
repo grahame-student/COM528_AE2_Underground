@@ -27,8 +27,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashfiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build project with Maven
-        run: mvn -B package --file pom.xml
+      - name: Build and install project with Maven
+        run: mvn -B build install --file pom.xml
 
       - name: Verify with Maven
         run: mvn -B test jacoco:report-aggregate
