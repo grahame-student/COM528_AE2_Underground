@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
+    <version>1.1-SNAPSHOT</version>
 
+    <groupId>uk.ac.solent.lunderground.lunderground-controller-web</groupId>
     <artifactId>lunderground-controller-web</artifactId>
     <!--
     <packaging>war</packaging>
@@ -68,18 +70,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>3.6.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <version>2.0.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>2.0.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

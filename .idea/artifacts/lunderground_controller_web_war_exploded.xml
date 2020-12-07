@@ -23,9 +23,7 @@
           <element id="archive" name="service-1.1-SNAPSHOT.jar">
             <element id="module-output" name="service" />
           </element>
-          <element id="archive" name="jpa-dao-1.1-SNAPSHOT.jar">
-            <element id="module-output" name="jpa-dao" />
-          </element>
+          <element id="library" level="project" name="Maven: uk.ac.solent.lunderground:jpa-dao:1.1-SNAPSHOT" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:eclipselink:2.7.0" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" />
