@@ -3,8 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/coverage-report/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/coverage-report/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/jpa-dao/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/jpa-dao/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jpadao/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/jpadao/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lunderground-controller-web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/model/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/src/main/java" charset="UTF-8" />

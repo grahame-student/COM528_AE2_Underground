@@ -7,15 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="lunderground-controller-web" />
-        <module name="jpa-dao" />
         <module name="model" />
         <module name="service" />
         <module name="coverage-report" />
+        <module name="jpadao" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="coverage-report" target="1.8" />
-      <module name="jpa-dao" target="1.8" />
+      <module name="jpadao" target="1.8" />
       <module name="londerground-controller-web" target="1.7" />
       <module name="lunderground" target="1.8" />
       <module name="lunderground-controller-web" target="1.8" />

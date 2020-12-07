@@ -139,7 +139,7 @@
         <module>lunderground-controller-web</module>
         <module>model</module>
         <module>service</module>
-        <module>jpa-dao</module>
+        <module>jpadao</module>
         <module>coverage-report</module>
     </modules>
     <!-- Not needed at this point in time
