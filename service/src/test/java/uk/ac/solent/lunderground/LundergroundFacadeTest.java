@@ -58,4 +58,16 @@ public class LundergroundFacadeTest
         verify(mockStationDao).addStation(args.capture());
         assertThat(args.getValue().getZone(), equalTo(SOME_ZONE));
     }
+
+    @Test
+    public void deleteAllUsesStationDaoToRemoveAllStations()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.deleteAll();
+
+        verify(mockStationDao).deleteAll();
+    }
 }

@@ -1,13 +1,20 @@
 package uk.ac.solent.lunderground.controllers;
 
 import org.junit.Test;
-import org.springframework.ui.ModelMap;
-import uk.ac.solent.lunderground.LundergroundFacade;
-import uk.ac.solent.lunderground.WebObjectFactory;
-import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
+import org.mockito.MockedStatic;
+
+import org.springframework.ui.ModelMap;
+
+import uk.ac.solent.lunderground.LundergroundFacade;
+import uk.ac.solent.lunderground.WebObjectFactory;
+import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 public class MainMenuControllerTest
 {
@@ -41,9 +48,35 @@ public class MainMenuControllerTest
     @Test
     public void getManageStationsPageAddStationListToModelMap()
     {
-        LundergroundServiceFacade facade = WebObjectFactory.getServiceFacade();
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade).thenReturn(mockFacade);
 
-        MainMenuController controller = new MainMenuController();
+            MainMenuController controller = new MainMenuController();
+            ModelMap mockModelMap = mock(ModelMap.class);
+            controller.getManageStationsPage(mockModelMap);
 
+            verify(mockModelMap).addAttribute(eq("stations"), anyList());
+        }
+    }
+
+    /**
+     * Check that getManageStationsPage adds a station list to the ModelMap.
+     */
+    @Test
+    public void getManageStationsPageGetsStationListFromFacade()
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade).thenReturn(mockFacade);
+
+            MainMenuController controller = new MainMenuController();
+            ModelMap mockModelMap = mock(ModelMap.class);
+            controller.getManageStationsPage(mockModelMap);
+
+            verify(mockFacade).getAllStations();
+        }
     }
 }

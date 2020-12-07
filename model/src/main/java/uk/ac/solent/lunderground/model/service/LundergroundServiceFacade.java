@@ -13,4 +13,5 @@ public interface LundergroundServiceFacade
     List<Station> getAllStations();
 
     void addStation(String stationName, int zoneNumber);
+    void deleteAll();
 }

@@ -45,4 +45,10 @@ public final class LundergroundFacade implements LundergroundServiceFacade
         station.setZone(zoneNumber);
         stationDao.addStation(station);
     }
+
+    @Override
+    public void deleteAll()
+    {
+        stationDao.deleteAll();
+    }
 }
