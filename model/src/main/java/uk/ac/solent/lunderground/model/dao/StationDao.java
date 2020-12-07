@@ -11,4 +11,8 @@ public interface StationDao
      * @return List of Station objects
      */
     List<Station> retrieveAll();
+
+    void addStation(Station newStation);
+
+    void deleteAll();
 }

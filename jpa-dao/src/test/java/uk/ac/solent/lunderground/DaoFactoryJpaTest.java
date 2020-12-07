@@ -7,7 +7,7 @@ import uk.ac.solent.lunderground.model.dao.StationDao;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class TestDaoFactoryJpa
+public class DaoFactoryJpaTest
 {
     /**
      * Test that a StationDaoJpa instance is created when getStation() is called.

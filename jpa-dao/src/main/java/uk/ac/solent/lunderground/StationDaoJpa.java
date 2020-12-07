@@ -31,4 +31,20 @@ public final class StationDaoJpa implements StationDao
         TypedQuery<Station> q = entityManager.createQuery("SELECT s FROM Station s", Station.class);
         return q.getResultList();
     }
+
+    @Override
+    public void addStation(Station newStation)
+    {
+        entityManager.getTransaction().begin();
+        entityManager.persist(newStation);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void deleteAll()
+    {
+        entityManager.getTransaction().begin();
+        entityManager.createQuery("DELETE FROM Station ").executeUpdate();
+        entityManager.getTransaction().commit();
+    }
 }
