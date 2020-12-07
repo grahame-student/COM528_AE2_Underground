@@ -52,6 +52,7 @@
             <groupId>uk.ac.solent.lunderground</groupId>
             <artifactId>lunderground-controller-web</artifactId>
             <version>${project.version}</version>
+            <classifier>classes</classifier>
             <scope>test</scope>
         </dependency>
     </dependencies>
