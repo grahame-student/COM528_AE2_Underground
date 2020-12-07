@@ -11,9 +11,11 @@
         <module name="model" />
         <module name="londerground-controller-web" />
         <module name="service" />
+        <module name="coverage-report" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="coverage-report" target="1.8" />
       <module name="jpa-dao" target="1.8" />
       <module name="londerground-controller-web" target="1.7" />
       <module name="lunderground" target="1.8" />

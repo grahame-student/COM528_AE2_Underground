@@ -2,44 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Basics -->
     <groupId>uk.ac.solent.lunderground</groupId>
     <artifactId>lunderground</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <log4j.version>2.14.0</log4j.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <jersey.version>2.32</jersey.version>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <jsp-api.version>2.2</jsp-api.version>
-        <junit.version>4.13.1</junit.version>
-        <hamcrest-core.version>2.2</hamcrest-core.version>
-        <maven.surefire.plugin.version>2.18</maven.surefire.plugin.version>
-
-        <!-- dependencies for java 11 -->
-        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
-        <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
-        <jaxb-runtime.version>2.4.0-b180830.0438</jaxb-runtime.version>
-        <!-- needed by Hibernate for java 11 -->
-        <javassist.version>3.27.0-GA</javassist.version>
-        <cglib-nodep.version>3.3.0</cglib-nodep.version>
-    </properties>
-
-    <modules>
-        <module>lunderground-controller-web</module>
-        <module>model</module>
-        <module>service</module>
-        <module>jpa-dao</module>
-    </modules>
-    <!-- Not needed at this point in time
-        <module>web</module>
-        <module>rest-client</module>
-    </modules>
-    -->
 
     <dependencyManagement>
         <dependencies>
@@ -160,6 +128,42 @@
         </dependencies>
     </dependencyManagement>
 
+    <modules>
+        <module>lunderground-controller-web</module>
+        <module>model</module>
+        <module>service</module>
+        <module>jpa-dao</module>
+        <module>coverage-report</module>
+    </modules>
+    <!-- Not needed at this point in time
+        <module>web</module>
+        <module>rest-client</module>
+    </modules>
+    -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <log4j.version>2.14.0</log4j.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <jersey.version>2.32</jersey.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <jsp-api.version>2.2</jsp-api.version>
+        <junit.version>4.13.1</junit.version>
+        <hamcrest-core.version>2.2</hamcrest-core.version>
+        <maven.surefire.plugin.version>2.18</maven.surefire.plugin.version>
+
+        <!-- dependencies for java 11 -->
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
+        <jaxb-runtime.version>2.4.0-b180830.0438</jaxb-runtime.version>
+        <!-- needed by Hibernate for java 11 -->
+        <javassist.version>3.27.0-GA</javassist.version>
+        <cglib-nodep.version>3.3.0</cglib-nodep.version>
+    </properties>
+
+    <!-- Environment Settings -->
     <!-- Fix for using maven https in netbeans  -->
     <repositories>
         <repository>

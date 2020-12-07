@@ -14,17 +14,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashfiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Verify with Maven
-        run: mvn -B verify --file pom.xml
+
       - name: Build project with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Verify with Maven
+        run: mvn -B test --file pom.xml jacoco:report
+
+      - name: UploadCoverage to CodeCov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage-report/target/site/jacoco-agregate/jacoco.xml
