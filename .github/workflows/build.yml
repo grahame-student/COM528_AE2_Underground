@@ -31,7 +31,7 @@ jobs:
         run: mvn -B clean install
 
       - name: Verify with Maven
-        run: mvn -B test jacoco:report-aggregate
+        run: mvn -B test org.jacoco:jacoco-maven-plugin:report-aggregate
 
       - name: UploadCoverage to CodeCov
         uses: codecov/codecov-action@v1.0.2
