@@ -9,7 +9,6 @@
         <module name="lunderground-controller-web" />
         <module name="jpa-dao" />
         <module name="model" />
-        <module name="londerground-controller-web" />
         <module name="service" />
         <module name="coverage-report" />
       </profile>

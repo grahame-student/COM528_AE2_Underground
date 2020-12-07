@@ -10,7 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lunderground-controller-web</artifactId>
+    <!--
     <packaging>war</packaging>
+    -->
 
     <name>lunderground-controller-web Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
