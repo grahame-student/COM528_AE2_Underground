@@ -31,7 +31,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Verify with Maven
-        run: mvn -B test --file pom.xml jacoco:report
+        run: mvn -B test jacoco:report-aggregate
 
       - name: UploadCoverage to CodeCov
         uses: codecov/codecov-action@v1.0.2
