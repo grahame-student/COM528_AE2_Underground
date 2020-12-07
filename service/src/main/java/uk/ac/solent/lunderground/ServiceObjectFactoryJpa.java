@@ -16,10 +16,13 @@ public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
      */
     private DaoFactory daoFactory = null;
     /**
-     * Instance of the StationDao to use when accessing Station functionality
+     * Instance of the StationDao to use when accessing Station functionality.
      */
     private StationDao stationDao = null;
 
+    /**
+     * Public constructor for the JPA version of the ServiceObjectFactory.
+     */
     public ServiceObjectFactoryJpa()
     {
         daoFactory = new DaoFactoryJpa();
