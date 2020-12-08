@@ -1,4 +1,4 @@
-package uk.ac.solent.lunderground;
+package uk.ac.solent.lunderground.controllerweb;
 
 import org.junit.Test;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;

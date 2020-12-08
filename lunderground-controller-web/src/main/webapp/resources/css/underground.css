@@ -64,6 +64,28 @@
   background-color: var(--colour-1st);
 }
 
+#station-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+#station-inputs p {
+  display: flex;
+  flex-direction: row;
+}
+
+#station-inputs p .col-label {
+  width: 25%;
+}
+
+#station-inputs p .col-input {
+  width: 25%;
+}
+
+#station-inputs p button {
+  padding: 4px;
+}
+
 #lunderground-footer {
   position: fixed;
   bottom: 0;

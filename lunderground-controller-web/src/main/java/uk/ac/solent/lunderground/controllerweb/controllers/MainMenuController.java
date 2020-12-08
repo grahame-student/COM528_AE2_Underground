@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
@@ -42,5 +44,13 @@ public final class MainMenuController
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
         return "manage-stations";
+    }
+
+    @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
+    public ModelAndView getManageStationsAddPage(final ModelMap map)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
+        return new ModelAndView("redirect:/manage-stations", map);
     }
 }

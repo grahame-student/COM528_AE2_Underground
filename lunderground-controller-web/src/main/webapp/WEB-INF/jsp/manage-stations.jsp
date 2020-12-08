@@ -13,6 +13,32 @@
 
             <div id="main-content">
                 <h2>This is where we manage underground stations</h2>
+                <section id="manage-station">
+                    <form method="post">
+                        <div id="station-inputs">
+                            <p>
+                                <label class="col-label" for="stationName">Station Name:</label>
+                                <input class="col-input" id="stationName" type="text" name="stationName">
+                                <button type="submit" formaction="manage-stations/add">Add</button>
+                            </p>
+                            <p>
+                                <label class="col-label" for="zoneNumber">Zone:</label>
+                                <select class="col-input" id="zoneNumber">
+                                    <option value="1">Zone 1</option>
+                                    <option value="2">Zone 2</option>
+                                    <option value="3">Zone 3</option>
+                                    <option value="4">Zone 4</option>
+                                    <option value="5">Zone 5</option>
+                                    <option value="6">Zone 6</option>
+                                </select>
+                            </p>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="list-stations">
+
+                </section>
             </div>
 
             <%@ include file="common/footer.jsp" %>

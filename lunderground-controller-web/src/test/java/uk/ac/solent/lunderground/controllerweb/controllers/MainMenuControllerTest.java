@@ -12,9 +12,9 @@ import org.mockito.MockedStatic;
 
 import org.springframework.ui.ModelMap;
 
-import uk.ac.solent.lunderground.service.LundergroundFacade;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
+import uk.ac.solent.lunderground.service.LundergroundFacade;
 
 public class MainMenuControllerTest
 {
@@ -62,7 +62,7 @@ public class MainMenuControllerTest
     }
 
     /**
-     * Check that getManageStationsPage adds a station list to the ModelMap.
+     * Check that getManageStationsPage gets a list of all stations from the facade.
      */
     @Test
     public void getManageStationsPageGetsStationListFromFacade()
@@ -79,4 +79,6 @@ public class MainMenuControllerTest
             verify(mockFacade).getAllStations();
         }
     }
+
+    // TODO: Check that the list from the facade is the list that is added to the model map
 }
