@@ -31,6 +31,9 @@ public class LundergroundFacadeTest
         verify(mockStationDao).retrieveAll();
     }
 
+    /**
+     * Check that the passed in name is used for the new station.
+     */
     @Test
     public void addStationUsesStationDaoToAddStationWithPassedInName()
     {
@@ -46,6 +49,9 @@ public class LundergroundFacadeTest
                        .getName(), equalTo(SOME_NAME));
     }
 
+    /**
+     * Check that the passed in zone is used for the new station.
+     */
     @Test
     public void addStationUsesStationDaoToAddStationWithPassedInZone()
     {
@@ -61,6 +67,9 @@ public class LundergroundFacadeTest
                        .getZone(), equalTo(SOME_ZONE));
     }
 
+    /**
+     * Check that all stations are removed from the database.
+     */
     @Test
     public void deleteAllUsesStationDaoToRemoveAllStations()
     {
