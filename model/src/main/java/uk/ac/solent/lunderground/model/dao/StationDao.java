@@ -8,12 +8,14 @@ public interface StationDao
 {
     /**
      * Get a list of all stations that exist.
+     *
      * @return List of Station objects
      */
     List<Station> retrieveAll();
 
     /**
      * Add the passed in Station to the persistence database.
+     *
      * @param newStation The Station to be saved to the database
      */
     void addStation(Station newStation);

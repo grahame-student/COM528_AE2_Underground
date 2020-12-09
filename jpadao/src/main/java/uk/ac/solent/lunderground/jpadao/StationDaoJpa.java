@@ -17,6 +17,7 @@ public final class StationDaoJpa implements StationDao
 
     /**
      * Public constructor for the StationDAO JPA implementation.
+     *
      * @param em Entity manager required for persistence
      */
     @NotNull
@@ -35,16 +36,21 @@ public final class StationDaoJpa implements StationDao
     @Override
     public void addStation(final Station newStation)
     {
-        entityManager.getTransaction().begin();
+        entityManager.getTransaction()
+                     .begin();
         entityManager.persist(newStation);
-        entityManager.getTransaction().commit();
+        entityManager.getTransaction()
+                     .commit();
     }
 
     @Override
     public void deleteAll()
     {
-        entityManager.getTransaction().begin();
-        entityManager.createQuery("DELETE FROM Station ").executeUpdate();
-        entityManager.getTransaction().commit();
+        entityManager.getTransaction()
+                     .begin();
+        entityManager.createQuery("DELETE FROM Station ")
+                     .executeUpdate();
+        entityManager.getTransaction()
+                     .commit();
     }
 }

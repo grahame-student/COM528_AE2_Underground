@@ -1,7 +1,6 @@
 package uk.ac.solent.lunderground.controllerweb;
 
 import org.junit.Test;
-import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.service.LundergroundFacade;
 

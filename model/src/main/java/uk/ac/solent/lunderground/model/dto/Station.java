@@ -28,6 +28,7 @@ public final class Station
 
     /**
      * Get the ID of the Station.
+     *
      * @return Long integer representing the ID of the station
      */
     @Id
@@ -39,6 +40,7 @@ public final class Station
 
     /**
      * Set the ID of the Station.
+     *
      * @param newId the new ID value for the Station
      */
     public void setId(final Long newId)
@@ -48,6 +50,7 @@ public final class Station
 
     /**
      * Get the name of the Station.
+     *
      * @return String containing the Station's name
      */
     public String getName()
@@ -57,6 +60,7 @@ public final class Station
 
     /**
      * Set the name of the Station.
+     *
      * @param newName String containing the Station name
      */
     public void setName(final String newName)
@@ -66,6 +70,7 @@ public final class Station
 
     /**
      * Get the zone number that the Station is in.
+     *
      * @return Integer containing the zone number
      */
     public int getZone()
@@ -75,6 +80,7 @@ public final class Station
 
     /**
      * Set the zone number that the Station is in.
+     *
      * @param newZone the zone number that the station is in
      */
     public void setZone(final int newZone)

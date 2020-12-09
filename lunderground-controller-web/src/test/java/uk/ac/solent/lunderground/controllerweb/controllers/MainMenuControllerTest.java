@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+
 import org.mockito.Mockito;
 import org.mockito.MockedStatic;
 
@@ -51,7 +52,8 @@ public class MainMenuControllerTest
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade).thenReturn(mockFacade);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
 
             MainMenuController controller = new MainMenuController();
             ModelMap mockModelMap = mock(ModelMap.class);
@@ -70,7 +72,8 @@ public class MainMenuControllerTest
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade).thenReturn(mockFacade);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
 
             MainMenuController controller = new MainMenuController();
             ModelMap mockModelMap = mock(ModelMap.class);

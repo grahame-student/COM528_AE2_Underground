@@ -12,7 +12,6 @@
             <%@ include file="common/header.jsp" %>
 
             <div id="main-content">
-                <h2>This is where we manage underground stations</h2>
                 <section id="manage-station">
                     <form method="post">
                         <div id="station-inputs">

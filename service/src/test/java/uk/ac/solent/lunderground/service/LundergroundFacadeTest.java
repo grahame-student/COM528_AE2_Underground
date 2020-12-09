@@ -42,7 +42,8 @@ public class LundergroundFacadeTest
         facade.addStation(SOME_NAME, SOME_ZONE);
 
         verify(mockStationDao).addStation(args.capture());
-        assertThat(args.getValue().getName(), equalTo(SOME_NAME));
+        assertThat(args.getValue()
+                       .getName(), equalTo(SOME_NAME));
     }
 
     @Test
@@ -56,7 +57,8 @@ public class LundergroundFacadeTest
         facade.addStation(SOME_NAME, SOME_ZONE);
 
         verify(mockStationDao).addStation(args.capture());
-        assertThat(args.getValue().getZone(), equalTo(SOME_ZONE));
+        assertThat(args.getValue()
+                       .getZone(), equalTo(SOME_ZONE));
     }
 
     @Test

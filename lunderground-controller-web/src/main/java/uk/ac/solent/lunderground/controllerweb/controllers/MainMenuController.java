@@ -5,7 +5,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
@@ -46,6 +45,12 @@ public final class MainMenuController
         return "manage-stations";
     }
 
+    /**
+     * Link to the controller responsible for adding a station to the database.
+     *
+     * @param map attributes map, used to inject data into the view
+     * @return Return a redirect back to the page responsible form managing stations
+     */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
     public ModelAndView getManageStationsAddPage(final ModelMap map)
     {
