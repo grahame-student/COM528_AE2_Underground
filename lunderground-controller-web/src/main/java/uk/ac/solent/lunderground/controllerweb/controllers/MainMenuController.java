@@ -2,10 +2,13 @@ package uk.ac.solent.lunderground.controllerweb.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
+import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 /**
@@ -48,13 +51,27 @@ public final class MainMenuController
     /**
      * Link to the controller responsible for adding a station to the database.
      *
-     * @param map attributes map, used to inject data into the view
+     * @param name The name of the station to be added
+     * @param zone The zone that the station is in
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
-    public ModelAndView getManageStationsAddPage(final ModelMap map)
+    public ModelAndView getManageStationsAddPage(@RequestParam("stationName") String name,
+                                                 @RequestParam("zoneNumber") Integer zone)
     {
+        ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        this.lunderGroundFacade.addStation(name, zone);
+        map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
+        return new ModelAndView("redirect:/manage-stations", map);
+    }
+
+    @RequestMapping(value = "/manage-stations/delete", method = RequestMethod.POST)
+    public ModelAndView getManageStationsDeletePage(@RequestParam("id") Integer stationId)
+    {
+        ModelMap map = new ModelMap();
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        System.out.println("Request to delete station with ID: " + stationId);
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
         return new ModelAndView("redirect:/manage-stations", map);
     }

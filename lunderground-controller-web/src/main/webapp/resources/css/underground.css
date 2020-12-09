@@ -64,6 +64,11 @@
     background-color: var(--colour-1st);
 }
 
+#manage-station {
+    margin: 7em auto 0;
+    text-align: center;
+}
+
 #station-inputs {
     display: flex;
     flex-direction: column;
@@ -75,15 +80,22 @@
 }
 
 #station-inputs p .col-label {
-    width: 25%;
+    width: 10%;
 }
 
 #station-inputs p .col-input {
     width: 25%;
+    margin-right: 1em;
 }
 
 #station-inputs p button {
-    padding: 4px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#list-stations button {
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 #lunderground-footer {

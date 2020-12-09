@@ -47,6 +47,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.11.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
           <element id="library" level="project" name="Maven: junit:junit:4.13.1" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:2.2" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest:2.2" />

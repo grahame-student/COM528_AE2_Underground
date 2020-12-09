@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <title>Underground Controller - Manage Stations</title>
@@ -17,12 +18,12 @@
                         <div id="station-inputs">
                             <p>
                                 <label class="col-label" for="stationName">Station Name:</label>
-                                <input class="col-input" id="stationName" type="text" name="stationName">
+                                <input class="col-input" id="stationName" type="text" name="stationName" required="true">
                                 <button type="submit" formaction="manage-stations/add">Add</button>
                             </p>
                             <p>
                                 <label class="col-label" for="zoneNumber">Zone:</label>
-                                <select class="col-input" id="zoneNumber">
+                                <select class="col-input" id="zoneNumber" name="zoneNumber">
                                     <option value="1">Zone 1</option>
                                     <option value="2">Zone 2</option>
                                     <option value="3">Zone 3</option>
@@ -36,7 +37,24 @@
                 </section>
 
                 <section id="list-stations">
-
+                    <form method="post">
+                        <table>
+                            <tr>
+                                <th>Station Name</th>
+                                <th>Zone</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <c:forEach items="${stations}" var="station" varStatus="tagStatus">
+                                <tr>
+                                    <td>${station.name}</td>
+                                    <td>${station.zone}</td>
+                                    <td><button formaction="manage-stations/delete?id=${station.id}">Delete</button></td>
+                                    <td></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </form>
                 </section>
             </div>
 
