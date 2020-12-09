@@ -13,6 +13,16 @@ public interface LundergroundServiceFacade
      */
     List<Station> getAllStations();
 
+    /**
+     * Add a Station to the London underground system.
+     *
+     * @param stationName String containing the name of the station to add
+     * @param zoneNumber  Integer containing the zone number that station is in
+     */
     void addStation(String stationName, int zoneNumber);
+
+    /**
+     * Remove all stations from the London underground systems.
+     */
     void deleteAll();
 }

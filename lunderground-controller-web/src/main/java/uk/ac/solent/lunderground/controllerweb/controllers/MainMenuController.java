@@ -2,13 +2,11 @@ package uk.ac.solent.lunderground.controllerweb.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
-import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 /**
@@ -24,7 +22,7 @@ public final class MainMenuController
     private LundergroundServiceFacade lunderGroundFacade = null;
 
     /**
-     * Link the root URL for the project to the main landing page.
+     * Serve the main landing page for the root URL.
      *
      * @return Return the .jsp to use for the root of the web app
      */
@@ -35,7 +33,7 @@ public final class MainMenuController
     }
 
     /**
-     * Link to the page responsible for managing underground stations.
+     * Serve the page responsible for managing underground stations.
      *
      * @param map attributes map, used to inject data into the view
      * @return Return the .jsp to use for manage underground stations
@@ -49,15 +47,15 @@ public final class MainMenuController
     }
 
     /**
-     * Link to the controller responsible for adding a station to the database.
+     * Serve the page responsible for adding a station to the database.
      *
      * @param name The name of the station to be added
      * @param zone The zone that the station is in
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
-    public ModelAndView getManageStationsAddPage(@RequestParam("stationName") String name,
-                                                 @RequestParam("zoneNumber") Integer zone)
+    public ModelAndView getManageStationsAddPage(@RequestParam("stationName") final String name,
+                                                 @RequestParam("zoneNumber") final Integer zone)
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
@@ -66,8 +64,13 @@ public final class MainMenuController
         return new ModelAndView("redirect:/manage-stations", map);
     }
 
+    /**
+     * Serve the page responsible for removing a station from the database.
+     * @param stationId The ID of the station to remove from the database
+     * @return Return a redirect back to the page responsible form managing stations
+     */
     @RequestMapping(value = "/manage-stations/delete", method = RequestMethod.POST)
-    public ModelAndView getManageStationsDeletePage(@RequestParam("id") Integer stationId)
+    public ModelAndView getManageStationsDeletePage(@RequestParam("id") final Integer stationId)
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();

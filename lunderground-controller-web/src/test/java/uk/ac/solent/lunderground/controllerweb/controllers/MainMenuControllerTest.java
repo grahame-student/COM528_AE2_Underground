@@ -24,7 +24,13 @@ import uk.ac.solent.lunderground.service.LundergroundFacade;
 
 public class MainMenuControllerTest
 {
+    /**
+     * Zone number used for testing, specific value is not important.
+     */
     private static final Integer SOME_ZONE = 4;
+    /**
+     * Station name used for testing, specific value is not important.
+     */
     private static final String SOME_STATION = "some station";
 
     /**
@@ -125,14 +131,14 @@ public class MainMenuControllerTest
                    .thenReturn(mockFacade);
 
             MainMenuController controller = new MainMenuController();
-            Object result =  controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
+            Object result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
 
             assertThat(result, instanceOf(ModelAndView.class));
         }
     }
 
     /**
-     * Check that we're asking for a redirect to the page responsible for managing stations
+     * Check that we're asking for a redirect to the page responsible for managing stations.
      */
     @Test
     public void getManageStationsAddPageRedirectsToManageStationsPage()
@@ -144,7 +150,7 @@ public class MainMenuControllerTest
                    .thenReturn(mockFacade);
 
             MainMenuController controller = new MainMenuController();
-            ModelAndView result =  controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
+            ModelAndView result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
 
             assertThat(result.getViewName(), equalTo("redirect:/manage-stations"));
         }

@@ -18,7 +18,8 @@
                         <div id="station-inputs">
                             <p>
                                 <label class="col-label" for="stationName">Station Name:</label>
-                                <input class="col-input" id="stationName" type="text" name="stationName" required="true">
+                                <input class="col-input" id="stationName" type="text" name="stationName"
+                                       required="true">
                                 <button type="submit" formaction="manage-stations/add">Add</button>
                             </p>
                             <p>
@@ -49,7 +50,9 @@
                                 <tr>
                                     <td>${station.name}</td>
                                     <td>${station.zone}</td>
-                                    <td><button formaction="manage-stations/delete?id=${station.id}">Delete</button></td>
+                                    <td>
+                                        <button formaction="manage-stations/delete?id=${station.id}">Delete</button>
+                                    </td>
                                     <td></td>
                                 </tr>
                             </c:forEach>
