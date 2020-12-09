@@ -74,7 +74,7 @@ public final class MainMenuController
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        System.out.println("Request to delete station with ID: " + stationId);
+        this.lunderGroundFacade.deleteStation(stationId);
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
         return new ModelAndView("redirect:/manage-stations", map);
     }

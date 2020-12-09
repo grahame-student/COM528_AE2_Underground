@@ -92,7 +92,7 @@ public class StationDaoJpaTest
         testStation = new Station();
         stationDao.addStation(testStation);
 
-        List<?> stationList = stationDao.retrieveAll();
+        List<Station> stationList = stationDao.retrieveAll();
         assertThat(stationList.size(), equalTo(TWO_ITEMS));
     }
 
@@ -111,7 +111,7 @@ public class StationDaoJpaTest
 
         stationDao.deleteAll();
 
-        List<?> stationList = stationDao.retrieveAll();
+        List<Station> stationList = stationDao.retrieveAll();
         assertThat(stationList.size(), equalTo(ZERO_ITEMS));
     }
 }

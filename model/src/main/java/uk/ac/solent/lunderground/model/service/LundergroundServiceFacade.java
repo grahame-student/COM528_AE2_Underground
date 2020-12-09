@@ -22,6 +22,13 @@ public interface LundergroundServiceFacade
     void addStation(String stationName, int zoneNumber);
 
     /**
+     * Remove the station with the specified ID.
+     *
+     * @param stationId The ID of the station to be removed.
+     */
+    void deleteStation(int stationId);
+
+    /**
      * Remove all stations from the London underground systems.
      */
     void deleteAll();

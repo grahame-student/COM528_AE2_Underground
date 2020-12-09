@@ -13,7 +13,13 @@ import static org.mockito.Mockito.verify;
 
 public class LundergroundFacadeTest
 {
+    /**
+     * Station name used for tests, specific value is not important.
+     */
     private static final String SOME_NAME = "some name";
+    /**
+     * Zone number used for tests, specific value is not important.
+     */
     private static final int SOME_ZONE = 2;
 
     /**
