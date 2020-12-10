@@ -44,6 +44,18 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
+    public void deleteStation(final long stationId)
+    {
+        entityManager.getTransaction()
+                     .begin();
+        entityManager.createQuery("DELETE FROM Station s WHERE s.id=:id")
+                     .setParameter("id", stationId)
+                     .executeUpdate();
+        entityManager.getTransaction()
+                     .commit();
+    }
+
+    @Override
     public void deleteAll()
     {
         entityManager.getTransaction()

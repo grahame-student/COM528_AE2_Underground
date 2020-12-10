@@ -26,7 +26,7 @@ public interface LundergroundServiceFacade
      *
      * @param stationId The ID of the station to be removed.
      */
-    void deleteStation(int stationId);
+    void deleteStation(long stationId);
 
     /**
      * Remove all stations from the London underground systems.

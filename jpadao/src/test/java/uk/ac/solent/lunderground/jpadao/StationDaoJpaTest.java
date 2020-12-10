@@ -11,6 +11,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 
 public class StationDaoJpaTest
 {
@@ -27,6 +28,15 @@ public class StationDaoJpaTest
      */
     private static final String SOME_STATION = "some station";
     /**
+     * Station name used for test purposes, name helps identify specific instance
+     */
+    private static final String STATION_1 = "Station 1";
+    /**
+     * Station name used for test purposes, name helps identify specific instance
+     */
+    private static final String STATION_2 = "Station 2";
+
+    /**
      * Zone number used for testing purposes, specific value is unimportant.
      */
     private static final int SOME_ZONE = 1;
@@ -39,6 +49,11 @@ public class StationDaoJpaTest
      * 2 items in a list.
      */
     private static final int TWO_ITEMS = 2;
+
+    /**
+     * Index of the first item in a list
+     */
+    private static final int FIRST_ITEM = 0;
 
     /**
      * Used to hold a reference to the StationDao instance being tested.
@@ -113,5 +128,24 @@ public class StationDaoJpaTest
 
         List<Station> stationList = stationDao.retrieveAll();
         assertThat(stationList.size(), equalTo(ZERO_ITEMS));
+    }
+
+    @Test
+    public void deleteRemovesStationWithPassedInIdFromTheDatabase()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+        Station testStation = new Station();
+        testStation.setName(STATION_1);
+        stationDao.addStation(testStation);
+        testStation = new Station();
+        testStation.setName(STATION_2);
+        stationDao.addStation(testStation);
+        testStation = stationDao.retrieveAll().get(FIRST_ITEM);
+
+        stationDao.deleteStation(testStation.getId());
+
+        List<Station> stationList = stationDao.retrieveAll();
+        assertThat(stationList, not(hasItem(testStation)));
     }
 }

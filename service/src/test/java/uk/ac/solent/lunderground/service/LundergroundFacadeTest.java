@@ -8,6 +8,8 @@ import uk.ac.solent.lunderground.model.dto.Station;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -21,6 +23,10 @@ public class LundergroundFacadeTest
      * Zone number used for tests, specific value is not important.
      */
     private static final int SOME_ZONE = 2;
+    /**
+     * Station ID used for tests, specific value is not important.
+     */
+    private static final long SOME_ID = 123;
 
     /**
      * Check that the configured StationDao is used to access the underlying database.
@@ -86,5 +92,35 @@ public class LundergroundFacadeTest
         facade.deleteAll();
 
         verify(mockStationDao).deleteAll();
+    }
+
+    /**
+     * Check that the StationDao is being used to remove a station from the database.
+     */
+    @Test
+    public void deleteStationUsesStationDaoToRemoveStation()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.deleteStation(SOME_ID);
+
+        verify(mockStationDao).deleteStation(anyLong());
+    }
+
+    /**
+     * Check that the station ID is passed to the StationDao.
+     */
+    @Test
+    public void deleteStationPassesStationIdToStationDao()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.deleteStation(SOME_ID);
+
+        verify(mockStationDao).deleteStation(eq(SOME_ID));
     }
 }

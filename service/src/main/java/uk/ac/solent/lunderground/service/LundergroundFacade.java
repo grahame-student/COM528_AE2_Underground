@@ -39,9 +39,9 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     }
 
     @Override
-    public void deleteStation(final int stationId)
+    public void deleteStation(final long stationId)
     {
-
+        stationDao.deleteStation(stationId);
     }
 
     @Override
