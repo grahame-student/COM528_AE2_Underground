@@ -28,11 +28,11 @@ public class StationDaoJpaTest
      */
     private static final String SOME_STATION = "some station";
     /**
-     * Station name used for test purposes, name helps identify specific instance
+     * Station name used for test purposes, name helps identify specific instance.
      */
     private static final String STATION_1 = "Station 1";
     /**
-     * Station name used for test purposes, name helps identify specific instance
+     * Station name used for test purposes, name helps identify specific instance.
      */
     private static final String STATION_2 = "Station 2";
 
@@ -51,7 +51,7 @@ public class StationDaoJpaTest
     private static final int TWO_ITEMS = 2;
 
     /**
-     * Index of the first item in a list
+     * Index of the first item in a list.
      */
     private static final int FIRST_ITEM = 0;
 
@@ -130,6 +130,9 @@ public class StationDaoJpaTest
         assertThat(stationList.size(), equalTo(ZERO_ITEMS));
     }
 
+    /**
+     * Check that only the station with the specified ID is removed from the database.
+     */
     @Test
     public void deleteRemovesStationWithPassedInIdFromTheDatabase()
     {

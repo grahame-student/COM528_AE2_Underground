@@ -21,8 +21,9 @@ public interface StationDao
     void addStation(Station newStation);
 
     /**
-     * Remove the station with passed in ID from the database
-     * @param stationId The ID of the station to be removed
+     * Remove the station with passed in ID from the database.
+     *
+     * @param stationId The Long ID of the station to be removed
      */
     void deleteStation(long stationId);
 

@@ -5,13 +5,18 @@
          version="4.0">
     <display-name>Spring MVC Application</display-name>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/application-context.xml</param-value>
+    </context-param>
+
     <!-- Step 1: Configure Spring MVC Dispatcher Servlet -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/Lunderground-servlet.xml</param-value>
+            <param-value>classpath:/spring/Lunderground-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
