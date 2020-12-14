@@ -184,7 +184,8 @@
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
         <jaxb-runtime.version>2.4.0-b180830.0438</jaxb-runtime.version>
         <eclipselink.version>2.7.1</eclipselink.version>
-        <javax.persistence>2.2.1</javax.persistence>
+        <javax.persistence.version>2.2.1</javax.persistence.version>
+        <javax.persistence.api.version>2.2</javax.persistence.api.version>
         <jakarta.xml.version>2.3.3</jakarta.xml.version>
 
         <!-- needed by Hibernate for java 11 -->

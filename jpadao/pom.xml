@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
-            <version>${javax.persistence}</version>
+            <version>${javax.persistence.version}</version>
             <scope>compile</scope>
         </dependency>
 
