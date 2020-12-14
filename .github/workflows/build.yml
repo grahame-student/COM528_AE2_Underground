@@ -5,6 +5,8 @@ name: Build Project
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
   pull_request:
 
 jobs:
