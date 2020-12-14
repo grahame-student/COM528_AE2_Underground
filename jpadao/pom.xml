@@ -24,6 +24,9 @@
         </resources>
     </build>
 
+    <properties>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>uk.ac.solent.lunderground.model</groupId>
@@ -32,25 +35,17 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>${eclipselink.version}</version>
+        </dependency>
+
         <!-- Eclipselink JPA implementation -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
-            <version>2.2.1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- See https://stackoverflow.com/q/45870753 -->
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.7.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.persistence</groupId>
-                    <artifactId>javax.persistence</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${javax.persistence}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -60,7 +55,7 @@
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.extension</artifactId>
-            <version>2.7.0</version>
+            <version>${eclipselink.version}</version>
         </dependency>
 
         <!-- SLF4J // jcl used to provide logging for eclipselink JPA and derby  -->
@@ -93,27 +88,27 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.26</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- derby database -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.9.1.0</version>
+            <version>${derby.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbytools</artifactId>
-            <version>10.9.1.0</version>
+            <version>${derby.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <version>${javaee.version}</version>
         </dependency>
 
         <!-- test -->

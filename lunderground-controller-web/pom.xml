@@ -13,22 +13,10 @@
 
     <groupId>uk.ac.solent.lunderground.controllerweb</groupId>
     <artifactId>lunderground-controller-web</artifactId>
-    <!--
-    <packaging>war</packaging>
-    -->
 
     <name>lunderground-controller-web Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.version>4.13.1</junit.version>
-        <mockito.version>3.6.28</mockito.version>
-        <spring.version>5.3.2</spring.version>
-    </properties>
 
     <dependencies>
         <!-- lunderground -->
@@ -51,14 +39,24 @@
             <version>${spring.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${javax.servlet.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
+            <version>${javax.servlet-api.version}</version>
         </dependency>
 
         <!-- test -->
@@ -123,7 +121,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
+                    <version>${maven-deploy.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
