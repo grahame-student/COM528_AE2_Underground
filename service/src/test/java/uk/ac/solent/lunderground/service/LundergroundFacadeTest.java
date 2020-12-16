@@ -9,6 +9,7 @@ import uk.ac.solent.lunderground.model.dto.Station;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -122,5 +123,35 @@ public class LundergroundFacadeTest
         facade.deleteStation(SOME_ID);
 
         verify(mockStationDao).deleteStation(eq(SOME_ID));
+    }
+
+    /**
+     * Check that the StationDao is used to get station from the database.
+     */
+    @Test
+    public void getStationUsesStationDaoToRetrieveStation()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.getStation(SOME_NAME);
+
+        verify(mockStationDao).getStation(anyString());
+    }
+
+    /**
+     * Check that the station name is passed to the StationDao..
+     */
+    @Test
+    public void getStationPassesStationNameToStationDao()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.getStation(SOME_NAME);
+
+        verify(mockStationDao).getStation(eq(SOME_NAME));
     }
 }

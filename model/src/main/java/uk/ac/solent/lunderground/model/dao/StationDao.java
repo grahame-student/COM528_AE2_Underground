@@ -31,4 +31,11 @@ public interface StationDao
      * Remove all Station instances from the database.
      */
     void deleteAll();
+
+    /**
+     * Get a station with the passed in name from the persistence database.
+     * @param stationName name of the station to retrieve from the database
+     * @return Station instance with retrieved details. Null if Station doesn't exist
+     */
+    Station getStation(String stationName);
 }

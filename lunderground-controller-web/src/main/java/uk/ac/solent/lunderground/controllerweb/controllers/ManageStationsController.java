@@ -40,12 +40,13 @@ public class ManageStationsController
      */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
     public ModelAndView getManageStationsAddPage(@RequestParam("stationName") final String name,
-                                                 @RequestParam("zoneNumber") final Integer zone)
+                                           @RequestParam("zoneNumber") final Integer zone)
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         this.lunderGroundFacade.addStation(name, zone);
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
+        map.addAttribute("newStation", this.lunderGroundFacade.getStation(name));
         return new ModelAndView("redirect:/manage-stations", map);
     }
 

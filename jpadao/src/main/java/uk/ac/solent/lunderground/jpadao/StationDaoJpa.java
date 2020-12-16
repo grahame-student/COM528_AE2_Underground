@@ -4,6 +4,7 @@ import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -64,5 +65,24 @@ public final class StationDaoJpa implements StationDao
                      .executeUpdate();
         entityManager.getTransaction()
                      .commit();
+    }
+
+    @Override
+    public Station getStation(String stationName)
+    {
+        Station result;
+
+        TypedQuery<Station> q = entityManager.createQuery("SELECT s FROM Station s WHERE s.name=:name",
+                Station.class)
+                .setParameter("name", stationName);
+        try
+        {
+            result = q.getSingleResult();
+        }
+        catch (NoResultException ex)
+        {
+            result = null;
+        }
+        return result;
     }
 }

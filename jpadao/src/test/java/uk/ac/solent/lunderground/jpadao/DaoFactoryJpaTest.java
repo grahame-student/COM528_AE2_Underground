@@ -37,11 +37,11 @@ public class DaoFactoryJpaTest
      * Check that runtime exception is raised when the persistence manage throws an exception.
      */
     @Test
-    @Ignore("Test disabled as mocking the persistence manager is causing additional tests to fail.\n" +
-            "This is because the method under test creates a singleton and resetting the internal\n" +
-            "state of the class has proven itself to be unexpectedly tricky.\n" +
-            "This test DOES pass when run in isolation and is left here as a sanity check that\n" +
-            "can be run on demand when required.")
+    @Ignore("Test disabled as mocking the persistence manager is causing additional tests to fail.\n"
+            + "This is because the method under test creates a singleton and resetting the internal\n"
+            + "state of the class has proven itself to be unexpectedly tricky.\n"
+            + "This test DOES pass when run in isolation and is left here as a sanity check that\n"
+            + "can be run on demand when required.")
     public void getStationDaoThrowsRuntimeExceptionWhenPersistenceManagerThrowsException()
     {
         DaoFactory factory = new DaoFactoryJpa();

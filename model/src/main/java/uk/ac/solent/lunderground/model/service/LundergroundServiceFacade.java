@@ -32,4 +32,11 @@ public interface LundergroundServiceFacade
      * Remove all stations from the London underground systems.
      */
     void deleteAll();
+
+    /**
+     * Get a station by name.
+     * @param stationName the name of the station to retrieve.
+     * @return Station instance. Null if station doesn't exist
+     */
+    Station getStation(String stationName);
 }

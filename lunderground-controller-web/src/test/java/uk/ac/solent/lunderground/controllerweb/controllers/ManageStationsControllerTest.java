@@ -219,6 +219,30 @@ public class ManageStationsControllerTest
         }
     }
 
+
+    /**
+     * Check that the newly added station has been set in the ModelMap using the facade.
+     */
+    @Test
+    public void getManageStationsAddPageAddsNewStationAttribute() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            Station newStation = new Station();
+            newStation.setName(SOME_STATION);
+            newStation.setZone(SOME_ZONE);
+            when(mockFacade.getStation(anyString())).thenReturn(newStation);
+
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM))
+                   .andExpect(model().attribute("newStation", newStation));
+        }
+    }
+
     /**
      * Check that getManageStationsDeletePage adds a station using the facade.
      */
@@ -294,4 +318,9 @@ public class ManageStationsControllerTest
                    .andExpect(model().attribute("stations", expectedList));
         }
     }
+
+    // Additional tests that could / should be added
+    // * Check adding the same station twice
+    // * Check trying to remove a station that doesn't exist
+    // * Check Messages passed back to the view
 }

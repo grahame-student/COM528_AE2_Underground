@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 public class StationDaoJpaTest
 {
@@ -150,5 +151,39 @@ public class StationDaoJpaTest
 
         List<Station> stationList = stationDao.retrieveAll();
         assertThat(stationList, not(hasItem(testStation)));
+    }
+
+    /**
+     * Check that a station is correctly retrieved by name when one exists.
+     */
+    @Test
+    public void getStationRetrievesStationWithPassedInNameFromDatabase()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+        Station testStation = new Station();
+        testStation.setName(STATION_1);
+        stationDao.addStation(testStation);
+
+        Station station = stationDao.getStation(STATION_1);
+
+        assertThat(station.getName(), equalTo(STATION_1));
+    }
+
+    /**
+     * Check that null is returned if the requested station doesn't exist.
+     */
+    @Test
+    public void getStationReturnsNullIfNoMatchFound()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+        Station testStation = new Station();
+        testStation.setName(STATION_1);
+        stationDao.addStation(testStation);
+
+        Station station = stationDao.getStation(STATION_2);
+
+        assertThat(station, nullValue());
     }
 }

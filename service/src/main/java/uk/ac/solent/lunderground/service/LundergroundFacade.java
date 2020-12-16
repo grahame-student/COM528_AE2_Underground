@@ -49,4 +49,10 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     {
         stationDao.deleteAll();
     }
+
+    @Override
+    public Station getStation(String stationName)
+    {
+        return stationDao.getStation(stationName);
+    }
 }
