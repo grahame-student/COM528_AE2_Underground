@@ -1,9 +1,15 @@
 package uk.ac.solent.lunderground.controllerweb.controllers;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import org.springframework.ui.ModelMap;
-import org.springframework.web.servlet.ModelAndView;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.dto.Station;
@@ -13,21 +19,32 @@ import uk.ac.solent.lunderground.service.LundergroundFacade;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.notNullValue;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+@ContextConfiguration(
+        locations =
+                {
+                        "classpath:spring/application-context.xml",
+                        "classpath:spring/Lunderground-servlet.xml"
+                }
+)
+@WebAppConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ManageStationsControllerTest
 {
     /**
@@ -35,86 +52,70 @@ public class ManageStationsControllerTest
      */
     private static final Integer SOME_ZONE = 4;
     /**
+     * Zone number parameter used for testing, must be the same as SOME_ZONE but in string form.
+     */
+    private static final String SOME_ZONE_PARAM = SOME_ZONE.toString();
+    /**
      * Station name used for testing, specific value is not important.
      */
     private static final String SOME_STATION = "some station";
     /**
      * ID used for testing, specific value is not important.
      */
-    private static final long SOME_ID = 123;
+    private static final Long SOME_ID = 123L;
+    /**
+     * ID used for testing, specific value is not important.
+     */
+    private static final String SOME_ID_PARAM = SOME_ID.toString();
+
+
+    /**
+     * Web Application Context used to allow the test cases to run.
+     */
+    @Autowired
+    private WebApplicationContext context;
+
+    /**
+     * MockMvc instance used to request endpoints and verify that the correct outcomes occur.
+     */
+    private MockMvc mockMvc;
+
+    /**
+     * Code to be executed before each test case to ensure that each one starts froms the same configuration.
+     */
+    @Before
+    public void setup()
+    {
+        mockMvc = webAppContextSetup(this.context).build();
+    }
 
     /**
      * Check that getManageStationsPage returns the name of the manage stations page.
      * Not the most useful test as the method attributes are not exercised
      */
     @Test
-    public void getManageStationsPageReturnsManageStations()
+    public void getManageStationsPageReturnsManageStations() throws Exception
     {
-        ManageStationsController controller = new ManageStationsController();
-
-        assertThat(controller.getManageStationsPage(new ModelMap()), equalTo("manage-stations"));
+        mockMvc.perform(get("/manage-stations"))
+               .andExpect(forwardedUrl("/WEB-INF/jsp/manage-stations.jsp"));
     }
 
     /**
-     * Check that getManageStationsPage adds a station list to the ModelMap.
+     * Check that getManageStationsPage adds a station list to the ModelMap from the Lunderground facade.
      */
     @Test
-    public void getManageStationsPageAddStationListToModelMap()
+    public void getManageStationsPageAddStationListToModelMap() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelMap mockModelMap = mock(ModelMap.class);
-            controller.getManageStationsPage(mockModelMap);
-
-            verify(mockModelMap).addAttribute(eq("stations"), anyList());
-        }
-    }
-
-    /**
-     * Check that getManageStationsPage gets a list of all stations from the facade.
-     */
-    @Test
-    public void getManageStationsPageGetsStationListFromFacade()
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-
-            ManageStationsController controller = new ManageStationsController();
-            ModelMap mockModelMap = mock(ModelMap.class);
-            controller.getManageStationsPage(mockModelMap);
-
-            verify(mockFacade).getAllStations();
-        }
-    }
-
-    /**
-     * Check that a stations attribute has been set from the Facade's getAllStations method.
-     */
-    @Test
-    public void getManageStationsPageSetStationsAttributeFromFacade()
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            List<Station> stationsList = new ArrayList<>();
-            when(mockFacade.getAllStations()).thenReturn(stationsList);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-
-            ManageStationsController controller = new ManageStationsController();
-            ModelMap map = new ModelMap();
-            controller.getManageStationsPage(map);
-
-            Object stations = map.getAttribute("stations");
-            assertThat(stations, equalTo(stationsList));
+            mockMvc.perform(get("/manage-stations"))
+                   .andExpect(model().attribute("stations", expectedList));
         }
     }
 
@@ -122,7 +123,7 @@ public class ManageStationsControllerTest
      * Check that getManageStationsAddPage adds a station using the facade.
      */
     @Test
-    public void getManageStationsAddPageAddsStationUsingFacade()
+    public void getManageStationsAddPageAddsStationUsingFacade() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -130,18 +131,19 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
             verify(mockFacade).addStation(anyString(), anyInt());
         }
     }
 
     /**
-     * Check that we're returning the correct type of object.
+     * Check that getManageStationsAddPage passes the station name param to the facade.
      */
     @Test
-    public void getManageStationsAddPageReturnsModelAndViewInstance()
+    public void getManageStationsAddPagePassesStationNameToFacade() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -149,18 +151,19 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            Object result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
-            assertThat(result, instanceOf(ModelAndView.class));
+            verify(mockFacade).addStation(eq(SOME_STATION), anyInt());
         }
     }
 
     /**
-     * Check that we're asking for a redirect to the page responsible for managing stations.
+     * Check that getManageStationsAddPage passes the zone number param to the facade.
      */
     @Test
-    public void getManageStationsAddPageRedirectsToManageStationsPage()
+    public void getManageStationsAddPagePassesZoneNumberToFacade() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -168,18 +171,19 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
-            assertThat(result.getViewName(), equalTo("redirect:/manage-stations"));
+            verify(mockFacade).addStation(anyString(), eq(SOME_ZONE));
         }
     }
 
     /**
-     * Check that a stations attribute has been set in the ModelMap.
+     * Check that we're asking for a redirect back to the page responsible for managing stations.
      */
     @Test
-    public void getManageStationsAddPageSetStationsAttribute()
+    public void getManageStationsAddPageRedirectsToManageStationsPage() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -187,35 +191,31 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
-
-            Object stations = result.getModelMap()
-                                    .getAttribute("stations");
-            assertThat(stations, notNullValue());
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations"));
         }
     }
 
     /**
-     * Check that a stations attribute has been set from the Facade's getAllStations method.
+     * Check that a stations attribute has been set in the ModelMap from the Lunderground facade.
      */
     @Test
-    public void getManageStationsAddPageSetStationsAttributeFromFacade()
+    public void getManageStationsAddPageSetStationsAttribute() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            List<Station> stationsList = new ArrayList<>();
-            when(mockFacade.getAllStations()).thenReturn(stationsList);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsAddPage(SOME_STATION, SOME_ZONE);
-
-            Object stations = result.getModelMap()
-                                    .getAttribute("stations");
-            assertThat(stations, equalTo(stationsList));
+            mockMvc.perform(post("/manage-stations/add")
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM))
+                   .andExpect(model().attribute("stations", expectedList));
         }
     }
 
@@ -223,7 +223,7 @@ public class ManageStationsControllerTest
      * Check that getManageStationsDeletePage adds a station using the facade.
      */
     @Test
-    public void getManageStationsDeletePageDeletesStationUsingFacade()
+    public void getManageStationsDeletePageDeletesStationUsingFacade() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -231,18 +231,18 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            controller.getManageStationsDeletePage(SOME_ID);
+            mockMvc.perform(post("/manage-stations/delete")
+                    .param("id", SOME_ID_PARAM));
 
             verify(mockFacade).deleteStation(anyLong());
         }
     }
 
     /**
-     * Check that we're returning the correct type of object.
+     * Check that getManageStationsDeletePage passes the station ID param to the facade.
      */
     @Test
-    public void getManageStationsDeletePageReturnsModelAndViewInstance()
+    public void getManageStationsDeletePagePassesStationIdToTheFacade() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -250,10 +250,10 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsDeletePage(SOME_ID);
+            mockMvc.perform(post("/manage-stations/delete")
+                    .param("id", SOME_ID_PARAM));
 
-            assertThat(result, instanceOf(ModelAndView.class));
+            verify(mockFacade).deleteStation(eq(SOME_ID));
         }
     }
 
@@ -261,7 +261,7 @@ public class ManageStationsControllerTest
      * Check that we're asking for a redirect to the page responsible for managing stations.
      */
     @Test
-    public void getManageStationsDeletePageRedirectsToManageStationsPage()
+    public void getManageStationsDeletePageRedirectsToManageStationsPage() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
@@ -269,54 +269,29 @@ public class ManageStationsControllerTest
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsDeletePage(SOME_ID);
-
-            assertThat(result.getViewName(), equalTo("redirect:/manage-stations"));
+            mockMvc.perform(post("/manage-stations/delete")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations"));
         }
     }
 
     /**
-     * Check that a stations attribute has been set in the ModelMap.
+     * Check that a stations attribute has been set in the ModelMap from the Lunderground facade.
      */
     @Test
-    public void getManageStationsDeletePageSetStationsAttribute()
+    public void getManageStationsDeletePageSetStationsAttribute() throws Exception
     {
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
 
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsDeletePage(SOME_ID);
-
-            Object stations = result.getModelMap()
-                                    .getAttribute("stations");
-            assertThat(stations, notNullValue());
-        }
-    }
-
-    /**
-     * Check that a stations attribute has been set from the Facade's getAllStations method.
-     */
-    @Test
-    public void getManageStationsDeletePageSetStationsAttributeFromFacade()
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            List<Station> stationsList = new ArrayList<>();
-            when(mockFacade.getAllStations()).thenReturn(stationsList);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-
-            ManageStationsController controller = new ManageStationsController();
-            ModelAndView result = controller.getManageStationsDeletePage(SOME_ID);
-
-            Object stations = result.getModelMap()
-                                    .getAttribute("stations");
-            assertThat(stations, equalTo(stationsList));
+            mockMvc.perform(post("/manage-stations/delete")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(model().attribute("stations", expectedList));
         }
     }
 }
