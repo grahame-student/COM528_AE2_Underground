@@ -68,7 +68,7 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
-    public Station getStation(String stationName)
+    public Station getStation(final String stationName)
     {
         Station result;
 

@@ -51,7 +51,7 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     }
 
     @Override
-    public Station getStation(String stationName)
+    public Station getStation(final String stationName)
     {
         return stationDao.getStation(stationName);
     }

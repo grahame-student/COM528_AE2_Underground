@@ -194,52 +194,7 @@ public class ManageStationsControllerTest
             mockMvc.perform(post("/manage-stations/add")
                     .param("stationName", SOME_STATION)
                     .param("zoneNumber", SOME_ZONE_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations"));
-        }
-    }
-
-    /**
-     * Check that a stations attribute has been set in the ModelMap from the Lunderground facade.
-     */
-    @Test
-    public void getManageStationsAddPageSetStationsAttribute() throws Exception
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-            List<Station> expectedList = new ArrayList<>();
-            when(mockFacade.getAllStations()).thenReturn(expectedList);
-
-            mockMvc.perform(post("/manage-stations/add")
-                    .param("stationName", SOME_STATION)
-                    .param("zoneNumber", SOME_ZONE_PARAM))
-                   .andExpect(model().attribute("stations", expectedList));
-        }
-    }
-
-
-    /**
-     * Check that the newly added station has been set in the ModelMap using the facade.
-     */
-    @Test
-    public void getManageStationsAddPageAddsNewStationAttribute() throws Exception
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-            Station newStation = new Station();
-            newStation.setName(SOME_STATION);
-            newStation.setZone(SOME_ZONE);
-            when(mockFacade.getStation(anyString())).thenReturn(newStation);
-
-            mockMvc.perform(post("/manage-stations/add")
-                    .param("stationName", SOME_STATION)
-                    .param("zoneNumber", SOME_ZONE_PARAM))
-                   .andExpect(model().attribute("newStation", newStation));
+                   .andExpect(redirectedUrl("/manage-stations?newStation=some+station"));
         }
     }
 

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
@@ -24,30 +25,40 @@ public class ManageStationsController
      * @return Return the .jsp to use for manage underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
-    public String getManageStationsPage(final ModelMap map)
+    public String getManageStationsPage(final ModelMap map,
+                                        @RequestParam(required = false) final String newStation)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
+        addAttribute(map, lunderGroundFacade, newStation);
         return "manage-stations";
+    }
+
+    private static void addAttribute(ModelMap map, LundergroundServiceFacade facade, String newStation)
+    {
+        if (newStation != null)
+        {
+            map.addAttribute("newStation", facade.getStation(newStation));
+        }
     }
 
     /**
      * Serve the page responsible for adding a station to the database.
      *
+     * @param redirectAttributes
      * @param name The name of the station to be added
      * @param zone The zone that the station is in
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
-    public ModelAndView getManageStationsAddPage(@RequestParam("stationName") final String name,
+    public String getManageStationsAddPage(final RedirectAttributes redirectAttributes,
+                                           @RequestParam("stationName") final String name,
                                            @RequestParam("zoneNumber") final Integer zone)
     {
-        ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         this.lunderGroundFacade.addStation(name, zone);
-        map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
-        map.addAttribute("newStation", this.lunderGroundFacade.getStation(name));
-        return new ModelAndView("redirect:/manage-stations", map);
+        redirectAttributes.addAttribute("newStation", name);
+        return "redirect:/manage-stations";
     }
 
     /**

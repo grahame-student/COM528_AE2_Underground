@@ -14,6 +14,14 @@
             <%@ include file="common/header.jsp" %>
 
             <div id="main-content">
+                <section id="messages">
+                    <p id="message">
+                        <c:if test="${not empty newStation}">
+                            Station ${newStation.name} added to zone ${newStation.zone}
+                        </c:if>
+                    </p>
+                </section>
+
                 <section id="manage-station">
                     <form method="post">
                         <div id="station-inputs">
