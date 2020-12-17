@@ -91,13 +91,53 @@ public class ManageStationsControllerTest
 
     /**
      * Check that getManageStationsPage returns the name of the manage stations page.
-     * Not the most useful test as the method attributes are not exercised
      */
     @Test
     public void getManageStationsPageReturnsManageStations() throws Exception
     {
         mockMvc.perform(get("/manage-stations"))
                .andExpect(forwardedUrl("/WEB-INF/jsp/manage-stations.jsp"));
+    }
+
+    /**
+     * Check that newly added station is added to the ModelMap from the lunderground facade.
+     */
+    @Test
+    public void getManageStationsPageAddsNewStationAttributeFromFacade() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyString())).thenReturn(station);
+
+            mockMvc.perform(get("/manage-stations").param("newStation", SOME_STATION))
+                   .andExpect(model().attribute("newStation", station));
+        }
+    }
+
+    /**
+     * Check that newly added station is added to the ModelMap from the lunderground facade.
+     */
+    @Test
+    public void getManageStationsPageUsesPassedInNewStationNameToGetStationDetailsFromFacade() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyString())).thenReturn(station);
+
+            mockMvc.perform(get("/manage-stations").param("newStation", SOME_STATION));
+
+            verify(mockFacade).getStation(SOME_STATION);
+        }
     }
 
     /**

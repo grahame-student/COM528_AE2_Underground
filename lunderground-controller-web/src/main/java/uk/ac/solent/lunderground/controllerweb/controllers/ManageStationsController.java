@@ -22,11 +22,12 @@ public class ManageStationsController
      * Serve the page responsible for managing underground stations.
      *
      * @param map attributes map, used to inject data into the view
+     * @param newStation (optional) the name of the newly added station
      * @return Return the .jsp to use for manage underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
     public String getManageStationsPage(final ModelMap map,
-                                        @RequestParam(required = false) final String newStation)
+                                        @RequestParam(required = false, name="newStation") final String newStation)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
@@ -34,7 +35,8 @@ public class ManageStationsController
         return "manage-stations";
     }
 
-    private static void addAttribute(ModelMap map, LundergroundServiceFacade facade, String newStation)
+    private static void addAttribute(final ModelMap map, final LundergroundServiceFacade facade,
+                                     final String newStation)
     {
         if (newStation != null)
         {
@@ -45,7 +47,7 @@ public class ManageStationsController
     /**
      * Serve the page responsible for adding a station to the database.
      *
-     * @param redirectAttributes
+     * @param redirectAttributes attributes to be added to the the redirect request
      * @param name The name of the station to be added
      * @param zone The zone that the station is in
      * @return Return a redirect back to the page responsible form managing stations
