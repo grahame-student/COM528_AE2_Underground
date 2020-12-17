@@ -120,6 +120,23 @@ public class ManageStationsControllerTest
     }
 
     /**
+     * Check that newly deleted station name is added to the ModelMap.
+     */
+    @Test
+    public void getManageStationsPageAddsDelStationAttribute() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(get("/manage-stations").param("delStation", SOME_STATION))
+                   .andExpect(model().attribute("delStation", SOME_STATION));
+        }
+    }
+
+    /**
      * Check that newly added station is added to the ModelMap from the lunderground facade.
      */
     @Test
@@ -299,7 +316,7 @@ public class ManageStationsControllerTest
 
             mockMvc.perform(post("/manage-stations/delete")
                     .param("id", SOME_ID_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations?deletedStation=some+station"));
+                   .andExpect(redirectedUrl("/manage-stations?delStation=some+station"));
         }
     }
 

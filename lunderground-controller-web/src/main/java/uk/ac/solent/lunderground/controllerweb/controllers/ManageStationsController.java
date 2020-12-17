@@ -22,16 +22,18 @@ public class ManageStationsController
      *
      * @param map attributes map, used to inject data into the view
      * @param newStation (optional) the name of the newly added station
+     * @param delStation (optional) the name of the newly deleted station
      * @return Return the .jsp to use for manage underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
     public String getManageStationsPage(final ModelMap map,
                                         @RequestParam(required = false, name = "newStation") final String newStation,
-                                        @RequestParam(required = false, name = "deletedStation") final String deletedStation)
+                                        @RequestParam(required = false, name = "delStation") final String delStation)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
         addNewStationAttribute(map, lunderGroundFacade, newStation);
+        addDelStationAttribute(map, delStation);
         return "manage-stations";
     }
 
@@ -41,6 +43,14 @@ public class ManageStationsController
         if (newStation != null)
         {
             map.addAttribute("newStation", facade.getStation(newStation));
+        }
+    }
+
+    private static void addDelStationAttribute(ModelMap map, String delStation)
+    {
+        if (delStation != null)
+        {
+            map.addAttribute("delStation", delStation);
         }
     }
 
@@ -65,6 +75,8 @@ public class ManageStationsController
 
     /**
      * Serve the page responsible for removing a station from the database.
+     *
+     * @param redirectAttributes attributes to be added to the the redirect request
      * @param stationId The ID of the station to remove from the database
      * @return Return a redirect back to the page responsible form managing stations
      */
@@ -74,7 +86,7 @@ public class ManageStationsController
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        redirectAttributes.addAttribute("deletedStation", this.lunderGroundFacade.getStation(stationId).getName());
+        redirectAttributes.addAttribute("delStation", this.lunderGroundFacade.getStation(stationId).getName());
         this.lunderGroundFacade.deleteStation(stationId);
         return "redirect:/manage-stations";
     }
