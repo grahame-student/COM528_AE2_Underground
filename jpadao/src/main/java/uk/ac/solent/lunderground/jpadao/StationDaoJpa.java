@@ -77,7 +77,7 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
-    public Station getStation(Long stationId)
+    public Station getStation(final Long stationId)
     {
         TypedQuery<Station> q = entityManager.createQuery("SELECT s FROM Station s WHERE s.id=:id",
                 Station.class)
@@ -85,7 +85,7 @@ public final class StationDaoJpa implements StationDao
         return runGetStationQuery(q);
     }
 
-    private Station runGetStationQuery(TypedQuery<Station> q)
+    private Station runGetStationQuery(final TypedQuery<Station> q)
     {
         Station result;
         try
