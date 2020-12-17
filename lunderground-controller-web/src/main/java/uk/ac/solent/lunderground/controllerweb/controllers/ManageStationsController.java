@@ -5,7 +5,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
@@ -27,16 +26,17 @@ public class ManageStationsController
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
     public String getManageStationsPage(final ModelMap map,
-                                        @RequestParam(required = false, name="newStation") final String newStation)
+                                        @RequestParam(required = false, name = "newStation") final String newStation,
+                                        @RequestParam(required = false, name = "deletedStation") final String deletedStation)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
-        addAttribute(map, lunderGroundFacade, newStation);
+        addNewStationAttribute(map, lunderGroundFacade, newStation);
         return "manage-stations";
     }
 
-    private static void addAttribute(final ModelMap map, final LundergroundServiceFacade facade,
-                                     final String newStation)
+    private static void addNewStationAttribute(final ModelMap map, final LundergroundServiceFacade facade,
+                                               final String newStation)
     {
         if (newStation != null)
         {
@@ -69,12 +69,13 @@ public class ManageStationsController
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/delete", method = RequestMethod.POST)
-    public ModelAndView getManageStationsDeletePage(@RequestParam("id") final Long stationId)
+    public String getManageStationsDeletePage(final RedirectAttributes redirectAttributes,
+                                              @RequestParam("id") final Long stationId)
     {
         ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        redirectAttributes.addAttribute("deletedStation", this.lunderGroundFacade.getStation(stationId).getName());
         this.lunderGroundFacade.deleteStation(stationId);
-        map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
-        return new ModelAndView("redirect:/manage-stations", map);
+        return "redirect:/manage-stations";
     }
 }

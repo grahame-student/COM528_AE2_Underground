@@ -70,11 +70,24 @@ public final class StationDaoJpa implements StationDao
     @Override
     public Station getStation(final String stationName)
     {
-        Station result;
-
         TypedQuery<Station> q = entityManager.createQuery("SELECT s FROM Station s WHERE s.name=:name",
                 Station.class)
-                .setParameter("name", stationName);
+                                             .setParameter("name", stationName);
+        return runGetStationQuery(q);
+    }
+
+    @Override
+    public Station getStation(Long stationId)
+    {
+        TypedQuery<Station> q = entityManager.createQuery("SELECT s FROM Station s WHERE s.id=:id",
+                Station.class)
+                                             .setParameter("id", stationId);
+        return runGetStationQuery(q);
+    }
+
+    private Station runGetStationQuery(TypedQuery<Station> q)
+    {
+        Station result;
         try
         {
             result = q.getSingleResult();

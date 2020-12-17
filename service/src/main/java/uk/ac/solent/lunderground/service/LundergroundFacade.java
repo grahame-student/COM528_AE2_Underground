@@ -55,4 +55,10 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     {
         return stationDao.getStation(stationName);
     }
+
+    @Override
+    public Station getStation(long stationId)
+    {
+        return stationDao.getStation(stationId);
+    }
 }

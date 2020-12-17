@@ -43,6 +43,11 @@ public class StationDaoJpaTest
     private static final int SOME_ZONE = 1;
 
     /**
+     * Id number used for testing purposes, specific value is unimportant.
+     */
+    private static final long SOME_ID = 123;
+
+    /**
      * Zero items in a list.
      */
     private static final int ZERO_ITEMS = 0;
@@ -174,15 +179,44 @@ public class StationDaoJpaTest
      * Check that null is returned if the requested station doesn't exist.
      */
     @Test
-    public void getStationReturnsNullIfNoMatchFound()
+    public void getStationReturnsNullIfNoMatchFoundForName()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+
+        Station station = stationDao.getStation(STATION_2);
+
+        assertThat(station, nullValue());
+    }
+
+    /**
+     * Check that a station is correctly retrieved by id when one exists.
+     */
+    @Test
+    public void getStationRetrievesStationWithPassedInIdFromDatabase()
     {
         DaoFactory factory = new DaoFactoryJpa();
         stationDao = factory.getStationDao();
         Station testStation = new Station();
         testStation.setName(STATION_1);
         stationDao.addStation(testStation);
+        Long id = stationDao.getStation(STATION_1).getId();
 
-        Station station = stationDao.getStation(STATION_2);
+        Station station = stationDao.getStation(id);
+
+        assertThat(station.getName(), equalTo(STATION_1));
+    }
+
+    /**
+     * Check that null is returned if the requested station doesn't exist.
+     */
+    @Test
+    public void getStationReturnsNullIfNoMatchFoundForId()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+
+        Station station = stationDao.getStation(SOME_ID);
 
         assertThat(station, nullValue());
     }

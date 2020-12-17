@@ -247,6 +247,9 @@ public class ManageStationsControllerTest
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
@@ -266,6 +269,9 @@ public class ManageStationsControllerTest
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
@@ -285,32 +291,15 @@ public class ManageStationsControllerTest
         try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/delete")
                     .param("id", SOME_ID_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations"));
-        }
-    }
-
-    /**
-     * Check that a stations attribute has been set in the ModelMap from the Lunderground facade.
-     */
-    @Test
-    public void getManageStationsDeletePageSetStationsAttribute() throws Exception
-    {
-        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
-        {
-            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
-            factory.when(WebObjectFactory::getServiceFacade)
-                   .thenReturn(mockFacade);
-            List<Station> expectedList = new ArrayList<>();
-            when(mockFacade.getAllStations()).thenReturn(expectedList);
-
-            mockMvc.perform(post("/manage-stations/delete")
-                    .param("id", SOME_ID_PARAM))
-                   .andExpect(model().attribute("stations", expectedList));
+                   .andExpect(redirectedUrl("/manage-stations?deletedStation=some+station"));
         }
     }
 

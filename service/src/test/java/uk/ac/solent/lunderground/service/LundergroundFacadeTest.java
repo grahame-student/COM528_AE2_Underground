@@ -129,7 +129,7 @@ public class LundergroundFacadeTest
      * Check that the StationDao is used to get station from the database.
      */
     @Test
-    public void getStationUsesStationDaoToRetrieveStation()
+    public void getStationUsesStationDaoToRetrieveStationByName()
     {
         StationDao mockStationDao = mock(StationDao.class);
         LundergroundFacade facade = new LundergroundFacade();
@@ -141,7 +141,7 @@ public class LundergroundFacadeTest
     }
 
     /**
-     * Check that the station name is passed to the StationDao..
+     * Check that the station name is passed to the StationDao.
      */
     @Test
     public void getStationPassesStationNameToStationDao()
@@ -153,5 +153,35 @@ public class LundergroundFacadeTest
         facade.getStation(SOME_NAME);
 
         verify(mockStationDao).getStation(eq(SOME_NAME));
+    }
+
+    /**
+     * Check that the StationDao is used to get station from the database.
+     */
+    @Test
+    public void getStationUsesStationDaoToRetrieveStationById()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.getStation(SOME_ID);
+
+        verify(mockStationDao).getStation(anyLong());
+    }
+
+    /**
+     * Check that the station name is passed to the StationDao.
+     */
+    @Test
+    public void getStationPassesStationIdToStationDao()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+
+        facade.getStation(SOME_ID);
+
+        verify(mockStationDao).getStation(eq(SOME_ID));
     }
 }

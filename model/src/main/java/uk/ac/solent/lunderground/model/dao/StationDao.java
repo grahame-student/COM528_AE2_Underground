@@ -38,4 +38,11 @@ public interface StationDao
      * @return Station instance with retrieved details. Null if Station doesn't exist
      */
     Station getStation(String stationName);
+
+    /**
+     * Get a station with the passed in ID from the persistence database.
+     * @param stationId id of the station to retrieve from the database
+     * @return Station instance with retrieved details. Null if Station doesn't exist
+     */
+    Station getStation(Long stationId);
 }

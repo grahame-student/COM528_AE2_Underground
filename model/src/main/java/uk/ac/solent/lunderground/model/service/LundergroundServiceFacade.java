@@ -39,4 +39,11 @@ public interface LundergroundServiceFacade
      * @return Station instance. Null if station doesn't exist
      */
     Station getStation(String stationName);
+
+    /**
+     * Get a station by id.
+     * @param stationId the ID of the station to retrieve.
+     * @return Station instance. Null if station doesn't exist
+     */
+    Station getStation(long stationId);
 }
