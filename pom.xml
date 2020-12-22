@@ -182,7 +182,7 @@
 
         <!-- XML -->
         <jaxb-api.version>2.4.0-b180830.0359</jaxb-api.version>
-        <jaxb-runtime.version>2.4.0-b180830.0438</jaxb-runtime.version>
+        <jaxb-runtime.version>3.0.0</jaxb-runtime.version>
         <eclipselink.version>2.7.1</eclipselink.version>
         <javax.persistence.version>2.2.1</javax.persistence.version>
         <javax.persistence.api.version>2.2</javax.persistence.api.version>
