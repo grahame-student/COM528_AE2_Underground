@@ -36,7 +36,7 @@ jobs:
         run: mvn -B test org.jacoco:jacoco-maven-plugin:report-aggregate
 
       - name: UploadCoverage to CodeCov
-        uses: codecov/codecov-action@v1.1.0
+        uses: codecov/codecov-action@v1.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: coverage-report/target/site/jacoco-aggregate/jacoco.xml
