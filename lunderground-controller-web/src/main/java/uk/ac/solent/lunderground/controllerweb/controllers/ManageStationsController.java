@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
+import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 @Controller
@@ -102,7 +103,10 @@ public class ManageStationsController
                                             @RequestParam("id") final Long stationId)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        this.lunderGroundFacade.getStation(stationId);
+        Station editStation = this.lunderGroundFacade.getStation(stationId);
+        redirectAttributes.addAttribute("editStationId", editStation.getId());
+        redirectAttributes.addAttribute("editStationName", editStation.getName());
+        redirectAttributes.addAttribute("editStationZone", editStation.getZone());
         return "redirect:/manage-stations";
     }
 }

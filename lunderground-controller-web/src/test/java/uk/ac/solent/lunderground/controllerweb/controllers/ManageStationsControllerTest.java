@@ -309,6 +309,26 @@ public class ManageStationsControllerTest
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
             Station station = new Station();
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/delete")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations"));
+        }
+    }
+
+    /**
+     * Check that we're passing the name of the deleted station in the redirected URL.
+     */
+    @Test
+    public void getManageStationsDeletePagePassesStationNameInRedirect() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
             station.setName(SOME_STATION);
             when(mockFacade.getStation(anyLong())).thenReturn(station);
             factory.when(WebObjectFactory::getServiceFacade)
@@ -374,7 +394,6 @@ public class ManageStationsControllerTest
         {
             LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
             Station station = new Station();
-            station.setName(SOME_STATION);
             when(mockFacade.getStation(anyLong())).thenReturn(station);
             factory.when(WebObjectFactory::getServiceFacade)
                    .thenReturn(mockFacade);
@@ -382,6 +401,69 @@ public class ManageStationsControllerTest
             mockMvc.perform(post("/manage-stations/edit")
                     .param("id", SOME_ID_PARAM))
                    .andExpect(redirectedUrl("/manage-stations"));
+        }
+    }
+
+    /**
+     * Check that we're passing the ID of the station to be edited in the redirected URL.
+     */
+    @Test
+    public void getManageStationsEditPagePassesStationIdInRedirect() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setId(SOME_ID);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations?editStationId=123"));
+        }
+    }
+
+    /**
+     * Check that we're passing the names of the station to be edited in the redirected URL.
+     */
+    @Test
+    public void getManageStationsEditPagePassesStationNameInRedirect() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations?editStationName=some+station"));
+        }
+    }
+
+    /**
+     * Check that we're passing the names of the station to be edited in the redirected URL.
+     */
+    @Test
+    public void getManageStationsEditPagePassesStationZoneInRedirect() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setZone(SOME_ZONE);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations?editStationZone=4"));
         }
     }
 
