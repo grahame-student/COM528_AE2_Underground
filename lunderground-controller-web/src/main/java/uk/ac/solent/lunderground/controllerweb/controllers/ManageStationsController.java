@@ -23,7 +23,7 @@ public class ManageStationsController
      * @param map attributes map, used to inject data into the view
      * @param newStation (optional) the name of the newly added station
      * @param delStation (optional) the name of the newly deleted station
-     * @return Return the .jsp to use for manage underground stations
+     * @return Return the .jsp to use for managing underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
     public String getManageStationsPage(final ModelMap map,
@@ -46,7 +46,7 @@ public class ManageStationsController
         }
     }
 
-    private static void addDelStationAttribute(ModelMap map, String delStation)
+    private static void addDelStationAttribute(final ModelMap map, final String delStation)
     {
         if (delStation != null)
         {
@@ -84,10 +84,25 @@ public class ManageStationsController
     public String getManageStationsDeletePage(final RedirectAttributes redirectAttributes,
                                               @RequestParam("id") final Long stationId)
     {
-        ModelMap map = new ModelMap();
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         redirectAttributes.addAttribute("delStation", this.lunderGroundFacade.getStation(stationId).getName());
         this.lunderGroundFacade.deleteStation(stationId);
+        return "redirect:/manage-stations";
+    }
+
+    /**
+     * Serve the page responsible for getting the details of the station to be edited.
+     *
+     * @param redirectAttributes attributes to be added to the the redirect request
+     * @param stationId The ID of the station to be edited
+     * @return Return a redirect back to the page responsible form managing stations
+     */
+    @RequestMapping(value = "/manage-stations/edit", method = RequestMethod.POST)
+    public String getManageStationsEditPage(final RedirectAttributes redirectAttributes,
+                                            @RequestParam("id") final Long stationId)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        this.lunderGroundFacade.getStation(stationId);
         return "redirect:/manage-stations";
     }
 }

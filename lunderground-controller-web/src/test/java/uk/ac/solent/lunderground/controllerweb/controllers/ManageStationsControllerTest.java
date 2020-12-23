@@ -256,7 +256,7 @@ public class ManageStationsControllerTest
     }
 
     /**
-     * Check that getManageStationsDeletePage adds a station using the facade.
+     * Check that getManageStationsDeletePage deletes a station using the facade.
      */
     @Test
     public void getManageStationsDeletePageDeletesStationUsingFacade() throws Exception
@@ -320,8 +320,86 @@ public class ManageStationsControllerTest
         }
     }
 
+    /**
+     * Check that getManageStationsEditPage retrieves a station using the facade.
+     */
+    @Test
+    public void getManageStationsEditPageGetStationDetailsUsingFacade() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM));
+
+            verify(mockFacade).getStation(anyLong());
+        }
+    }
+
+    /**
+     * Check that getManageStationsEditPage retrieves a station using the passed in stationId.
+     */
+    @Test
+    public void getManageStationsEditPagePassesStationIdToTheFacade() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM));
+
+            verify(mockFacade).getStation(eq(SOME_ID));
+        }
+    }
+
+    /**
+     * Check that we're asking for a redirect to the page responsible for managing stations.
+     */
+    @Test
+    public void getManageStationsEditPageRedirectsToManageStationsPage() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setName(SOME_STATION);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl("/manage-stations"));
+        }
+    }
+
+    // Adds station from facade to model map
+
+    // updateStation updates station using facade
+    // Passes stationId to facade
+    // Passes newStationName to facade
+    // Passes newStationZone to facade
+    // Adds old details to model map
+    // Adds new details to model map
+    // Redirect to manage station page
+
+
+
+
+
     // Additional tests that could / should be added
     // * Check adding the same station twice
     // * Check trying to remove a station that doesn't exist
-    // * Check Messages passed back to the view
 }

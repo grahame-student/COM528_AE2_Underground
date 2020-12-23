@@ -17,7 +17,10 @@
                 <section id="messages">
                     <p id="message">
                         <c:if test="${not empty newStation}">
-                            Station ${newStation.name} added to zone ${newStation.zone}
+                            Station with name "${newStation.name}" added to zone ${newStation.zone}
+                        </c:if>
+                        <c:if test="${not empty delStation}">
+                            Station with name "${delStation}" deleted
                         </c:if>
                     </p>
                 </section>
@@ -40,6 +43,9 @@
                                     <option value="4">Zone 4</option>
                                     <option value="5">Zone 5</option>
                                     <option value="6">Zone 6</option>
+                                    <option value="7">Zone 7</option>
+                                    <option value="8">Zone 8</option>
+                                    <option value="9">Zone 9</option>
                                 </select>
                             </p>
                         </div>
@@ -59,6 +65,9 @@
                                 <tr>
                                     <td>${station.name}</td>
                                     <td>${station.zone}</td>
+                                    <td>
+                                        <button formaction="manage-stations/modify?id=${station.id}">Modify</button>
+                                    </td>
                                     <td>
                                         <button formaction="manage-stations/delete?id=${station.id}">Delete</button>
                                     </td>
