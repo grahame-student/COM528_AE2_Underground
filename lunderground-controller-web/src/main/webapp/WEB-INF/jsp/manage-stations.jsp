@@ -31,7 +31,7 @@
                             <p>
                                 <label class="col-label" for="stationName">Station Name:</label>
                                 <input class="col-input" id="stationName" type="text" name="stationName"
-                                       required="true">
+                                       required="true" value="${editName}">
                                 <button type="submit" formaction="manage-stations/add">Add</button>
                             </p>
                             <p>
@@ -71,7 +71,6 @@
                                     <td>
                                         <button formaction="manage-stations/delete?id=${station.id}">Delete</button>
                                     </td>
-                                    <td></td>
                                 </tr>
                             </c:forEach>
                         </table>

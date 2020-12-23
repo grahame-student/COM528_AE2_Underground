@@ -22,37 +22,57 @@ public class ManageStationsController
      * Serve the page responsible for managing underground stations.
      *
      * @param map attributes map, used to inject data into the view
-     * @param newStation (optional) the name of the newly added station
-     * @param delStation (optional) the name of the newly deleted station
      * @return Return the .jsp to use for managing underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET)
-    public String getManageStationsPage(final ModelMap map,
-                                        @RequestParam(required = false, name = "newStation") final String newStation,
-                                        @RequestParam(required = false, name = "delStation") final String delStation)
+    public String getManageStationsPageNoParams(final ModelMap map)
+    {
+        return getManageStationsModelMapView(map);
+    }
+
+    /**
+     * Serve the page responsible for managing underground stations.
+     *
+     * @param map attributes map, used to inject data into the view
+     * @param newStation (optional) the name of the newly added station
+     * @return Return the .jsp to use for managing underground stations
+     */
+    @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"newStation"})
+    public String getManageStationsPageNewStation(final ModelMap map,
+                                                  @RequestParam(name = "newStation") final String newStation)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        map.addAttribute("newStation", lunderGroundFacade.getStation(newStation));
+        return getManageStationsModelMapView(map);
+    }
+
+    /**
+     * Serve the page responsible for managing underground stations.
+     *
+     * @param map attributes map, used to inject data into the view
+     * @param delStation (optional) the name of the newly deleted station
+     * @return Return the .jsp to use for managing underground stations
+     */
+    @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"delStation"})
+    public String getManageStationsPageDeleteStation(final ModelMap map,
+                                                     @RequestParam(required = false, name = "delStation") final String delStation)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        map.addAttribute("delStation", delStation);
+        return getManageStationsModelMapView(map);
+    }
+
+    /**
+     * Handle the common part of serving up the manage stations URL.
+     *
+     * @param map attributes map, used to inject data into the view
+     * @return Return the .jsp to use for managing underground stations
+     */
+    private String getManageStationsModelMapView(final ModelMap map)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
-        addNewStationAttribute(map, lunderGroundFacade, newStation);
-        addDelStationAttribute(map, delStation);
         return "manage-stations";
-    }
-
-    private static void addNewStationAttribute(final ModelMap map, final LundergroundServiceFacade facade,
-                                               final String newStation)
-    {
-        if (newStation != null)
-        {
-            map.addAttribute("newStation", facade.getStation(newStation));
-        }
-    }
-
-    private static void addDelStationAttribute(final ModelMap map, final String delStation)
-    {
-        if (delStation != null)
-        {
-            map.addAttribute("delStation", delStation);
-        }
     }
 
     /**
