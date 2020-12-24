@@ -99,6 +99,52 @@ public class ManageStationsControllerTest
                .andExpect(forwardedUrl("/WEB-INF/jsp/manage-stations.jsp"));
     }
 
+    @Test
+    public void getManageStationPageAddsDefaultEditStationNameToModelMap() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            when(mockFacade.getStation(anyString())).thenReturn(mock(Station.class));
+
+            mockMvc.perform(get("/manage-stations"))
+                   .andExpect(model().attribute("editStationName", ""));
+        }
+    }
+
+    @Test
+    public void getManageStationPageAddsDefaultEditStationZoneToModelMap() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            when(mockFacade.getStation(anyString())).thenReturn(mock(Station.class));
+
+            mockMvc.perform(get("/manage-stations"))
+                   .andExpect(model().attribute("editStationZone", 1));
+        }
+    }
+
+    @Test
+    public void getManageStationPageAddsListOfValidZonesFromFacade() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            List<Integer> zoneList = new ArrayList<>();
+            when(mockFacade.getAllZones()).thenReturn(zoneList);
+
+            mockMvc.perform(get("/manage-stations"))
+                   .andExpect(model().attribute("zones", zoneList));
+        }
+    }
+
     /**
      * Check that newly added station is added to the ModelMap from the lunderground facade.
      */
@@ -400,7 +446,7 @@ public class ManageStationsControllerTest
 
             mockMvc.perform(post("/manage-stations/edit")
                     .param("id", SOME_ID_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations"));
+                   .andExpect(redirectedUrl("/manage-stations?editStationZone=0"));
         }
     }
 
@@ -421,7 +467,7 @@ public class ManageStationsControllerTest
 
             mockMvc.perform(post("/manage-stations/edit")
                     .param("id", SOME_ID_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations?editStationId=123"));
+                   .andExpect(redirectedUrl("/manage-stations?editStationId=123&editStationZone=0"));
         }
     }
 
@@ -442,7 +488,7 @@ public class ManageStationsControllerTest
 
             mockMvc.perform(post("/manage-stations/edit")
                     .param("id", SOME_ID_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations?editStationName=some+station"));
+                   .andExpect(redirectedUrl("/manage-stations?editStationName=some+station&editStationZone=0"));
         }
     }
 
@@ -464,6 +510,30 @@ public class ManageStationsControllerTest
             mockMvc.perform(post("/manage-stations/edit")
                     .param("id", SOME_ID_PARAM))
                    .andExpect(redirectedUrl("/manage-stations?editStationZone=4"));
+        }
+    }
+
+    /**
+     * Check that we're passing all params of the station to be edited in the redirected URL.
+     */
+    @Test
+    public void getManageStationsEditPagePassesStationIdNameAndZoneInRedirect() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            Station station = new Station();
+            station.setId(SOME_ID);
+            station.setName(SOME_STATION);
+            station.setZone(SOME_ZONE);
+            when(mockFacade.getStation(anyLong())).thenReturn(station);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+
+            mockMvc.perform(post("/manage-stations/edit")
+                    .param("id", SOME_ID_PARAM))
+                   .andExpect(redirectedUrl(
+                           "/manage-stations?editStationId=123&editStationName=some+station&editStationZone=4"));
         }
     }
 

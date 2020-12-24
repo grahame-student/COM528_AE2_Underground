@@ -24,7 +24,7 @@ public final class Station
     /**
      * The zone that the Station belongs to.
      */
-    private Integer zone;
+    private int zone;
 
     /**
      * Get the ID of the Station.
@@ -73,7 +73,7 @@ public final class Station
      *
      * @return Integer containing the zone number
      */
-    public Integer getZone()
+    public int getZone()
     {
         return zone;
     }

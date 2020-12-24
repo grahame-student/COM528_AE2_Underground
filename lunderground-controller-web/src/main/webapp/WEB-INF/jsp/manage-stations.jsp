@@ -31,21 +31,18 @@
                             <p>
                                 <label class="col-label" for="stationName">Station Name:</label>
                                 <input class="col-input" id="stationName" type="text" name="stationName"
-                                       required="true" value="${editName}">
+                                       required="true" value="${editStationName}">
                                 <button type="submit" formaction="manage-stations/add">Add</button>
                             </p>
                             <p>
                                 <label class="col-label" for="zoneNumber">Zone:</label>
                                 <select class="col-input" id="zoneNumber" name="zoneNumber">
-                                    <option value="1">Zone 1</option>
-                                    <option value="2">Zone 2</option>
-                                    <option value="3">Zone 3</option>
-                                    <option value="4">Zone 4</option>
-                                    <option value="5">Zone 5</option>
-                                    <option value="6">Zone 6</option>
-                                    <option value="7">Zone 7</option>
-                                    <option value="8">Zone 8</option>
-                                    <option value="9">Zone 9</option>
+                                    <c:forEach items="${zones}" var="zone" varStatus="tagStatus">
+                                        <option value="${zone}"
+                                                <c:if test = "${zone == editStationZone}"> selected </c:if>>
+                                            Zone ${zone}
+                                        </option>
+                                    </c:forEach>
                                 </select>
                             </p>
                         </div>
@@ -66,7 +63,7 @@
                                     <td>${station.name}</td>
                                     <td>${station.zone}</td>
                                     <td>
-                                        <button formaction="manage-stations/modify?id=${station.id}">Modify</button>
+                                        <button formaction="manage-stations/edit?id=${station.id}">Modify</button>
                                     </td>
                                     <td>
                                         <button formaction="manage-stations/delete?id=${station.id}">Delete</button>

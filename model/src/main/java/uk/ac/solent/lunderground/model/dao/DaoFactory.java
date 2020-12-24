@@ -8,4 +8,5 @@ public interface DaoFactory
      * @return return a concrete instance of a StationDao
      */
     StationDao getStationDao();
+    ZoneDao getZoneDao();
 }

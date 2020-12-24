@@ -14,6 +14,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.mockito.MockedStatic;
+import uk.ac.solent.lunderground.model.dao.ZoneDao;
+import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -57,5 +59,18 @@ public class DaoFactoryJpaTest
 
             assertThat(exception, instanceOf(RuntimeException.class));
         }
+    }
+
+    /**
+     * Check that a StationDaoJpa instance is created when getStation() is called.
+     */
+    @Test
+    public void getZoneDaoReturnsZoneDaoSimpleInstance()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+
+        ZoneDao zoneDao = factory.getZoneDao();
+
+        assertThat(zoneDao, instanceOf(ZoneDaoSimple.class));
     }
 }

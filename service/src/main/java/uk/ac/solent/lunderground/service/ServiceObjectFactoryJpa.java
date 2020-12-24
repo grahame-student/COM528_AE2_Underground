@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.service;
 import uk.ac.solent.lunderground.jpadao.DaoFactoryJpa;
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 
@@ -21,6 +22,8 @@ public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
      */
     private StationDao stationDao = null;
 
+    private ZoneDao zoneDao = null;
+
     /**
      * Public constructor for the JPA version of the ServiceObjectFactory.
      */
@@ -28,9 +31,11 @@ public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
     {
         daoFactory = new DaoFactoryJpa();
         stationDao = daoFactory.getStationDao();
+        zoneDao = daoFactory.getZoneDao();
 
         LundergroundFacade facade = new LundergroundFacade();
         facade.setStationDao(stationDao);
+        facade.setZoneDao(zoneDao);
         lundergroundFacade = facade;
     }
 

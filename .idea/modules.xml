@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simpledao/simpledao.iml" filepath="$PROJECT_DIR$/simpledao/simpledao.iml" />
     </modules>
   </component>
 </project>

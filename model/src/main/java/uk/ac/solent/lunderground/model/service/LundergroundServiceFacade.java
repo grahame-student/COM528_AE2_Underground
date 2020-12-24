@@ -29,7 +29,7 @@ public interface LundergroundServiceFacade
     void deleteStation(long stationId);
 
     /**
-     * Remove all stations from the London underground systems.
+     * Remove all stations from the London underground system.
      */
     void deleteAll();
 
@@ -46,4 +46,10 @@ public interface LundergroundServiceFacade
      * @return Station instance. Null if station doesn't exist
      */
     Station getStation(long stationId);
+
+    /**
+     * get a list of the zones within the London underground system.
+     * @return List of the zones
+     */
+    List<Integer> getAllZones();
 }

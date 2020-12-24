@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.instanceOf;
 public class ServiceObjectFactoryTest
 {
     /**
-     * Test that a StationDaoJpa instance is created when getStation() is called.
+     * Test that the correct facade instance is created.
      */
     @Test
     public void getLundergroundFacadeReturnsInstanceOfLundergroundFacade()
@@ -21,4 +21,10 @@ public class ServiceObjectFactoryTest
 
         assertThat(facade, instanceOf(LundergroundFacade.class));
     }
+
+    // Additional tests to consider, these are a bit trickier to implement, as ideally the DAO factory would be
+    // mocked. To implement this robustly, it might be worth taking time to implement a dependency injection
+    // framework that would allow test cases to supply the required mock instances.
+    // * Is the required StationDao passed into the facade as expected
+    // * Is the required ZoneDao passed into the facade as expected
 }

@@ -1,6 +1,7 @@
 package uk.ac.solent.lunderground.service;
 
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
@@ -13,6 +14,8 @@ public final class LundergroundFacade implements LundergroundServiceFacade
      */
     private StationDao stationDao = null;
 
+    private ZoneDao zoneDao = null;
+
     /**
      * Set the StationDao instance to use for accessing the database layer.
      *
@@ -21,6 +24,16 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     public void setStationDao(final StationDao newStationDao)
     {
         this.stationDao = newStationDao;
+    }
+
+    /**
+     * Set the ZoneDao instance to use for accessing the database layer.
+     *
+     * @param newZoneDao ZoneDao to use
+     */
+    public void setZoneDao(ZoneDao newZoneDao)
+    {
+        this.zoneDao = newZoneDao;
     }
 
     @Override
@@ -60,5 +73,11 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     public Station getStation(final long stationId)
     {
         return stationDao.getStation(stationId);
+    }
+
+    @Override
+    public List<Integer> getAllZones()
+    {
+        return zoneDao.retrieveAll();
     }
 }

@@ -65,7 +65,7 @@ public class StationTest
     @Test
     public void toStringReturnsInformativeString()
     {
-        final String expectedString = "Station{name=null, zone=null, id=null}";
+        final String expectedString = "Station{name=null, zone=0, id=null}";
         Station station = new Station();
 
         assertThat(station.toString(), equalTo(expectedString));

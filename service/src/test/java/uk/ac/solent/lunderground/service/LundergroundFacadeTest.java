@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -183,5 +184,20 @@ public class LundergroundFacadeTest
         facade.getStation(SOME_ID);
 
         verify(mockStationDao).getStation(eq(SOME_ID));
+    }
+
+    /**
+     * Check that the configured StationDao is used to access the underlying database.
+     */
+    @Test
+    public void setZoneDaoSetsZoneDaoToUseWhenRetrievingStationDetails()
+    {
+        ZoneDao mockZoneDao = mock(ZoneDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+
+        facade.setZoneDao(mockZoneDao);
+        facade.getAllZones();
+
+        verify(mockZoneDao).retrieveAll();
     }
 }

@@ -2,6 +2,9 @@ package uk.ac.solent.lunderground.jpadao;
 
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.ZoneDao;
+
+import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,9 +28,14 @@ public final class DaoFactoryJpa implements DaoFactory
     private static EntityManager em = null;
 
     /**
-     * DAO singleton used, to access data related to the station entities.
+     * DAO singleton used to access data related to the station entities.
      */
     private static StationDao stationDao;
+
+    /**
+     * DAO singleton used to access data related to the zones.
+     */
+    private static ZoneDao zoneDao;
 
     @Override
     public StationDao getStationDao()
@@ -52,5 +60,25 @@ public final class DaoFactoryJpa implements DaoFactory
             }
         }
         return stationDao;
+    }
+
+    @Override
+    public ZoneDao getZoneDao()
+    {
+        if(zoneDao == null)
+        {
+            synchronized (this)
+            {
+                if (zoneDao == null)
+                {
+                    // This is not ideal but creating a new DaoFactory in the SimpleDao module
+                    // just for this one simple DAO instance would consume a lot of time for
+                    // little immediate benefit. Should more simple DAOs be required then
+                    // this decision can be revisited.
+                    zoneDao = new ZoneDaoSimple();
+                }
+            }
+        }
+        return zoneDao;
     }
 }

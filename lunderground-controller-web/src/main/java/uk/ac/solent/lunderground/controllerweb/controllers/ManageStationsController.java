@@ -10,6 +10,8 @@ import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
+import javax.validation.constraints.NotNull;
+
 @Controller
 public class ManageStationsController
 {
@@ -55,10 +57,25 @@ public class ManageStationsController
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"delStation"})
     public String getManageStationsPageDeleteStation(final ModelMap map,
-                                                     @RequestParam(required = false, name = "delStation") final String delStation)
+                                                     @RequestParam(name = "delStation") final String delStation)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("delStation", delStation);
+        return getManageStationsModelMapView(map);
+    }
+
+    @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"editStationId",
+                                                                                         "editStationName",
+                                                                                         "editStationZone"})
+    public String getManageStationsPageEditStation(final ModelMap map,
+                                                     @RequestParam(name = "editStationId") final String editId,
+                                                     @RequestParam(name = "editStationName") final String editName,
+                                                     @RequestParam(name = "editStationZone") final String editZone)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        map.addAttribute("editStationId", editId);
+        map.addAttribute("editStationName", editName);
+        map.addAttribute("editStationZone", editZone);
         return getManageStationsModelMapView(map);
     }
 
@@ -72,7 +89,18 @@ public class ManageStationsController
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("stations", this.lunderGroundFacade.getAllStations());
+        map.addAttribute("zones", this.lunderGroundFacade.getAllZones());
+        setDefaultStationDetails(map);
         return "manage-stations";
+    }
+
+    private void setDefaultStationDetails(@NotNull ModelMap map)
+    {
+        if ((map.getAttribute("editStationId") == null))
+        {
+            map.addAttribute("editStationName", "");
+            map.addAttribute("editStationZone", 1);
+        }
     }
 
     /**
