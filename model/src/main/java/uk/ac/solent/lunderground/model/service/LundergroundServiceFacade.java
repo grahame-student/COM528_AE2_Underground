@@ -35,6 +35,7 @@ public interface LundergroundServiceFacade
 
     /**
      * Get a station by name.
+     *
      * @param stationName the name of the station to retrieve.
      * @return Station instance. Null if station doesn't exist
      */
@@ -42,6 +43,7 @@ public interface LundergroundServiceFacade
 
     /**
      * Get a station by id.
+     *
      * @param stationId the ID of the station to retrieve.
      * @return Station instance. Null if station doesn't exist
      */
@@ -49,6 +51,7 @@ public interface LundergroundServiceFacade
 
     /**
      * get a list of the zones within the London underground system.
+     *
      * @return List of the zones
      */
     List<Integer> getAllZones();

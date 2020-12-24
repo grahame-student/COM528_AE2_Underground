@@ -39,7 +39,7 @@
                                 <select class="col-input" id="zoneNumber" name="zoneNumber">
                                     <c:forEach items="${zones}" var="zone" varStatus="tagStatus">
                                         <option value="${zone}"
-                                                <c:if test = "${zone == editStationZone}"> selected </c:if>>
+                                                <c:if test="${zone == editStationZone}"> selected </c:if>>
                                             Zone ${zone}
                                         </option>
                                     </c:forEach>

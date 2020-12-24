@@ -17,7 +17,7 @@
 
         <!-- The name uk.ac.solent.lunderground specifies that log names beginning with this string are dealt with by the following appender -->
         <!-- i.e. in our config, classes in package names beginning uk.ac.solent.lunderground -->
-        <Logger name="uk.ac.solent.lunderground"  additivity="false" level="DEBUG">
+        <Logger name="uk.ac.solent.lunderground" additivity="false" level="DEBUG">
             <AppenderRef ref="Console"/>
         </Logger>
 

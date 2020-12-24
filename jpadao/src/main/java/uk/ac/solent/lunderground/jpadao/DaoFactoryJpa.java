@@ -65,7 +65,7 @@ public final class DaoFactoryJpa implements DaoFactory
     @Override
     public ZoneDao getZoneDao()
     {
-        if(zoneDao == null)
+        if (zoneDao == null)
         {
             synchronized (this)
             {

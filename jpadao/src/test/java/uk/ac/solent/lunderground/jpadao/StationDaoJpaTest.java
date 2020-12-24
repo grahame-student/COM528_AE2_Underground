@@ -150,7 +150,8 @@ public class StationDaoJpaTest
         testStation = new Station();
         testStation.setName(STATION_2);
         stationDao.addStation(testStation);
-        testStation = stationDao.retrieveAll().get(FIRST_ITEM);
+        testStation = stationDao.retrieveAll()
+                                .get(FIRST_ITEM);
 
         stationDao.deleteStation(testStation.getId());
 
@@ -200,7 +201,8 @@ public class StationDaoJpaTest
         Station testStation = new Station();
         testStation.setName(STATION_1);
         stationDao.addStation(testStation);
-        Long id = stationDao.getStation(STATION_1).getId();
+        Long id = stationDao.getStation(STATION_1)
+                            .getId();
 
         Station station = stationDao.getStation(id);
 

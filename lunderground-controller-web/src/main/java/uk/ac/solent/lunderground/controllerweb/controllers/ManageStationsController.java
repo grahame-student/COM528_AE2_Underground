@@ -35,7 +35,7 @@ public class ManageStationsController
     /**
      * Serve the page responsible for managing underground stations.
      *
-     * @param map attributes map, used to inject data into the view
+     * @param map        attributes map, used to inject data into the view
      * @param newStation (optional) the name of the newly added station
      * @return Return the .jsp to use for managing underground stations
      */
@@ -51,7 +51,7 @@ public class ManageStationsController
     /**
      * Serve the page responsible for managing underground stations.
      *
-     * @param map attributes map, used to inject data into the view
+     * @param map        attributes map, used to inject data into the view
      * @param delStation (optional) the name of the newly deleted station
      * @return Return the .jsp to use for managing underground stations
      */
@@ -65,12 +65,12 @@ public class ManageStationsController
     }
 
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"editStationId",
-                                                                                         "editStationName",
-                                                                                         "editStationZone"})
+            "editStationName",
+            "editStationZone"})
     public String getManageStationsPageEditStation(final ModelMap map,
-                                                     @RequestParam(name = "editStationId") final String editId,
-                                                     @RequestParam(name = "editStationName") final String editName,
-                                                     @RequestParam(name = "editStationZone") final String editZone)
+                                                   @RequestParam(name = "editStationId") final String editId,
+                                                   @RequestParam(name = "editStationName") final String editName,
+                                                   @RequestParam(name = "editStationZone") final String editZone)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("editStationId", editId);
@@ -107,8 +107,8 @@ public class ManageStationsController
      * Serve the page responsible for adding a station to the database.
      *
      * @param redirectAttributes attributes to be added to the the redirect request
-     * @param name The name of the station to be added
-     * @param zone The zone that the station is in
+     * @param name               The name of the station to be added
+     * @param zone               The zone that the station is in
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/add", method = RequestMethod.POST)
@@ -126,7 +126,7 @@ public class ManageStationsController
      * Serve the page responsible for removing a station from the database.
      *
      * @param redirectAttributes attributes to be added to the the redirect request
-     * @param stationId The ID of the station to remove from the database
+     * @param stationId          The ID of the station to remove from the database
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/delete", method = RequestMethod.POST)
@@ -134,7 +134,8 @@ public class ManageStationsController
                                               @RequestParam("id") final Long stationId)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        redirectAttributes.addAttribute("delStation", this.lunderGroundFacade.getStation(stationId).getName());
+        redirectAttributes.addAttribute("delStation", this.lunderGroundFacade.getStation(stationId)
+                                                                             .getName());
         this.lunderGroundFacade.deleteStation(stationId);
         return "redirect:/manage-stations";
     }
@@ -143,7 +144,7 @@ public class ManageStationsController
      * Serve the page responsible for getting the details of the station to be edited.
      *
      * @param redirectAttributes attributes to be added to the the redirect request
-     * @param stationId The ID of the station to be edited
+     * @param stationId          The ID of the station to be edited
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/edit", method = RequestMethod.POST)

@@ -548,9 +548,6 @@ public class ManageStationsControllerTest
     // Redirect to manage station page
 
 
-
-
-
     // Additional tests that could / should be added
     // * Check adding the same station twice
     // * Check trying to remove a station that doesn't exist
