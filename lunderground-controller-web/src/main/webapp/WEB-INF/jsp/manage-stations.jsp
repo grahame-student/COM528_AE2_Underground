@@ -54,7 +54,7 @@
 
                 <section id="list-stations">
                     <form method="post">
-                        <table>
+                        <table id="station-list">
                             <tr>
                                 <th class="col-name">Station Name</th>
                                 <th class="col-zone">Zone</th>

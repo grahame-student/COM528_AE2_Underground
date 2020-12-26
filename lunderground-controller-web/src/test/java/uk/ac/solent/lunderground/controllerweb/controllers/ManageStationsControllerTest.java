@@ -627,9 +627,9 @@ public class ManageStationsControllerTest
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/update")
-                    .param("editStationId", SOME_ID_PARAM)
-                    .param("editStationName", SOME_STATION)
-                    .param("editStationZone", SOME_ZONE_PARAM));
+                    .param("id", SOME_ID_PARAM)
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
             verify(mockFacade).updateStation(anyLong(), anyString(), anyInt());
         }
@@ -650,9 +650,9 @@ public class ManageStationsControllerTest
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/update")
-                    .param("editStationId", SOME_ID_PARAM)
-                    .param("editStationName", SOME_STATION)
-                    .param("editStationZone", SOME_ZONE_PARAM));
+                    .param("id", SOME_ID_PARAM)
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
             verify(mockFacade).updateStation(eq(SOME_ID), anyString(), anyInt());
         }
@@ -673,9 +673,9 @@ public class ManageStationsControllerTest
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/update")
-                    .param("editStationId", SOME_ID_PARAM)
-                    .param("editStationName", SOME_STATION)
-                    .param("editStationZone", SOME_ZONE_PARAM));
+                    .param("id", SOME_ID_PARAM)
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
             verify(mockFacade).updateStation(anyLong(), eq(SOME_STATION), anyInt());
         }
@@ -696,9 +696,9 @@ public class ManageStationsControllerTest
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/update")
-                    .param("editStationId", SOME_ID_PARAM)
-                    .param("editStationName", SOME_STATION)
-                    .param("editStationZone", SOME_ZONE_PARAM));
+                    .param("id", SOME_ID_PARAM)
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM));
 
             verify(mockFacade).updateStation(anyLong(), anyString(), eq(SOME_ZONE));
         }
@@ -717,16 +717,12 @@ public class ManageStationsControllerTest
                    .thenReturn(mockFacade);
 
             mockMvc.perform(post("/manage-stations/update")
-                    .param("editStationId", SOME_ID_PARAM)
-                    .param("editStationName", SOME_STATION)
-                    .param("editStationZone", SOME_ZONE_PARAM))
+                    .param("id", SOME_ID_PARAM)
+                    .param("stationName", SOME_STATION)
+                    .param("zoneNumber", SOME_ZONE_PARAM))
                    .andExpect(redirectedUrl("/manage-stations?updatedStation=123"));
         }
     }
-
-    // Redirect to manage station page
-    // Adds ID of updated station to redirect
-
 
     // Additional tests that could / should be added
     // * Check adding the same station twice

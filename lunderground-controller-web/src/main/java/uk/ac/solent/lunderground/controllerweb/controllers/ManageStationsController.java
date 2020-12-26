@@ -198,18 +198,18 @@ public class ManageStationsController
      *
      * @param redirectAttributes attributes to be added to the the redirect request
      * @param editId ID of the station to be updates
-     * @param editName new name to use for the station
-     * @param editZone new zone to use for the station
+     * @param name new name to use for the station
+     * @param zone new zone to use for the station
      * @return Return a redirect back to the page responsible form managing stations
      */
     @RequestMapping(value = "/manage-stations/update", method = RequestMethod.POST)
     public String getManageStationsUpdatePage(final RedirectAttributes redirectAttributes,
-                                              @RequestParam(name = "editStationId") final Long editId,
-                                              @RequestParam(name = "editStationName") final String editName,
-                                              @RequestParam(name = "editStationZone") final int editZone)
+                                              @RequestParam(name = "id") final Long editId,
+                                              @RequestParam(name = "stationName") final String name,
+                                              @RequestParam(name = "zoneNumber") final Integer zone)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        this.lunderGroundFacade.updateStation(editId, editName, editZone);
+        this.lunderGroundFacade.updateStation(editId, name, zone);
 
         redirectAttributes.addAttribute("updatedStation", editId);
         return "redirect:/manage-stations";
