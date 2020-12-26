@@ -86,7 +86,7 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
-    public void updateStation(Station newDetails)
+    public void updateStation(final Station newDetails)
     {
         entityManager.merge(newDetails);
     }

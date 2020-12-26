@@ -21,6 +21,15 @@ public class ManageStationsController
     private LundergroundServiceFacade lunderGroundFacade = null;
 
     /**
+     * Default name to use if no other name has been supplied.
+     */
+    private static final String DEFAULT_NAME = "";
+    /**
+     * Default zone to use if no other zone has been supplied.
+     */
+    private static final int DEFAULT_ZONE = 1;
+
+    /**
      * Serve the page responsible for managing underground stations.
      *
      * @param map attributes map, used to inject data into the view
@@ -68,6 +77,22 @@ public class ManageStationsController
      * Serve the page responsible for managing underground stations.
      *
      * @param map        attributes map, used to inject data into the view
+     * @param updatedStation the name of the newly deleted station
+     * @return Return the .jsp to use for managing underground stations
+     */
+    @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"updatedStation"})
+    public String getManageStationsPageUpdateStation(final ModelMap map,
+                                                     @RequestParam(name = "updatedStation") final String updatedStation)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        map.addAttribute("updatedStation", updatedStation);
+        return getManageStationsModelMapView(map);
+    }
+
+    /**
+     * Serve the page responsible for managing underground stations.
+     *
+     * @param map        attributes map, used to inject data into the view
      * @param editId     ID of the station that the user wants to modify
      * @param editName   Current name of the station that the user wants to modify
      * @param editZone   Current zone of the station that the user wants to modify
@@ -107,8 +132,8 @@ public class ManageStationsController
     {
         if ((map.getAttribute("editStationId") == null))
         {
-            map.addAttribute("editStationName", "");
-            map.addAttribute("editStationZone", 1);
+            map.addAttribute("editStationName", DEFAULT_NAME);
+            map.addAttribute("editStationZone", DEFAULT_ZONE);
         }
     }
 
