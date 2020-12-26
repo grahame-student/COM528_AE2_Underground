@@ -99,6 +99,9 @@ public class ManageStationsControllerTest
                .andExpect(forwardedUrl("/WEB-INF/jsp/manage-stations.jsp"));
     }
 
+    /**
+     * Check that a default editStationName attribute is added to the ModelMap.
+     */
     @Test
     public void getManageStationPageAddsDefaultEditStationNameToModelMap() throws Exception
     {
@@ -114,6 +117,9 @@ public class ManageStationsControllerTest
         }
     }
 
+    /**
+     * Check that a default editStationZone attribute is added to the ModelMap.
+     */
     @Test
     public void getManageStationPageAddsDefaultEditStationZoneToModelMap() throws Exception
     {
@@ -129,6 +135,9 @@ public class ManageStationsControllerTest
         }
     }
 
+    /**
+     * Check that a list of all available stations is added as an attribute to the ModelMap.
+     */
     @Test
     public void getManageStationPageAddsListOfValidZonesFromFacade() throws Exception
     {
@@ -711,7 +720,7 @@ public class ManageStationsControllerTest
                     .param("editStationId", SOME_ID_PARAM)
                     .param("editStationName", SOME_STATION)
                     .param("editStationZone", SOME_ZONE_PARAM))
-                   .andExpect(redirectedUrl("/manage-stations?updatedStationId=123"));
+                   .andExpect(redirectedUrl("/manage-stations?updatedStation=123"));
         }
     }
 

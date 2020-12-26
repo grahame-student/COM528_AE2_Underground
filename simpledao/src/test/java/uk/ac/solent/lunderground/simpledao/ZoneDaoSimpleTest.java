@@ -1,6 +1,7 @@
+package uk.ac.solent.lunderground.simpledao;
+
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
-import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ZoneDaoSimpleTest
      * Check that retrieveAll returns a list of the expected zones.
      */
     @Test
-    public void RetrieveAllReturnsListOfIntegersFromOneToNine()
+    public void retrieveAllReturnsListOfIntegersFromOneToNine()
     {
         ZoneDao zoneDao = new ZoneDaoSimple();
 

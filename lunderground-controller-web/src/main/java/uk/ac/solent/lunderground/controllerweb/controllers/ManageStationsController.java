@@ -36,7 +36,7 @@ public class ManageStationsController
      * Serve the page responsible for managing underground stations.
      *
      * @param map        attributes map, used to inject data into the view
-     * @param newStation (optional) the name of the newly added station
+     * @param newStation the name of the newly added station
      * @return Return the .jsp to use for managing underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"newStation"})
@@ -52,7 +52,7 @@ public class ManageStationsController
      * Serve the page responsible for managing underground stations.
      *
      * @param map        attributes map, used to inject data into the view
-     * @param delStation (optional) the name of the newly deleted station
+     * @param delStation the name of the newly deleted station
      * @return Return the .jsp to use for managing underground stations
      */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"delStation"})
@@ -64,6 +64,15 @@ public class ManageStationsController
         return getManageStationsModelMapView(map);
     }
 
+    /**
+     * Serve the page responsible for managing underground stations.
+     *
+     * @param map        attributes map, used to inject data into the view
+     * @param editId     ID of the station that the user wants to modify
+     * @param editName   Current name of the station that the user wants to modify
+     * @param editZone   Current zone of the station that the user wants to modify
+     * @return Return the .jsp to use for managing underground stations
+     */
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"editStationId",
                                                                                          "editStationName",
                                                                                          "editStationZone"})
@@ -94,7 +103,7 @@ public class ManageStationsController
         return "manage-stations";
     }
 
-    private void setDefaultStationDetails(@NotNull ModelMap map)
+    private void setDefaultStationDetails(@NotNull final ModelMap map)
     {
         if ((map.getAttribute("editStationId") == null))
         {
@@ -177,7 +186,7 @@ public class ManageStationsController
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         this.lunderGroundFacade.updateStation(editId, editName, editZone);
 
-        redirectAttributes.addAttribute("updatedStationId", editId);
+        redirectAttributes.addAttribute("updatedStation", editId);
         return "redirect:/manage-stations";
     }
 }

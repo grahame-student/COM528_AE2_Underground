@@ -21,7 +21,9 @@ public final class ServiceObjectFactoryJpa implements ServiceObjectFactory
      * Instance of the StationDao to use when accessing Station functionality.
      */
     private StationDao stationDao = null;
-
+    /**
+     * Instance of the ZoneDao to use when accessing Zone functionality.
+     */
     private ZoneDao zoneDao = null;
 
     /**

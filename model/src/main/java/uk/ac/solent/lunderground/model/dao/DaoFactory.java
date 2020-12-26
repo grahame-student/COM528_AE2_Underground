@@ -8,5 +8,11 @@ public interface DaoFactory
      * @return return a concrete instance of a StationDao
      */
     StationDao getStationDao();
+
+    /**
+     * Get a reference to a ZoneDao instance.
+     *
+     * @return return a concrete instance of a ZoneDao
+     */
     ZoneDao getZoneDao();
 }

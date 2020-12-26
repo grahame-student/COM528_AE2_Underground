@@ -14,6 +14,9 @@ public final class LundergroundFacade implements LundergroundServiceFacade
      */
     private StationDao stationDao = null;
 
+    /**
+     * ZoneDao instance used to access the database implementation.
+     */
     private ZoneDao zoneDao = null;
 
     /**
@@ -31,7 +34,7 @@ public final class LundergroundFacade implements LundergroundServiceFacade
      *
      * @param newZoneDao ZoneDao to use
      */
-    public void setZoneDao(ZoneDao newZoneDao)
+    public void setZoneDao(final ZoneDao newZoneDao)
     {
         this.zoneDao = newZoneDao;
     }
@@ -82,7 +85,7 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     }
 
     @Override
-    public void updateStation(long stationId, String newName, int newZone)
+    public void updateStation(final long stationId, final String newName, final int newZone)
     {
         Station station = new Station();
         station.setId(stationId);

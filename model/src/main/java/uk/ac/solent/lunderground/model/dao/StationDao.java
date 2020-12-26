@@ -51,6 +51,7 @@ public interface StationDao
     /**
      * Update the station with the passed in ID to use the passed in name and zone.
      *
+     * @param newDetails Station instance containing the new details to persist
      */
     void updateStation(Station newDetails);
 }
