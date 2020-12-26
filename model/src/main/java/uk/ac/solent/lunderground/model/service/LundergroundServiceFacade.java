@@ -55,4 +55,13 @@ public interface LundergroundServiceFacade
      * @return List of the zones
      */
     List<Integer> getAllZones();
+
+    /**
+     * Update the details of the station with the passed in ID.
+     *
+     * @param stationId ID of the station to modify
+     * @param newName the new station name to use
+     * @param newZone the new station zone to use
+     */
+    void updateStation(long stationId, String newName, int newZone);
 }

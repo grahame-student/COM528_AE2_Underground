@@ -85,6 +85,12 @@ public final class StationDaoJpa implements StationDao
         return runGetStationQuery(q);
     }
 
+    @Override
+    public void updateStation(Station newDetails)
+    {
+        entityManager.merge(newDetails);
+    }
+
     private Station runGetStationQuery(final TypedQuery<Station> q)
     {
         Station result;

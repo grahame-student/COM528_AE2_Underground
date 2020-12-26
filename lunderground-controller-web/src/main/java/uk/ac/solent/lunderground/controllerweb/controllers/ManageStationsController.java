@@ -158,4 +158,26 @@ public class ManageStationsController
         redirectAttributes.addAttribute("editStationZone", editStation.getZone());
         return "redirect:/manage-stations";
     }
+
+    /**
+     * Serve the page responsible for updating the station with the supplied details.
+     *
+     * @param redirectAttributes attributes to be added to the the redirect request
+     * @param editId ID of the station to be updates
+     * @param editName new name to use for the station
+     * @param editZone new zone to use for the station
+     * @return Return a redirect back to the page responsible form managing stations
+     */
+    @RequestMapping(value = "/manage-stations/update", method = RequestMethod.POST)
+    public String getManageStationsUpdatePage(final RedirectAttributes redirectAttributes,
+                                              @RequestParam(name = "editStationId") final Long editId,
+                                              @RequestParam(name = "editStationName") final String editName,
+                                              @RequestParam(name = "editStationZone") final int editZone)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        this.lunderGroundFacade.updateStation(editId, editName, editZone);
+
+        redirectAttributes.addAttribute("updatedStationId", editId);
+        return "redirect:/manage-stations";
+    }
 }

@@ -47,4 +47,10 @@ public interface StationDao
      * @return Station instance with retrieved details. Null if Station doesn't exist
      */
     Station getStation(Long stationId);
+
+    /**
+     * Update the station with the passed in ID to use the passed in name and zone.
+     *
+     */
+    void updateStation(Station newDetails);
 }

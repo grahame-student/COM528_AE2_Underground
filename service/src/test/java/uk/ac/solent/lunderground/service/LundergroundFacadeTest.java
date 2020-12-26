@@ -200,4 +200,58 @@ public class LundergroundFacadeTest
 
         verify(mockZoneDao).retrieveAll();
     }
+
+    /**
+     * Check that the passed in ID is used to update the station.
+     */
+    @Test
+    public void updateStationUsesStationIdToUpdateStation()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+        ArgumentCaptor<Station> args = ArgumentCaptor.forClass(Station.class);
+
+        facade.updateStation(SOME_ID, SOME_NAME, SOME_ZONE);
+
+        verify(mockStationDao).updateStation(args.capture());
+        assertThat(args.getValue()
+                       .getId(), equalTo(SOME_ID));
+    }
+
+    /**
+     * Check that the passed in ID is used to update the station.
+     */
+    @Test
+    public void updateStationUsesStationNameToUpdateStation()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+        ArgumentCaptor<Station> args = ArgumentCaptor.forClass(Station.class);
+
+        facade.updateStation(SOME_ID, SOME_NAME, SOME_ZONE);
+
+        verify(mockStationDao).updateStation(args.capture());
+        assertThat(args.getValue()
+                       .getName(), equalTo(SOME_NAME));
+    }
+
+    /**
+     * Check that the passed in ID is used to update the station.
+     */
+    @Test
+    public void updateStationUsesStationZoneToUpdateStation()
+    {
+        StationDao mockStationDao = mock(StationDao.class);
+        LundergroundFacade facade = new LundergroundFacade();
+        facade.setStationDao(mockStationDao);
+        ArgumentCaptor<Station> args = ArgumentCaptor.forClass(Station.class);
+
+        facade.updateStation(SOME_ID, SOME_NAME, SOME_ZONE);
+
+        verify(mockStationDao).updateStation(args.capture());
+        assertThat(args.getValue()
+                       .getZone(), equalTo(SOME_ZONE));
+    }
 }

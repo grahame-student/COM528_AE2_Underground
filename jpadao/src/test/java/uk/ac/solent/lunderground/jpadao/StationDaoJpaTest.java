@@ -43,6 +43,11 @@ public class StationDaoJpaTest
     private static final int SOME_ZONE = 1;
 
     /**
+     * Zone number used for testing purposes, value must be different to SOME_ZONE.
+     */
+    private static final int SOME_OTHER_ZONE = 3;
+
+    /**
      * Id number used for testing purposes, specific value is unimportant.
      */
     private static final long SOME_ID = 123;
@@ -221,5 +226,58 @@ public class StationDaoJpaTest
         Station station = stationDao.getStation(SOME_ID);
 
         assertThat(station, nullValue());
+    }
+
+    /**
+     * Check that we can update the name of a station that has been persisted.
+     */
+    @Test
+    public void updateStationSetsStationNameToPassedInStationName()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+        Station testStation = new Station();
+        testStation.setName(STATION_1);
+        stationDao.addStation(testStation);
+
+        Long id = stationDao.getStation(STATION_1).getId();
+        // We create a new station instance and set the appropriate properties
+        // rather than retrieve the station with the required ID and modify that
+        // as modifying the retrieved station also modifies thd instance which
+        // was originally persisted.
+        Station newDetails = new Station();
+        newDetails.setId(id);
+        newDetails.setName(STATION_2);
+
+        stationDao.updateStation(newDetails);
+        Station updatedStation = stationDao.getStation(id);
+        assertThat(updatedStation.getName(), equalTo(STATION_2));
+    }
+
+    /**
+     * Check that we can update the name of a station that has been persisted.
+     */
+    @Test
+    public void updateStationSetsStationZoneToPassedInStationZone()
+    {
+        DaoFactory factory = new DaoFactoryJpa();
+        stationDao = factory.getStationDao();
+        Station testStation = new Station();
+        testStation.setName(SOME_STATION);
+        testStation.setZone(SOME_ZONE);
+        stationDao.addStation(testStation);
+
+        Long id = stationDao.getStation(SOME_STATION).getId();
+        // We create a new station instance and set the appropriate properties
+        // rather than retrieve the station with the required ID and modify that
+        // as modifying the retrieved station also modifies thd instance which
+        // was originally persisted.
+        Station newDetails = new Station();
+        newDetails.setId(id);
+        newDetails.setZone(SOME_OTHER_ZONE);
+
+        stationDao.updateStation(newDetails);
+        Station updatedStation = stationDao.getStation(id);
+        assertThat(updatedStation.getZone(), equalTo(SOME_OTHER_ZONE));
     }
 }

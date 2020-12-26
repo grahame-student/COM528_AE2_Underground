@@ -80,4 +80,14 @@ public final class LundergroundFacade implements LundergroundServiceFacade
     {
         return zoneDao.retrieveAll();
     }
+
+    @Override
+    public void updateStation(long stationId, String newName, int newZone)
+    {
+        Station station = new Station();
+        station.setId(stationId);
+        station.setName(newName);
+        station.setZone(newZone);
+        stationDao.updateStation(station);
+    }
 }
