@@ -223,6 +223,72 @@ public class ManageStationsControllerTest
     }
 
     /**
+     * Check that getManageStationsPage adds passed in station ID to the ModelMap.
+     */
+    @Test
+    public void getManageStationsPageAddsEditStationIdToModelMap() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
+
+            mockMvc.perform(get("/manage-stations")
+                    .param("editStationId", SOME_ID_PARAM)
+                    .param("editStationName", SOME_STATION)
+                    .param("editStationZone", SOME_ZONE_PARAM))
+                   .andExpect(model().attribute("editStationId", SOME_ID));
+        }
+    }
+
+    /**
+     * Check that getManageStationsPage adds passed in station name to the ModelMap.
+     */
+    @Test
+    public void getManageStationsPageAddsEditStationNameToModelMap() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
+
+            mockMvc.perform(get("/manage-stations")
+                    .param("editStationId", SOME_ID_PARAM)
+                    .param("editStationName", SOME_STATION)
+                    .param("editStationZone", SOME_ZONE_PARAM))
+                   .andExpect(model().attribute("editStationName", SOME_STATION));
+        }
+    }
+
+    /**
+     * Check that getManageStationsPage adds passed in station zone to the ModelMap.
+     */
+    @Test
+    public void getManageStationsPageAddsEditStationZoneToModelMap() throws Exception
+    {
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            List<Station> expectedList = new ArrayList<>();
+            when(mockFacade.getAllStations()).thenReturn(expectedList);
+
+            mockMvc.perform(get("/manage-stations")
+                    .param("editStationId", SOME_ID_PARAM)
+                    .param("editStationName", SOME_STATION)
+                    .param("editStationZone", SOME_ZONE_PARAM))
+                   .andExpect(model().attribute("editStationZone", SOME_ZONE));
+        }
+    }
+
+    /**
      * Check that getManageStationsAddPage adds a station using the facade.
      */
     @Test

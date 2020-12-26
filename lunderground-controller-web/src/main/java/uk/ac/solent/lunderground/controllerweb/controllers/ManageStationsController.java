@@ -65,12 +65,12 @@ public class ManageStationsController
     }
 
     @RequestMapping(value = "/manage-stations", method = RequestMethod.GET, params = {"editStationId",
-            "editStationName",
-            "editStationZone"})
+                                                                                         "editStationName",
+                                                                                         "editStationZone"})
     public String getManageStationsPageEditStation(final ModelMap map,
-                                                   @RequestParam(name = "editStationId") final String editId,
+                                                   @RequestParam(name = "editStationId") final Long editId,
                                                    @RequestParam(name = "editStationName") final String editName,
-                                                   @RequestParam(name = "editStationZone") final String editZone)
+                                                   @RequestParam(name = "editStationZone") final int editZone)
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         map.addAttribute("editStationId", editId);
@@ -135,7 +135,7 @@ public class ManageStationsController
     {
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         redirectAttributes.addAttribute("delStation", this.lunderGroundFacade.getStation(stationId)
-                                                                             .getName());
+                                                                                .getName());
         this.lunderGroundFacade.deleteStation(stationId);
         return "redirect:/manage-stations";
     }

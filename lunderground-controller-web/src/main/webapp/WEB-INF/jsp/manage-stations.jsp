@@ -38,12 +38,12 @@
                                 <label class="col-label" for="zoneNumber">Zone:</label>
                                 <select class="col-input" id="zoneNumber" name="zoneNumber">
                                     <c:forEach items="${zones}" var="zone" varStatus="tagStatus">
-                                        <option value="${zone}"
-                                                <c:if test="${zone == editStationZone}"> selected </c:if>>
-                                            Zone ${zone}
-                                        </option>
+                                        <option value="${zone}" <c:if test="${zone == editStationZone}"> selected </c:if>>Zone ${zone}</option>
                                     </c:forEach>
                                 </select>
+                                <c:if test="${not empty editStationId}">
+                                    <button type="submit" formaction="manage-stations/update?id=${editStationId}">Update</button>
+                                </c:if>
                             </p>
                         </div>
                     </form>
@@ -53,10 +53,10 @@
                     <form method="post">
                         <table>
                             <tr>
-                                <th>Station Name</th>
-                                <th>Zone</th>
-                                <th></th>
-                                <th></th>
+                                <th class="col-name">Station Name</th>
+                                <th class="col-zone">Zone</th>
+                                <th class="col-modify"></th>
+                                <th class="col-delete"></th>
                             </tr>
                             <c:forEach items="${stations}" var="station" varStatus="tagStatus">
                                 <tr>
