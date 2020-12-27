@@ -70,4 +70,16 @@ public class StationTest
 
         assertThat(station.toString(), equalTo(expectedString));
     }
+
+    /**
+     * Check that different objects with the same configuration are equal
+     */
+    @Test
+    public void equalsReturnsTrueWhenStationInstancesHaveSameConfiguration()
+    {
+        Station station1 = new Station();
+        Station station2 = new Station();
+
+        assertThat(station1, equalTo(station2));
+    }
 }

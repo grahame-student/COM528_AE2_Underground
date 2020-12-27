@@ -17,6 +17,43 @@
     </properties>
 
     <dependencies>
+        <!-- project -->
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.model</groupId>
+            <artifactId>model</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- jaxb -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!-- logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>

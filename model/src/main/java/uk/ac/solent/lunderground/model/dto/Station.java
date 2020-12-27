@@ -7,8 +7,9 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
-@XmlRootElement
+@XmlRootElement(name = "Station")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public final class Station
@@ -86,6 +87,29 @@ public final class Station
     public void setZone(final int newZone)
     {
         this.zone = newZone;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        Station station = (Station) o;
+        return zone == station.zone &&
+               Objects.equals(id, station.id) &&
+               Objects.equals(name, station.name);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, name, zone);
     }
 
     /**
