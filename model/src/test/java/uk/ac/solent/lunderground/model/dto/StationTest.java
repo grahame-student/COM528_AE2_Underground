@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 public class StationTest
 {
@@ -72,7 +73,19 @@ public class StationTest
     }
 
     /**
-     * Check that different objects with the same configuration are equal
+     * Check that different objects with the same configuration have same hash code.
+     */
+    @Test
+    public void hashCodeReturnsSameWhenStationInstancesHaveSameConfiguration()
+    {
+        Station station1 = new Station();
+        Station station2 = new Station();
+
+        assertThat(station1.hashCode(), equalTo(station2.hashCode()));
+    }
+
+    /**
+     * Check that different objects with the same configuration are equal.
      */
     @Test
     public void equalsReturnsTrueWhenStationInstancesHaveSameConfiguration()
@@ -81,5 +94,17 @@ public class StationTest
         Station station2 = new Station();
 
         assertThat(station1, equalTo(station2));
+    }
+
+    /**
+     * Check that comparison with null object is not equal.
+     */
+    @Test
+    public void equalsReturnsFalseWhenStationInstanceIsNull()
+    {
+        Station station1 = new Station();
+        Station station2 = null;
+
+        assertThat(station1, not(equalTo(station2)));
     }
 }

@@ -8,18 +8,26 @@ import java.util.List;
 
 @XmlRootElement(name = "StationList")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StationList
+public final class StationList
 {
     @XmlElement(name = "Station")
-    private List<Station> stations = null;
+    private List<Station> stationList = null;
 
-    public List<Station> getStations()
+    /**
+     *
+     * @return
+     */
+    public List<Station> getStationList()
     {
-        return this.stations;
+        return this.stationList;
     }
 
-    public void setStations(List<Station> stations)
+    /**
+     *
+     * @param stations
+     */
+    public void setStationList(final List<Station> stations)
     {
-        this.stations = stations;
+        this.stationList = stations;
     }
 }

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -21,7 +20,7 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class StationDaoJaxb implements StationDao
+public final class StationDaoJaxb implements StationDao
 {
     /**
      * Logger instance for the StationDaoJaxb implementation.
@@ -108,7 +107,7 @@ public class StationDaoJaxb implements StationDao
         stationMap.clear();
         if (stationList != null)
         {
-            for (Station station : stationList.getStations())
+            for (Station station : stationList.getStationList())
             {
                 stationMap.put(station.getName(), station);
             }
@@ -125,7 +124,7 @@ public class StationDaoJaxb implements StationDao
         saveStationsToFile(file);
     }
 
-    private void saveStationsToFile(File file)
+    private void saveStationsToFile(final File file)
     {
         try
         {
@@ -135,7 +134,7 @@ public class StationDaoJaxb implements StationDao
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             StationList stationList = new StationList();
-            stationList.setStations(this.retrieveAll());
+            stationList.setStationList(this.retrieveAll());
             jaxbMarshaller.marshal(stationList, file);
         }
         catch (JAXBException e)
@@ -151,7 +150,7 @@ public class StationDaoJaxb implements StationDao
     }
 
     @Override
-    public synchronized void addStation(Station newStation)
+    public synchronized void addStation(final Station newStation)
     {
         stationMap.put(newStation.getName(), newStation);
     }

@@ -2,14 +2,11 @@ package uk.ac.solent.lunderground.jaxbdao;
 
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.dto.Station;
-import uk.ac.solent.lunderground.model.dto.StationList;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 
 /**

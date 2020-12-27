@@ -90,7 +90,7 @@ public final class Station
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if (this == o)
         {
@@ -101,9 +101,9 @@ public final class Station
             return false;
         }
         Station station = (Station) o;
-        return zone == station.zone &&
-               Objects.equals(id, station.id) &&
-               Objects.equals(name, station.name);
+        return zone == station.zone
+               && Objects.equals(id, station.id)
+               && Objects.equals(name, station.name);
     }
 
     @Override
