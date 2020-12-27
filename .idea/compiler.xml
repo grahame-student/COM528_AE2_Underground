@@ -6,16 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="lunderground-controller-web" />
         <module name="simpledao" />
-        <module name="model" />
+        <module name="jaxbdao" />
         <module name="service" />
         <module name="coverage-report" />
+        <module name="lunderground-controller-web" />
+        <module name="model" />
         <module name="jpadao" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="coverage-report" target="1.8" />
+      <module name="jaxbdao" target="1.8" />
+      <module name="jaxbdao-old" target="1.8" />
       <module name="jpadao" target="1.8" />
       <module name="londerground-controller-web" target="1.7" />
       <module name="lunderground" target="1.8" />

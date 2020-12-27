@@ -22,7 +22,7 @@
                         <c:if test="${not empty delStation}">
                             Station with name "${delStation}" deleted
                         </c:if>
-                        <c:if test="${not empty updateStation}">
+                        <c:if test="${not empty updatedStation}">
                             Station with ID "${updatedStation}" has been updated
                         </c:if>
                     </p>

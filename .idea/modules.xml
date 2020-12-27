@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/coverage-report/coverage-report.iml" filepath="$PROJECT_DIR$/coverage-report/coverage-report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jaxbdao/jaxbdao.iml" filepath="$PROJECT_DIR$/jaxbdao/jaxbdao.iml" />
       <module fileurl="file://$PROJECT_DIR$/jpadao/jpadao.iml" filepath="$PROJECT_DIR$/jpadao/jpadao.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground.iml" filepath="$PROJECT_DIR$/lunderground.iml" />
       <module fileurl="file://$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" filepath="$PROJECT_DIR$/lunderground-controller-web/lunderground-controller-web.iml" />

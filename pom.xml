@@ -140,8 +140,10 @@
         <module>model</module>
         <module>service</module>
         <module>jpadao</module>
+        <module>jaxbdao</module>
         <module>simpledao</module>
         <module>coverage-report</module>
+        <module>jaxbdao</module>
     </modules>
     <!-- Not needed at this point in time
         <module>web</module>

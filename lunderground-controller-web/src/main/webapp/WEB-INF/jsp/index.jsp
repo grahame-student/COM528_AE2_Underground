@@ -17,6 +17,8 @@
                 <nav id="lunderground-controller-menu">
                     <menu>
                         <li class="controller-button"><a href="manage-stations">Manage Stations</a></li>
+                        <li><hr></li>
+                        <li class="init-stations"><a href="manage-stations/init">Initialise Stations</a></li>
                     </menu>
                 </nav>
             </div>

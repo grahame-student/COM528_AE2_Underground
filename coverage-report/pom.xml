@@ -25,6 +25,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>uk.ac.solent.lunderground.jaxbdao</groupId>
+            <artifactId>jaxbdao</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>uk.ac.solent.lunderground.simpledao</groupId>
             <artifactId>simpledao</artifactId>
             <version>1.1-SNAPSHOT</version>
