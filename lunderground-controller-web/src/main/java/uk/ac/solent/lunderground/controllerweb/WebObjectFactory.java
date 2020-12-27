@@ -1,6 +1,7 @@
 package uk.ac.solent.lunderground.controllerweb;
 
-import uk.ac.solent.lunderground.service.ServiceObjectFactoryJpa;
+import uk.ac.solent.lunderground.model.service.DeveloperFacade;
+import uk.ac.solent.lunderground.service.ServiceObjectFactoryImpl;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 
@@ -11,6 +12,7 @@ public final class WebObjectFactory
      * The instance is lazy loaded at the point it is first required for use
      */
     private static LundergroundServiceFacade lundergroundFacade = null;
+    private static DeveloperFacade devFacade = null;
 
     private WebObjectFactory()
     {
@@ -29,11 +31,27 @@ public final class WebObjectFactory
             {
                 if (lundergroundFacade == null)
                 {
-                    ServiceObjectFactory clientObjectFactory = new ServiceObjectFactoryJpa();
+                    ServiceObjectFactory clientObjectFactory = new ServiceObjectFactoryImpl();
                     lundergroundFacade = clientObjectFactory.getLundergroundFacade();
                 }
             }
         }
         return lundergroundFacade;
+    }
+
+    public static DeveloperFacade getdeveloperFacade()
+    {
+        if (devFacade == null)
+        {
+            synchronized (WebObjectFactory.class)
+            {
+                if (devFacade == null)
+                {
+                    ServiceObjectFactory clientObjectFactory = new ServiceObjectFactoryImpl();
+                    devFacade = clientObjectFactory.getDeveloperFacade();
+                }
+            }
+        }
+        return devFacade;
     }
 }

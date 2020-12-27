@@ -3,11 +3,12 @@ package uk.ac.solent.lunderground.service;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.dto.Station;
+import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 import java.util.List;
 
-public final class LundergroundFacade implements LundergroundServiceFacade
+public final class LundergroundFacade implements LundergroundServiceFacade, DeveloperFacade
 {
     /**
      * StationDao instance used to access the database implementation.
@@ -18,6 +19,11 @@ public final class LundergroundFacade implements LundergroundServiceFacade
      * ZoneDao instance used to access the database implementation.
      */
     private ZoneDao zoneDao = null;
+
+    /**
+     * StationDao instance used during development activities.
+     */
+    private StationDao devStationDao = null;
 
     /**
      * Set the StationDao instance to use for accessing the database layer.
@@ -92,5 +98,22 @@ public final class LundergroundFacade implements LundergroundServiceFacade
         station.setName(newName);
         station.setZone(newZone);
         stationDao.updateStation(station);
+    }
+
+    @Override
+    public void setDevStationDao(StationDao newStationDao)
+    {
+        this.devStationDao = newStationDao;
+    }
+
+    @Override
+    public void initStationList()
+    {
+        List<Station> stationList = devStationDao.retrieveAll();
+        stationDao.deleteAll();
+        for (Station station: stationList)
+        {
+            stationDao.addStation(station);
+        }
     }
 }

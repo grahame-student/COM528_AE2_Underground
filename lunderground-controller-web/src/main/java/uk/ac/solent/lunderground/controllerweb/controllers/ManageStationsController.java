@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
 import uk.ac.solent.lunderground.model.dto.Station;
+import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,11 @@ public class ManageStationsController
      * Reference to the London Underground Service Facade used to access the service available.
      */
     private LundergroundServiceFacade lunderGroundFacade = null;
+
+    /**
+     *
+     */
+    private DeveloperFacade devFacade = null;
 
     /**
      * Default name to use if no other name has been supplied.
@@ -212,6 +218,15 @@ public class ManageStationsController
         this.lunderGroundFacade.updateStation(editId, name, zone);
 
         redirectAttributes.addAttribute("updatedStation", editId);
+        return "redirect:/manage-stations";
+    }
+
+    @RequestMapping(value = "/manage-stations/init", method = RequestMethod.GET)
+    public String getManageStationsInitPage()
+    {
+        this.devFacade = WebObjectFactory.getdeveloperFacade();
+        devFacade.initStationList();
+
         return "redirect:/manage-stations";
     }
 }

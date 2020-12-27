@@ -45,5 +45,11 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.jaxbdao</groupId>
+            <artifactId>jaxbdao</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

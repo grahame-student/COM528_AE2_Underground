@@ -15,7 +15,7 @@ public class ServiceObjectFactoryTest
     @Test
     public void getLundergroundFacadeReturnsInstanceOfLundergroundFacade()
     {
-        ServiceObjectFactory factory = new ServiceObjectFactoryJpa();
+        ServiceObjectFactory factory = new ServiceObjectFactoryImpl();
 
         LundergroundServiceFacade facade = factory.getLundergroundFacade();
 

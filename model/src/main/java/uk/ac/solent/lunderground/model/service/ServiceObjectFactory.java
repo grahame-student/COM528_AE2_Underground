@@ -8,4 +8,11 @@ public interface ServiceObjectFactory
      * @return Service facade that implements the LundergroundServiceFacade interface
      */
     LundergroundServiceFacade getLundergroundFacade();
+
+    /**
+     * Get a service facade that can be used for development purposes.
+     *
+     * @return Service facade that implements the DeveloperFacade interface
+     */
+    DeveloperFacade getDeveloperFacade();
 }

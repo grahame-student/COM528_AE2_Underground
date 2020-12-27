@@ -1,5 +1,6 @@
 package uk.ac.solent.lunderground.jaxbdao;
 
+import org.springframework.core.io.ClassPathResource;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.StationList;
@@ -7,13 +8,9 @@ import uk.ac.solent.lunderground.model.dto.StationList;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -27,15 +24,7 @@ public final class StationDaoJaxb implements StationDao
      */
     private static final Logger LOG = LogManager.getLogger(StationDaoJaxb.class);
 
-    /**
-     * The encoding to use when decoding URLs.
-     */
-    private static final String URL_ENCODING = StandardCharsets.UTF_8.toString();
-
-    /**
-     * Path to use when marshalling to XML / unmarshalling from XML.
-     */
-    private final String path;
+    private final InputStream resourceFile;
 
     /**
      * Tree map of the various stations.
@@ -46,26 +35,21 @@ public final class StationDaoJaxb implements StationDao
     /**
      * Constructor for the JAXB StationDao implementation.
      *
-     * @param resourceURL URL pointing to an XML file that should be marshalled to or
+     * @param resourceName URL pointing to an XML file that should be marshalled to or
      *                    unmarshalled from.
      */
-    public StationDaoJaxb(@NotNull final URL resourceURL)
+    public StationDaoJaxb(@NotNull final String resourceName)
     {
-        String tmpPath = resourceURL.getPath();
+        InputStream tmpFile = null;
         try
         {
-            // Decode the URL in case there are any escaped chars in it.
-            // Escaped chars can cause all sorts of issues locating and accessing resources.
-            tmpPath = URLDecoder.decode(resourceURL.getPath(), URL_ENCODING);
+            tmpFile = new ClassPathResource(resourceName).getInputStream();
         }
-        catch (UnsupportedEncodingException ex)
+        catch (IOException e)
         {
-            LOG.error("Problem whilst decoding Stations URL");
-            LOG.error(URL_ENCODING + " is not a supported URL encoding");
-            LOG.debug("Unable to decode " + resourceURL);
-            LOG.debug("If the supplied URL contains escaped chars this may cause further issues");
+            LOG.error("unable to find " + resourceName + " in the class path");
         }
-        path = tmpPath;
+        resourceFile = tmpFile;
     }
 
     /**
@@ -73,31 +57,24 @@ public final class StationDaoJaxb implements StationDao
      */
     public void load()
     {
-        File file = new File(path);
-        if (!file.exists())
-        {
-            LOG.debug("No file found at: " + path);
-        }
-        else
-        {
-            StationList stationList = getStationsFromFile(file);
-            storeStationList(stationList);
-        }
+        StationList stationList = getStationsFromFile();
+        storeStationList(stationList);
     }
 
-    private StationList getStationsFromFile(final File file)
+    private StationList getStationsFromFile()
     {
         StationList stationList = null;
         try
         {
             JAXBContext jaxbContext = JAXBContext.newInstance(StationList.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            stationList = (StationList) jaxbUnmarshaller.unmarshal(file);
+            stationList = (StationList) jaxbUnmarshaller.unmarshal(resourceFile);
         }
         catch (JAXBException ex)
         {
             LOG.error("Unable to unmarshall the Stations list");
             LOG.error("Error code: " + ex.getErrorCode());
+            LOG.error(ex.getLocalizedMessage());
         }
         return stationList;
     }
@@ -115,31 +92,6 @@ public final class StationDaoJaxb implements StationDao
         else
         {
             LOG.debug("Station list is null, unable to store.");
-        }
-    }
-
-    public void save()
-    {
-        File file = new File(path);
-        saveStationsToFile(file);
-    }
-
-    private void saveStationsToFile(final File file)
-    {
-        try
-        {
-            JAXBContext jaxbContext = JAXBContext.newInstance(StationList.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            StationList stationList = new StationList();
-            stationList.setStationList(this.retrieveAll());
-            jaxbMarshaller.marshal(stationList, file);
-        }
-        catch (JAXBException e)
-        {
-            LOG.error("Unable to marshall station list to XML");
         }
     }
 
