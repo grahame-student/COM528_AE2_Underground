@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/client-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/client-rest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/coverage-report/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/coverage-report/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/jaxbdao/src/main/java" charset="UTF-8" />
@@ -15,5 +17,7 @@
     <file url="file://$PROJECT_DIR$/service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/simpledao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/simpledao/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ticket-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ticket-web/src/main/resources" charset="UTF-8" />
   </component>
 </project>

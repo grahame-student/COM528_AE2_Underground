@@ -49,6 +49,13 @@
             <type>war</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.ticketweb</groupId>
+            <artifactId>ticket-web</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <type>war</type>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

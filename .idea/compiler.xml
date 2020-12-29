@@ -8,14 +8,17 @@
         <outputRelativeToContentRoot value="true" />
         <module name="simpledao" />
         <module name="jaxbdao" />
+        <module name="client-rest" />
         <module name="service" />
         <module name="coverage-report" />
         <module name="lunderground-controller-web" />
+        <module name="ticket-web" />
         <module name="model" />
         <module name="jpadao" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client-rest" target="1.8" />
       <module name="coverage-report" target="1.8" />
       <module name="jaxbdao" target="1.8" />
       <module name="jaxbdao-old" target="1.8" />
@@ -26,6 +29,7 @@
       <module name="model" target="1.8" />
       <module name="service" target="1.8" />
       <module name="simpledao" target="1.8" />
+      <module name="ticket-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

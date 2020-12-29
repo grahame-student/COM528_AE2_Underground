@@ -13,7 +13,7 @@ import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
 import javax.validation.constraints.NotNull;
 
-@Controller
+@Controller("/manage-stations")
 public class ManageStationsController
 {
     /**

@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * This is the controller for the main landing page http://localhost/lunderground.
+ * This is the controller for the main landing page http://localhost/lunderground/controller.
  * The controller takes care of serving up the pages related to the various menu items
  */
-@Controller
+@Controller("/")
 public final class MainMenuController
 {
     /**

@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="uk.ac.solent"/>
+    <context:component-scan base-package="uk.ac.solent.lunderground.controllerweb"/>
     <mvc:annotation-driven/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

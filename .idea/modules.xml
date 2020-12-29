@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/client-rest/client-rest.iml" filepath="$PROJECT_DIR$/client-rest/client-rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/coverage-report/coverage-report.iml" filepath="$PROJECT_DIR$/coverage-report/coverage-report.iml" />
       <module fileurl="file://$PROJECT_DIR$/jaxbdao/jaxbdao.iml" filepath="$PROJECT_DIR$/jaxbdao/jaxbdao.iml" />
       <module fileurl="file://$PROJECT_DIR$/jpadao/jpadao.iml" filepath="$PROJECT_DIR$/jpadao/jpadao.iml" />
@@ -10,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
       <module fileurl="file://$PROJECT_DIR$/simpledao/simpledao.iml" filepath="$PROJECT_DIR$/simpledao/simpledao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ticket-web/ticket-web.iml" filepath="$PROJECT_DIR$/ticket-web/ticket-web.iml" />
     </modules>
   </component>
 </project>

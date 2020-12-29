@@ -143,12 +143,9 @@
         <module>jaxbdao</module>
         <module>simpledao</module>
         <module>coverage-report</module>
+        <module>ticket-web</module>
+        <module>client-rest</module>
     </modules>
-    <!-- Not needed at this point in time
-        <module>web</module>
-        <module>rest-client</module>
-    </modules>
-    -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

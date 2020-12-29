@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ContextConfiguration(
         locations =
                 {
-                        "classpath:spring/application-context.xml",
+                        "classpath:spring/controller-application-context.xml",
                         "classpath:spring/Lunderground-servlet.xml"
                 }
 )

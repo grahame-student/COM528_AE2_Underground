@@ -3,11 +3,11 @@
          xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <display-name>Spring MVC Application</display-name>
+    <display-name>Lunderground</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/application-context.xml</param-value>
+        <param-value>classpath:spring/controller-application-context.xml</param-value>
     </context-param>
 
     <!-- Step 1: Configure Spring MVC Dispatcher Servlet -->
