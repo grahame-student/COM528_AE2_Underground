@@ -1,8 +1,8 @@
 package uk.ac.solent.lunderground.model.service;
 
-import uk.ac.solent.lunderground.model.dto.StationList;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
 public interface TicketMachineFacade
 {
-    StationList getAllStations();
+    TicketMachineConfig getTicketMachineConfig(String uuid);
 }

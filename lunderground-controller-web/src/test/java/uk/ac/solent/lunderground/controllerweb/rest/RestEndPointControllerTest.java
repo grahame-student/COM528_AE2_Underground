@@ -48,6 +48,7 @@ public class RestEndPointControllerTest
     @Test
     public void returnHelloWorldString() throws Exception
     {
-        mockMvc.perform(get("/rest/v1/")).andExpect(status().isOk());
+        mockMvc.perform(get("/rest/v1/ticketMachineConfig/{uuid}", "1234"))
+               .andExpect(status().isOk());
     }
 }

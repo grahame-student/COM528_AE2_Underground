@@ -36,32 +36,6 @@ public class DaoFactoryJpaTest
     }
 
     /**
-     * Check that runtime exception is raised when the persistence manage throws an exception.
-     */
-    @Test
-    @Ignore("Test disabled as mocking the persistence manager is causing additional tests to fail.\n"
-            + "This is because the method under test creates a singleton and resetting the internal\n"
-            + "state of the class has proven itself to be unexpectedly tricky.\n"
-            + "This test DOES pass when run in isolation and is left here as a sanity check that\n"
-            + "can be run on demand when required.")
-    public void getStationDaoThrowsRuntimeExceptionWhenPersistenceManagerThrowsException()
-    {
-        DaoFactory factory = new DaoFactoryJpa();
-
-        try (MockedStatic<Persistence> persistence = Mockito.mockStatic(Persistence.class))
-        {
-            EntityManagerFactory mockEmFactory = mock(EntityManagerFactory.class);
-            when(mockEmFactory.createEntityManager()).thenThrow(IllegalStateException.class);
-            persistence.when(() -> Persistence.createEntityManagerFactory(anyString()))
-                       .thenReturn(mockEmFactory);
-
-            Exception exception = assertThrows(RuntimeException.class, factory::getStationDao);
-
-            assertThat(exception, instanceOf(RuntimeException.class));
-        }
-    }
-
-    /**
      * Check that a StationDaoJpa instance is created when getStation() is called.
      */
     @Test

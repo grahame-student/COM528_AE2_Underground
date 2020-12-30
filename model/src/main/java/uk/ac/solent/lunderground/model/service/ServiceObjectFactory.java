@@ -15,4 +15,11 @@ public interface ServiceObjectFactory
      * @return Service facade that implements the DeveloperFacade interface
      */
     DeveloperFacade getDeveloperFacade();
+
+    /**
+     * Get a service facade that can be used to access the functionality related to a ticket machine.
+     *
+     * @return Service facade that implements the TicketFacade interface
+     */
+    TicketMachineFacade getTicketMachineFacade();
 }

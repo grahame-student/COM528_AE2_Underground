@@ -15,4 +15,16 @@ public interface DaoFactory
      * @return return a concrete instance of a ZoneDao
      */
     ZoneDao getZoneDao();
+
+    /**
+     * Get a refeernece to a TicketMachineDao instance
+     *
+     * @return return a concrete instance of a TicketMachineDao
+     */
+    TicketMachineDao getTicketMachineDao();
+
+    /**
+     * Shutdown the DAO Factory safely
+     */
+    void shutDown();
 }

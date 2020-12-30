@@ -1,8 +1,12 @@
 package uk.ac.solent.lunderground.ticketweb.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
+import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
+import uk.ac.solent.lunderground.ticketweb.WebClientObjectFactory;
 
 /**
  * This is the controller for the main landing page http://localhost/lunderground.
@@ -17,8 +21,13 @@ public class TicketMachineController
      * @return Return the .jsp to use for the root of the web app
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-     public String getMainPage()
+     public String getMainPage(ModelMap map)
     {
+        TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
+        TicketMachineConfig config = facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid());
+
+        map.addAttribute("machineConfig", config);
+
         return "index";
     }
 }

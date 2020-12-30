@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,16 +18,15 @@
                 <form method="post">
                     <p>
                         <label class="col-label">Ticket Machine ID</label>
-                        <label class="col-value">xxx-xxx-xxx-xxx-xxx</label>
+                        <label class="col-value">${machineConfig.uuid}</label>
                         <button>Generate new ID</button>
                     </p>
                     <p>
                         <label class="col-label" for="station-name">Station Name</label>
                         <select class="col-value" id="station-name">
-                            <option value="Station 1">Station 1 - Zone 1</option>
-                            <option value="Station 2">Station 2 - Zone 2</option>
-                            <option value="Station 3">Station 3 - Zone 3</option>
-                            <option value="Station 4">Station 4 - Zone 4</option>
+                            <c:forEach items="${machineConfig.stationList}" var="station" varStatus="tagStatus">
+                                <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
+                            </c:forEach>
                         </select>
                     </p>
                     <p>

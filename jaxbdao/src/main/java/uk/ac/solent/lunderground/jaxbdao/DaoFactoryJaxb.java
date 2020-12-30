@@ -2,6 +2,7 @@ package uk.ac.solent.lunderground.jaxbdao;
 
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
 
@@ -66,5 +67,17 @@ public class DaoFactoryJaxb implements DaoFactory
             }
         }
         return zoneDao;
+    }
+
+    @Override
+    public TicketMachineDao getTicketMachineDao()
+    {
+        return null;
+    }
+
+    @Override
+    public void shutDown()
+    {
+
     }
 }

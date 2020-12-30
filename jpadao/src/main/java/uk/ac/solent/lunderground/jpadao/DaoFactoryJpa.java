@@ -2,6 +2,7 @@ package uk.ac.solent.lunderground.jpadao;
 
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 
 import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
@@ -33,52 +34,49 @@ public final class DaoFactoryJpa implements DaoFactory
     private static StationDao stationDao;
 
     /**
+     * DAO singleton used to access data related to the ticket machines.
+     */
+    private static TicketMachineDao ticketMachineDao;
+
+    /**
      * DAO singleton used to access data related to the zones.
      */
     private static ZoneDao zoneDao;
 
+    /**
+     * Do a one time initialisation, across all instances of this class.
+     * This sets up the entity manager used for persistence and creates the DAO objects
+     */
+    static {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        em = factory.createEntityManager();
+
+        stationDao = new StationDaoJpa(em);
+        ticketMachineDao = new TicketMachineDaoJpa(em);
+        zoneDao = new ZoneDaoSimple();
+    }
+
     @Override
     public StationDao getStationDao()
     {
-        if (stationDao == null)
-        {
-            synchronized (this)
-            {
-                if (stationDao == null)
-                {
-                    try
-                    {
-                        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-                        em = factory.createEntityManager();
-                        stationDao = new StationDaoJpa(em);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new RuntimeException("problem creating StationDaoJpa ", ex);
-                    }
-                }
-            }
-        }
         return stationDao;
+    }
+
+    @Override
+    public TicketMachineDao getTicketMachineDao()
+    {
+        return ticketMachineDao;
     }
 
     @Override
     public ZoneDao getZoneDao()
     {
-        if (zoneDao == null)
-        {
-            synchronized (this)
-            {
-                if (zoneDao == null)
-                {
-                    // This is not ideal but creating a new DaoFactory in the SimpleDao module
-                    // just for this one simple DAO instance would consume a lot of time for
-                    // little immediate benefit. Should more simple DAOs be required then
-                    // this decision can be revisited.
-                    zoneDao = new ZoneDaoSimple();
-                }
-            }
-        }
         return zoneDao;
+    }
+
+    @Override
+    public void shutDown()
+    {
+
     }
 }

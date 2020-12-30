@@ -8,6 +8,7 @@ import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
+import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
 public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
 {
@@ -82,5 +83,11 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
     public DeveloperFacade getDeveloperFacade()
     {
         return developerFacade;
+    }
+
+    @Override
+    public TicketMachineFacade getTicketMachineFacade()
+    {
+        return null;
     }
 }
