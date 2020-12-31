@@ -3,17 +3,23 @@ package uk.ac.solent.lunderground.controllerweb.rest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import uk.ac.solent.lunderground.model.dto.TicketMachine;
+import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
+import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
+import uk.ac.solent.lunderground.service.LundergroundFacade;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -52,14 +58,15 @@ public class RestEndPointControllerTest
     @Test
     public void getTicketMachineConfigReturnsStatusOk() throws Exception
     {
-        mockMvc.perform(get("/rest/v1/ticketMachineConfig/{uuid}", "1234"))
-               .andExpect(status().isOk());
-    }
+        try (MockedStatic<WebObjectFactory> factory = Mockito.mockStatic(WebObjectFactory.class))
+        {
+            LundergroundServiceFacade mockFacade = mock(LundergroundFacade.class);
+            factory.when(WebObjectFactory::getServiceFacade)
+                   .thenReturn(mockFacade);
+            when(mockFacade.getTicketMachineConfig(anyString())).thenReturn(mock(TicketMachineConfig.class));
 
-    @Test
-    public void addTicketMachine() throws Exception
-    {
-        mockMvc.perform(post("/rest/v1/ticketMachine").content(""))
-               .andExpect(status().isCreated());
+            mockMvc.perform(get("/rest/v1/ticketMachineConfig/{uuid}", "1234"))
+                   .andExpect(status().isOk());
+        }
     }
 }
