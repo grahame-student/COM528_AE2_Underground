@@ -51,7 +51,7 @@ public class TicketMachineControllerTest
     @Test
     public void getMainPageReturnsIndex() throws Exception
     {
-//        mockMvc.perform(get("/"))
-//               .andExpect(forwardedUrl("/WEB-INF/jsp/index.jsp"));
+        mockMvc.perform(get("/"))
+               .andExpect(forwardedUrl("/WEB-INF/jsp/index.jsp"));
     }
 }

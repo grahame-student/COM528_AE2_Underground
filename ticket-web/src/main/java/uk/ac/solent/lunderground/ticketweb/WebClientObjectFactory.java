@@ -1,17 +1,25 @@
 package uk.ac.solent.lunderground.ticketweb;
 
-import org.springframework.context.event.ContextStartedEvent;
-import org.springframework.context.event.ContextStoppedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.solent.lunderground.clientrest.ConfigurationPoller;
 import uk.ac.solent.lunderground.clientrest.RestClientObjectFactory;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
-@Component
-public class WebClientObjectFactory
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import java.util.UUID;
+
+@WebListener
+public class WebClientObjectFactory implements ServletContextListener
 {
+    /**
+     * Logger instance for the WebClientObjectFactory implementation.
+     */
+    private static final Logger LOG = LogManager.getLogger(WebClientObjectFactory.class);
+
     /**
      * Time to wait before requesting first config update
      */
@@ -28,6 +36,26 @@ public class WebClientObjectFactory
     public static String getTicketMachineUuid()
     {
         return configPoller.getTicketMachineUuid();
+    }
+
+    public static void setTicketMachineUuid()
+    {
+        // For testing purposes we're just generating a new, random, uuid
+        // each and everytime this method is called.
+        // In a real ticket machine this would be a value that is either
+        // baked in during manufacturing, or generated on the first power
+        // up and then persisted for reuse thereafter.
+        configPoller.setTicketMachineUuid(UUID.randomUUID().toString());
+    }
+
+    public static String getStationName()
+    {
+        return configPoller.getStationName();
+    }
+
+    public static int getStationZone()
+    {
+        return configPoller.getStationZone();
     }
 
     public static TicketMachineFacade getServiceFacade()
@@ -49,15 +77,20 @@ public class WebClientObjectFactory
         return ticketFacade;
     }
 
-//    @EventListener
-//    public void onContextStarted(ContextStartedEvent event)
-//    {
-//
-//    }
-//
-//    @EventListener
-//    public void onContextStopped(ContextStoppedEvent event)
-//    {
-//
-//    }
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent)
+    {
+        LOG.debug("Ticket machine web app started");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent)
+    {
+        LOG.debug("Ticket machine web app stopped");
+        if (configPoller != null)
+        {
+            LOG.debug("Shutting down config poller");
+            configPoller.shutdown();
+        }
+    }
 }

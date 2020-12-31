@@ -40,7 +40,10 @@ public class TicketMachineDaoJpa implements TicketMachineDao
     @Override
     public TicketMachine getTicketMachine(String uuid)
     {
-        return null;
+        String query  = "SELECT t FROM TicketMachine t WHERE t.uuid=:uuid";
+        TypedQuery<TicketMachine> q = entityManager.createQuery(query, TicketMachine.class);
+        q.setParameter("uuid", uuid);
+        return q.getSingleResult();
     }
 
     @Override

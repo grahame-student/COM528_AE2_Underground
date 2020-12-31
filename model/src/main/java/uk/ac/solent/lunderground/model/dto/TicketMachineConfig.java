@@ -41,6 +41,15 @@ public class TicketMachineConfig
         this.stationName = stationName;
     }
 
+    public void setStation(Station station)
+    {
+        if (station != null)
+        {
+            stationName = station.getName();
+            stationZone = station.getZone();
+        }
+    }
+
     public int getStationZone()
     {
         return stationZone;

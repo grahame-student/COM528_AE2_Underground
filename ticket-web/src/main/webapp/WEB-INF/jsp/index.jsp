@@ -8,31 +8,20 @@
         <meta name="description" content="Ticket Machine">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="resources/css/ticket-core.css">
-        <link rel="stylesheet" type="text/css" href="resources/css/ticket-configure.css">
     </head>
     <body>
         <div id="wrapper">
             <%@ include file="common/header.jsp" %>
 
             <div id="main-content">
-                <form method="post">
-                    <p>
-                        <label class="col-label">Ticket Machine ID</label>
-                        <label class="col-value">${machineConfig.uuid}</label>
-                        <button>Generate new ID</button>
-                    </p>
-                    <p>
-                        <label class="col-label" for="station-name">Station Name</label>
-                        <select class="col-value" id="station-name">
-                            <c:forEach items="${machineConfig.stationList}" var="station" varStatus="tagStatus">
-                                <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
-                            </c:forEach>
-                        </select>
-                    </p>
-                    <p>
-                        <button>Apply Changes</button>
-                    </p>
-                </form>
+                <c:if test="${empty uuid}">
+                    <form method="post">
+                        <button type="submit" formaction="register" formmethod="post">Register Ticket Machine</button>
+                    </form>
+                </c:if>
+                <c:if test="${empty uuid}">
+                    <!-- Add menu here: Config, Sales -->
+                </c:if>
             </div>
 
             <%@ include file="common/footer.jsp" %>

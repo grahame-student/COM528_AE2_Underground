@@ -4,13 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+import uk.ac.solent.lunderground.model.dto.TicketMachine;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -25,6 +28,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RestEndPointControllerTest
 {
+    private static final String SOME_UUID = "some uuid";
     /**
      * Web Application Context used to allow the test cases to run.
      */
@@ -46,9 +50,16 @@ public class RestEndPointControllerTest
     }
 
     @Test
-    public void returnHelloWorldString() throws Exception
+    public void getTicketMachineConfigReturnsStatusOk() throws Exception
     {
         mockMvc.perform(get("/rest/v1/ticketMachineConfig/{uuid}", "1234"))
                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void addTicketMachine() throws Exception
+    {
+        mockMvc.perform(post("/rest/v1/ticketMachine").content(""))
+               .andExpect(status().isCreated());
     }
 }

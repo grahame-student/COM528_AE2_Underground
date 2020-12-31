@@ -1,8 +1,11 @@
 package uk.ac.solent.lunderground.service;
 
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.dto.Station;
+import uk.ac.solent.lunderground.model.dto.TicketMachine;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
@@ -19,6 +22,11 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
      * ZoneDao instance used to access the database implementation.
      */
     private ZoneDao zoneDao = null;
+
+    /**
+     * TicketMachineDao instance used to access the database implementation.
+     */
+    private TicketMachineDao ticketMachineDao = null;
 
     /**
      * StationDao instance used during development activities.
@@ -45,6 +53,11 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
         this.zoneDao = newZoneDao;
     }
 
+    public void setTicketMachineDao(final TicketMachineDao newTicketMachineDao)
+    {
+        this.ticketMachineDao = newTicketMachineDao;
+    }
+
     @Override
     public List<Station> getAllStations()
     {
@@ -67,7 +80,7 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     }
 
     @Override
-    public void deleteAll()
+    public void deleteAllStations()
     {
         stationDao.deleteAll();
     }
@@ -89,6 +102,33 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     {
         return zoneDao.retrieveAll();
     }
+
+    @Override
+    public TicketMachineConfig getTicketMachineConfig(String uuid)
+    {
+        TicketMachineConfig config = new TicketMachineConfig();
+        TicketMachine ticketMachine = ticketMachineDao.getTicketMachine(uuid);
+
+        if (ticketMachine != null)
+        {
+            config.setUuid(ticketMachine.getUuid());
+            config.setStation(ticketMachine.getStation());
+        }
+        config.setStationList(stationDao.retrieveAll());
+        return config;
+    }
+
+    @Override
+    public void addTicketMachine(TicketMachine newTicketMachine)
+    {
+        ticketMachineDao.addTicketMachine(newTicketMachine);
+    }
+
+//    @Override
+//    public TicketMachine getTicketMachine(String uuid)
+//    {
+//        return ticketMachineDao.getTicketMachine(uuid);
+//    }
 
     @Override
     public void updateStation(final long stationId, final String newName, final int newZone)

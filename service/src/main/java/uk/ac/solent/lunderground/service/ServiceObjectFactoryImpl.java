@@ -4,6 +4,7 @@ import uk.ac.solent.lunderground.jaxbdao.DaoFactoryJaxb;
 import uk.ac.solent.lunderground.jpadao.DaoFactoryJpa;
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
@@ -35,6 +36,11 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
     private ZoneDao zoneDao = null;
 
     /**
+     * Instance of the TicketMachineDao to use when accessing TicketMachine functionality.
+     */
+    private TicketMachineDao ticketMachineDao = null;
+
+    /**
      * Instance of the DaoFactory to use when creating Dao objects for dev purposes.
      */
     private DaoFactory devDaoFactory = null;
@@ -61,9 +67,11 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
         daoFactory = new DaoFactoryJpa();
         stationDao = daoFactory.getStationDao();
         zoneDao = daoFactory.getZoneDao();
+        ticketMachineDao = daoFactory.getTicketMachineDao();
 
         facade.setStationDao(stationDao);
         facade.setZoneDao(zoneDao);
+        facade.setTicketMachineDao(ticketMachineDao);
     }
 
     private void initDeveloperFacade(final DeveloperFacade facade)

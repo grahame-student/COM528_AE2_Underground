@@ -1,18 +1,13 @@
 package uk.ac.solent.lunderground.model.service;
 
 import uk.ac.solent.lunderground.model.dto.Station;
+import uk.ac.solent.lunderground.model.dto.TicketMachine;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
 import java.util.List;
 
 public interface LundergroundServiceFacade
 {
-    /**
-     * Get a list of all of the Stations in the London underground system.
-     *
-     * @return List of Stations
-     */
-    List<Station> getAllStations();
-
     /**
      * Add a Station to the London underground system.
      *
@@ -31,7 +26,7 @@ public interface LundergroundServiceFacade
     /**
      * Remove all stations from the London underground system.
      */
-    void deleteAll();
+    void deleteAllStations();
 
     /**
      * Get a station by name.
@@ -50,11 +45,11 @@ public interface LundergroundServiceFacade
     Station getStation(long stationId);
 
     /**
-     * get a list of the zones within the London underground system.
+     * Get a list of all of the Stations in the London underground system.
      *
-     * @return List of the zones
+     * @return List of Stations
      */
-    List<Integer> getAllZones();
+    List<Station> getAllStations();
 
     /**
      * Update the details of the station with the passed in ID.
@@ -64,4 +59,20 @@ public interface LundergroundServiceFacade
      * @param newZone the new station zone to use
      */
     void updateStation(long stationId, String newName, int newZone);
+
+    /**
+     * get a list of the zones within the London underground system.
+     *
+     * @return List of the zones
+     */
+    List<Integer> getAllZones();
+
+//    /**
+//     * Get a ticket machine by UUID
+//     * @param uuid the UUID of the station to retrieve
+//     * @return TicketMachine instance. Null if no machine with the specified UUID found.
+//     */
+//    TicketMachine getTicketMachine(String uuid);
+    TicketMachineConfig getTicketMachineConfig(String uuid);
+    void addTicketMachine(TicketMachine newTicketMachine);
 }

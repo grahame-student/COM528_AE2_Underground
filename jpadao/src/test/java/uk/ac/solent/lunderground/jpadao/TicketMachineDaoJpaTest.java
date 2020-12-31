@@ -13,6 +13,14 @@ import static org.hamcrest.Matchers.hasItem;
 
 public class TicketMachineDaoJpaTest
 {
+    /*
+     *  These tests are not strictly unit tests as we are testing
+     *  that ticket machine instances are being persisted to the disk rather
+     *  than mocking the entity manager responsible and checking that
+     *  it is being used correctly. As a result these tests are relatively
+     *  slow
+     */
+
     private static final String SOME_UUID = "some uuid";
     private TicketMachineDao machineDao;
 

@@ -91,7 +91,7 @@ public class LundergroundFacadeTest
         LundergroundFacade facade = new LundergroundFacade();
         facade.setStationDao(mockStationDao);
 
-        facade.deleteAll();
+        facade.deleteAllStations();
 
         verify(mockStationDao).deleteAll();
     }
