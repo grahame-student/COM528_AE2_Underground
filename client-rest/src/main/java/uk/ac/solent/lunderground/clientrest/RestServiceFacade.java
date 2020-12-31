@@ -14,12 +14,19 @@ import org.apache.logging.log4j.Logger;
 
 public class RestServiceFacade implements TicketMachineFacade
 {
+    private Runnable configChangedCallback = null;
     /**
      * Logger instance for the TicketMachineController implementation.
      */
     private static final Logger LOG = LogManager.getLogger(RestServiceFacade.class);
 
     static final String baseUrl = "http://localhost/lunderground/rest/v1/";
+
+    @Override
+    public void ticketMachineConfigChanged(Runnable callback)
+    {
+        configChangedCallback = callback;
+    }
 
     @Override
     public TicketMachineConfig getTicketMachineConfig(String uuid)
@@ -47,6 +54,7 @@ public class RestServiceFacade implements TicketMachineFacade
 
         TicketMachine result = template.postForObject(uri, newMachine, TicketMachine.class);
         LOG.info("added new ticket machine: " + result);
+        configUpdated();
     }
 
     @Override
@@ -65,6 +73,7 @@ public class RestServiceFacade implements TicketMachineFacade
 
         // We use a put as we're updating an existing station
         template.put(uri, tm, params);
+        configUpdated();
     }
 
     private TicketMachine getTicketMachine(String uuid)
@@ -91,5 +100,16 @@ public class RestServiceFacade implements TicketMachineFacade
 
         // We use a get as we are retrieving information
         return template.getForObject(uri, Station.class, params);
+    }
+
+    /**
+     * Execute the registered callback.
+     */
+    private void configUpdated()
+    {
+        if (configChangedCallback != null)
+        {
+            configChangedCallback.run();
+        }
     }
 }

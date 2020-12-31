@@ -35,6 +35,11 @@ public class ConfigurationPoller
     public ConfigurationPoller(TicketMachineFacade ticketFacade)
     {
         facade = ticketFacade;
+
+        // We register with the facade's configuration changed callback
+        // so that we can force a request of the ticket machine's
+        // latest configuration.
+        facade.ticketMachineConfigChanged(this::getLatestConfig);
     }
 
     public String getTicketMachineUuid()

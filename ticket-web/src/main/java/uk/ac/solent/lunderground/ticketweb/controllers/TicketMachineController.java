@@ -56,7 +56,7 @@ public class TicketMachineController
         TicketMachineConfig config = facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentUuid", WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentStationName", WebClientObjectFactory.getStationName());
-        map.addAttribute("StationList", config.getStationList());
+        map.addAttribute("stationList", config.getStationList());
 
         return "configureMachine";
     }

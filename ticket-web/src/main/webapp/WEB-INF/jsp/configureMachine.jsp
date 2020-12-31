@@ -22,9 +22,9 @@
                     </p>
                     <p>
                         <label class="col-label" for="stationName">Station Name</label>
-                        <select class="col-value" id="stationName" name="stationName">
+                        <select class="col-value" id="stationName" name="stationName" autocomplete="off">
                             <c:forEach items="${stationList}" var="station" varStatus="tagStatus">
-                                <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
+                                <option value="${station.name}" <c:if test="${station.name == currentStationName}"> selected </c:if>>${station.name} - Zone ${station.zone}</option>
                             </c:forEach>
                         </select>
                     </p>

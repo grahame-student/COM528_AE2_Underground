@@ -35,11 +35,6 @@ public class RestEndPointController
         return lunderGroundFacade.getStation(stationName);
     }
 
-    /**
-     *
-     * @param uuid
-     * @return
-     */
     @GetMapping(value = "/rest/v1/ticketMachineConfig/{uuid}")
     public TicketMachineConfig getTicketMachineConfig(@PathVariable final String uuid)
     {
@@ -49,11 +44,6 @@ public class RestEndPointController
         return lunderGroundFacade.getTicketMachineConfig(uuid);
     }
 
-    /**
-     *
-     * @param ticketMachine
-     * @return
-     */
     @PostMapping(value = "/rest/v1/ticketMachine")
     @ResponseStatus(HttpStatus.CREATED)
     public void addTicketMachine(@RequestBody final TicketMachine ticketMachine)
@@ -63,11 +53,6 @@ public class RestEndPointController
         lunderGroundFacade.addTicketMachine(ticketMachine);
     }
 
-    /**
-     *
-     * @param uuid
-     * @return
-     */
     @GetMapping(value = "/rest/v1/ticketMachine/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public TicketMachine getTicketMachine(@PathVariable final String uuid)
@@ -86,6 +71,7 @@ public class RestEndPointController
         TicketMachine updatedMachine = this.lunderGroundFacade.getTicketMachine(ticketMachine.getUuid());
         updatedMachine.setStation(ticketMachine.getStation());
 
+        LOG.debug("Rest uuid: " + uuid);
         LOG.debug("Update ticket machine with ID: " + updatedMachine.getId());
         LOG.debug("Update ticket machine with uuid: " + updatedMachine.getUuid());
         LOG.debug("Set station ID to " + updatedMachine.getStation().getId());

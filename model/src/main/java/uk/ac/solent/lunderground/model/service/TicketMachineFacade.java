@@ -4,6 +4,12 @@ import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
 public interface TicketMachineFacade
 {
+    /**
+     * register a callback method to run when the ticket machine config is changed.
+     * @param configChangedCallback the method to run when the callback is triggered
+     */
+    void ticketMachineConfigChanged(Runnable configChangedCallback);
+
     TicketMachineConfig getTicketMachineConfig(String uuid);
 
     /**
