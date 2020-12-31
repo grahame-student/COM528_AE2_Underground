@@ -10,4 +10,5 @@ public interface TicketMachineDao
     List<TicketMachine> retrieveAll();
     TicketMachine getTicketMachine(String uuid);
     void deleteAll();
+    void updateTicketMachine(TicketMachine ticketMachine);
 }

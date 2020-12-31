@@ -3,14 +3,15 @@ package uk.ac.solent.lunderground.controllerweb.rest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.solent.lunderground.controllerweb.WebObjectFactory;
+import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
@@ -25,19 +26,27 @@ public class RestEndPointController
 
     private LundergroundServiceFacade lunderGroundFacade = null;
 
+    @GetMapping(value = "/rest/v1/station/{stationName}")
+    public Station getStation(@PathVariable final String stationName)
+    {
+        LOG.debug("Requested station with name: " + stationName);
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+
+        return lunderGroundFacade.getStation(stationName);
+    }
+
     /**
      *
      * @param uuid
      * @return
      */
-    @RequestMapping(value = "/rest/v1/ticketMachineConfig/{uuid}", method = RequestMethod.GET)
-    public TicketMachineConfig getTicketMachineConfig(@PathVariable String uuid)
+    @GetMapping(value = "/rest/v1/ticketMachineConfig/{uuid}")
+    public TicketMachineConfig getTicketMachineConfig(@PathVariable final String uuid)
     {
-        LOG.info("Requested ticket machine config for machine with uuid: " + uuid);
+        LOG.debug("Requested ticket machine config for machine with uuid: " + uuid);
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-        TicketMachineConfig config = lunderGroundFacade.getTicketMachineConfig(uuid);
 
-        return config;
+        return lunderGroundFacade.getTicketMachineConfig(uuid);
     }
 
     /**
@@ -47,10 +56,42 @@ public class RestEndPointController
      */
     @PostMapping(value = "/rest/v1/ticketMachine")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTicketMachine(@RequestBody TicketMachine ticketMachine)
+    public void addTicketMachine(@RequestBody final TicketMachine ticketMachine)
     {
-        LOG.info("Add ticket machine with uuid: " + ticketMachine.getUuid());
+        LOG.debug("Add ticket machine with uuid: " + ticketMachine.getUuid());
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         lunderGroundFacade.addTicketMachine(ticketMachine);
+    }
+
+    /**
+     *
+     * @param uuid
+     * @return
+     */
+    @GetMapping(value = "/rest/v1/ticketMachine/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public TicketMachine getTicketMachine(@PathVariable final String uuid)
+    {
+        LOG.debug("Get ticket machine with uuid: " + uuid);
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        return lunderGroundFacade.getTicketMachine(uuid);
+    }
+
+    @PutMapping(value = "/rest/v1/ticketMachine/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateTicketMachine(@PathVariable final String uuid,
+                                    @RequestBody final TicketMachine ticketMachine)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+        TicketMachine updatedMachine = this.lunderGroundFacade.getTicketMachine(ticketMachine.getUuid());
+        updatedMachine.setStation(ticketMachine.getStation());
+
+        LOG.debug("Update ticket machine with ID: " + updatedMachine.getId());
+        LOG.debug("Update ticket machine with uuid: " + updatedMachine.getUuid());
+        LOG.debug("Set station ID to " + updatedMachine.getStation().getId());
+        LOG.debug("Set station name to " + updatedMachine.getStation().getName());
+        LOG.debug("Set station zone to " + updatedMachine.getStation().getZone());
+
+        lunderGroundFacade.updateTicketMachine(updatedMachine);
     }
 }

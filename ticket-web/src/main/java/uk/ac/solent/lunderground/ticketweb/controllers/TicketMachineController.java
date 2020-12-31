@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 import uk.ac.solent.lunderground.ticketweb.WebClientObjectFactory;
 
@@ -31,7 +33,7 @@ public class TicketMachineController
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String GetRegistrationPage()
+    public String getRegistrationPage()
     {
         TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
         // If we've got here it is because the ticket machine has not been previously registered.
@@ -46,14 +48,27 @@ public class TicketMachineController
     }
 
     @RequestMapping(value = "/configure", method = RequestMethod.GET)
-    public String GetConfigurationPage(ModelMap map)
+    public String getConfigurationPage(ModelMap map)
     {
         TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
 
         // Added for initial testing
-        map.addAttribute("machineConfig", facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid()));
+        TicketMachineConfig config = facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid());
+        map.addAttribute("currentUuid", WebClientObjectFactory.getTicketMachineUuid());
+        map.addAttribute("currentStationName", WebClientObjectFactory.getStationName());
+        map.addAttribute("StationList", config.getStationList());
 
         return "configureMachine";
+    }
+
+    @RequestMapping(value = "/updateConfig", method = RequestMethod.POST)
+    public String updateConfig(@RequestParam("uuid") final String uuid,
+                               @RequestParam("stationName") final String stationName)
+    {
+        TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
+        facade.updateTicketMachine(uuid, stationName);
+
+        return "redirect:/configure";
     }
 
     // TODO: Add customer page

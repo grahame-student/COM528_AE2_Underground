@@ -124,11 +124,17 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
         ticketMachineDao.addTicketMachine(newTicketMachine);
     }
 
-//    @Override
-//    public TicketMachine getTicketMachine(String uuid)
-//    {
-//        return ticketMachineDao.getTicketMachine(uuid);
-//    }
+    @Override
+    public TicketMachine getTicketMachine(String uuid)
+    {
+        return ticketMachineDao.getTicketMachine(uuid);
+    }
+
+    @Override
+    public void updateTicketMachine(TicketMachine ticketMachine)
+    {
+        ticketMachineDao.updateTicketMachine(ticketMachine);
+    }
 
     @Override
     public void updateStation(final long stationId, final String newName, final int newZone)

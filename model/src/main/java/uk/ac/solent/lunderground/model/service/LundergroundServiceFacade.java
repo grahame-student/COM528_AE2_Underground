@@ -75,4 +75,6 @@ public interface LundergroundServiceFacade
 //    TicketMachine getTicketMachine(String uuid);
     TicketMachineConfig getTicketMachineConfig(String uuid);
     void addTicketMachine(TicketMachine newTicketMachine);
+    TicketMachine getTicketMachine(String uuid);
+    void updateTicketMachine(TicketMachine ticketMachine);
 }

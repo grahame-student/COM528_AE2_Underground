@@ -18,19 +18,18 @@
                 <form method="post">
                     <p>
                         <label class="col-label">Ticket Machine ID</label>
-                        <label class="col-value">${machineConfig.uuid}</label>
-                        <button>Generate new ID</button>
+                        <label class="col-value">${currentUuid}</label>
                     </p>
                     <p>
-                        <label class="col-label" for="station-name">Station Name</label>
-                        <select class="col-value" id="station-name">
-                            <c:forEach items="${machineConfig.stationList}" var="station" varStatus="tagStatus">
+                        <label class="col-label" for="stationName">Station Name</label>
+                        <select class="col-value" id="stationName" name="stationName">
+                            <c:forEach items="${stationList}" var="station" varStatus="tagStatus">
                                 <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
                             </c:forEach>
                         </select>
                     </p>
                     <p>
-                        <button>Apply Changes</button>
+                        <button type="submit" formaction="updateConfig?uuid=${currentUuid}">Apply Changes</button>
                     </p>
                 </form>
             </div>

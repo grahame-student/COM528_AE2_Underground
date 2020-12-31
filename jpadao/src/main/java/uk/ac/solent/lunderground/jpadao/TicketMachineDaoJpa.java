@@ -56,4 +56,10 @@ public class TicketMachineDaoJpa implements TicketMachineDao
         entityManager.getTransaction()
                      .commit();
     }
+
+    @Override
+    public void updateTicketMachine(TicketMachine ticketMachine)
+    {
+        entityManager.merge(ticketMachine);
+    }
 }
