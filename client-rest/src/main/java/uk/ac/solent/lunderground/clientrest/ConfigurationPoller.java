@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ConfigurationPoller
@@ -24,13 +23,14 @@ public class ConfigurationPoller
     TicketMachineFacade facade = null;
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private ScheduledFuture<?> futureTask = null;
     private String ticketMachineUuid = null;
     private boolean pollerInitialised = false;
-    private Date lastUpdateAttempt;
-    private Date lastUpdateTime;
-    private String stationName;
-    private int stationZone;
+    private Date lastUpdateAttempt = null;
+    private Date lastUpdateTime = null;
+    private String stationName = "";
+    private int stationZone = 0;
+    private List<Station> stationList = null;
+    private PricingSchedule pricingSchedule = null;
 
     public ConfigurationPoller(TicketMachineFacade ticketFacade)
     {
@@ -72,6 +72,11 @@ public class ConfigurationPoller
         return stationZone;
     }
 
+    public List<Station> getStationList()
+    {
+        return stationList;
+    }
+
     /**
      * Start polling periodically for an up to date ticket machine configuration.
      * @param initialDelay time to wait for first attempt
@@ -106,9 +111,9 @@ public class ConfigurationPoller
 
             stationName = config.getStationName();
             stationZone = config.getStationZone();
+            stationList = config.getStationList();
 
-            List<Station> stationList = config.getStationList();
-            PricingSchedule pricingSchedule = config.getPricingSchedule();
+            pricingSchedule = config.getPricingSchedule();
         }
         catch (Exception ex)
         {

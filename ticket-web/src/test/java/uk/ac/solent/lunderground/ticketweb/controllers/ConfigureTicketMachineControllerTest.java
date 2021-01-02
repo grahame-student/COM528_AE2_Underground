@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 )
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TicketMachineControllerTest
+public class ConfigureTicketMachineControllerTest
 {
     /**
      * Web Application Context used to allow the test cases to run.

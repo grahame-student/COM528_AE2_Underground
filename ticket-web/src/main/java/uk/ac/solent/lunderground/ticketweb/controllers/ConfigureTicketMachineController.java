@@ -13,24 +13,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This is the controller for the main landing page http://localhost/lunderground.
- * The controller takes care of serving up the pages related to the various menu items
+ * This is the controller for ticket machine configuration.
  */
 @Controller
-public class TicketMachineController
+public class ConfigureTicketMachineController
 {
     /**
      * Logger instance for the TicketMachineController implementation.
      */
-    private static final Logger LOG = LogManager.getLogger(TicketMachineController.class);
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getMainPage(ModelMap map)
-    {
-        TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
-        map.addAttribute("uuid", WebClientObjectFactory.getTicketMachineUuid());
-        return "index";
-    }
+    private static final Logger LOG = LogManager.getLogger(ConfigureTicketMachineController.class);
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String getRegistrationPage()
@@ -56,7 +47,9 @@ public class TicketMachineController
         TicketMachineConfig config = facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentUuid", WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentStationName", WebClientObjectFactory.getStationName());
-        map.addAttribute("stationList", config.getStationList());
+        map.addAttribute("stationList", WebClientObjectFactory.getStationList());
+        map.addAttribute("lastAttempt", WebClientObjectFactory.getLastUpdateAttempt());
+        map.addAttribute("lastUpdate", WebClientObjectFactory.getLastUpdateTime());
 
         return "configureMachine";
     }
@@ -70,6 +63,4 @@ public class TicketMachineController
 
         return "redirect:/configure";
     }
-
-    // TODO: Add customer page
 }

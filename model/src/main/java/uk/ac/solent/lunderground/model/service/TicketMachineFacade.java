@@ -1,6 +1,9 @@
 package uk.ac.solent.lunderground.model.service;
 
+import uk.ac.solent.lunderground.model.dto.Rate;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
+
+import java.util.Date;
 
 public interface TicketMachineFacade
 {
@@ -24,4 +27,6 @@ public interface TicketMachineFacade
      * @param stationName name of the station to set in the ticket machine
      */
     void updateTicketMachine(String uuid, String stationName);
+    Double getJourneyPrice(String stationName, String destination, Date issueDate);
+    Rate getRateBand(Date issueDate);
 }

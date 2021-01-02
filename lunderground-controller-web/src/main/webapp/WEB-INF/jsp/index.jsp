@@ -18,12 +18,10 @@
                     <menu>
                         <li class="controller-button"><a href="manage-stations">Manage Stations</a></li>
                         <li><hr></li>
-                        <li class="init-stations"><a href="manage-stations/init">Initialise Stations</a></li>
+                        <li class="init-stations"><a href="init">Initialise</a></li>
                     </menu>
                 </nav>
             </div>
-
-            <%@ include file="common/footer.jsp" %>
         </div>
     </body>
 </html>

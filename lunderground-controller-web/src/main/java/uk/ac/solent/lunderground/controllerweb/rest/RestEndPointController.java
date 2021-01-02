@@ -16,6 +16,8 @@ import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
+import java.util.Date;
+
 @RestController
 public class RestEndPointController
 {
@@ -79,5 +81,15 @@ public class RestEndPointController
         LOG.debug("Set station zone to " + updatedMachine.getStation().getZone());
 
         lunderGroundFacade.updateTicketMachine(updatedMachine);
+    }
+
+    @GetMapping(value = "/rest/v1/price/{zones}/{issueDate}")
+    @ResponseStatus(HttpStatus.OK)
+    public Double getJourneyPrice(@PathVariable final int zones,
+                                  @PathVariable final Date issueDate)
+    {
+        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
+
+        return this.lunderGroundFacade.getJourneyPrice(zones, issueDate);
     }
 }

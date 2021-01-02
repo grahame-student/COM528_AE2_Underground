@@ -4,12 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.solent.lunderground.clientrest.ConfigurationPoller;
 import uk.ac.solent.lunderground.clientrest.RestClientObjectFactory;
+import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.ServiceObjectFactory;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @WebListener
@@ -56,6 +59,21 @@ public class WebClientObjectFactory implements ServletContextListener
     public static int getStationZone()
     {
         return configPoller.getStationZone();
+    }
+
+    public static List<Station> getStationList()
+    {
+        return configPoller.getStationList();
+    }
+
+    public static Date getLastUpdateAttempt()
+    {
+        return configPoller.getLastUpdateAttempt();
+    }
+
+    public static Date getLastUpdateTime()
+    {
+        return configPoller.getLastUpdateTime();
     }
 
     public static TicketMachineFacade getServiceFacade()

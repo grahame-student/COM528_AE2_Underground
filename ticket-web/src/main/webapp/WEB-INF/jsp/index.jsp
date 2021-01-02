@@ -16,11 +16,16 @@
             <div id="main-content">
                 <c:if test="${empty uuid}">
                     <form method="post">
-                        <button type="submit" formaction="register" formmethod="post">Register Ticket Machine</button>
+                        <button type="submit" formaction="register">Register Ticket Machine</button>
                     </form>
                 </c:if>
-                <c:if test="${empty uuid}">
-                    <!-- Add menu here: Config, Sales -->
+                <c:if test="${not empty uuid}">
+                    <nav id="ticket-machine-menu">
+                        <menu>
+                            <li class="ticket-button"><a href="configure">Reconfigure Ticket Machine</a></li>
+                            <li class="ticket-button"><a href="sales">Start Sales Kiosk</a></li>
+                        </menu>
+                    </nav>
                 </c:if>
             </div>
 

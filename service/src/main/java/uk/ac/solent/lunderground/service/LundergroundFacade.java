@@ -9,6 +9,7 @@ import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
+import java.util.Date;
 import java.util.List;
 
 public final class LundergroundFacade implements LundergroundServiceFacade, DeveloperFacade
@@ -59,6 +60,18 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     }
 
     @Override
+    public Station getStation(final String stationName)
+    {
+        return stationDao.getStation(stationName);
+    }
+
+    @Override
+    public Station getStation(final long stationId)
+    {
+        return stationDao.getStation(stationId);
+    }
+
+    @Override
     public List<Station> getAllStations()
     {
         return stationDao.retrieveAll();
@@ -76,6 +89,7 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     @Override
     public void deleteStation(final long stationId)
     {
+        // TODO: remove any dependant ticket machines first
         stationDao.deleteStation(stationId);
     }
 
@@ -86,15 +100,14 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     }
 
     @Override
-    public Station getStation(final String stationName)
+    public void updateStation(final long stationId, final String newName, final int newZone)
     {
-        return stationDao.getStation(stationName);
-    }
-
-    @Override
-    public Station getStation(final long stationId)
-    {
-        return stationDao.getStation(stationId);
+        // TODO: What happens if station name changes and it already has ticket machines associated with it.
+        Station station = new Station();
+        station.setId(stationId);
+        station.setName(newName);
+        station.setZone(newZone);
+        stationDao.updateStation(station);
     }
 
     @Override
@@ -137,13 +150,10 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     }
 
     @Override
-    public void updateStation(final long stationId, final String newName, final int newZone)
+    public Double getJourneyPrice(int zonesTravelled, Date issueDate)
     {
-        Station station = new Station();
-        station.setId(stationId);
-        station.setName(newName);
-        station.setZone(newZone);
-        stationDao.updateStation(station);
+        // TODO: Implement pricing
+        return 0.0;
     }
 
     @Override
@@ -152,10 +162,18 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
         this.devStationDao = newStationDao;
     }
 
+    /**
+     * Reinitialise the Lundeground system.
+     * Removes all ticket machine instances and stations
+     */
     @Override
-    public void initStationList()
+    public void reinitialise()
     {
         List<Station> stationList = devStationDao.retrieveAll();
+
+        // Remove ticket machines before stations.
+        // Trying to delete a station that has ticket machines assigned can cause issues
+        ticketMachineDao.deleteAll();
         stationDao.deleteAll();
         for (Station station: stationList)
         {

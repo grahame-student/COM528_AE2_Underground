@@ -5,5 +5,5 @@ import uk.ac.solent.lunderground.model.dao.StationDao;
 public interface DeveloperFacade
 {
     void setDevStationDao(StationDao devStationDao);
-    void initStationList();
+    void reinitialise();
 }

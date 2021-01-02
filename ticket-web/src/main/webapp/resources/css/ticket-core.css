@@ -38,6 +38,10 @@
   text-align: center;
 }
 
+#messages {
+  margin: 3em auto 0;
+}
+
 #lunderground-footer {
   position: fixed;
   bottom: 0;

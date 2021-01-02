@@ -1,11 +1,13 @@
 package uk.ac.solent.lunderground.clientrest;
 
 import org.springframework.web.client.RestTemplate;
+import uk.ac.solent.lunderground.model.dto.Rate;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +76,37 @@ public class RestServiceFacade implements TicketMachineFacade
         // We use a put as we're updating an existing station
         template.put(uri, tm, params);
         configUpdated();
+    }
+
+    @Override
+    public Double getJourneyPrice(String startStation, String destinationStation, Date issueDate)
+    {
+        Station start = getStation(startStation);
+        Station dest = getStation(destinationStation);
+        Integer zonesTravelled = Math.abs(start.getZone() - dest.getZone());
+        Double basePrice = getBasePrice(zonesTravelled, issueDate);
+
+        return basePrice * zonesTravelled;
+    }
+
+    @Override
+    public Rate getRateBand(Date issueDate)
+    {
+        // TODO:
+        return null;
+    }
+
+    private Double getBasePrice(Integer zonesTravelled, Date issueDate)
+    {
+        final String uri = baseUrl + "price/{zones}/{issueDate}";
+
+        RestTemplate template = new RestTemplate();
+        Map<String, String> params = new HashMap<>();
+        params.put("zones", zonesTravelled.toString());
+        params.put("issueDate", issueDate.toString());
+
+        return 0.0;
+        // return template.getForObject(uri, Double.class, params);
     }
 
     private TicketMachine getTicketMachine(String uuid)

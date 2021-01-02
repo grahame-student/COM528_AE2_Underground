@@ -1,6 +1,12 @@
 package uk.ac.solent.lunderground.model.dto;
 
-public class PriceBand
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "PriceBand")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PriceBand implements Comparable<PriceBand>
 {
     /**
      * The minimum allowable hour value.
@@ -48,18 +54,18 @@ public class PriceBand
     }
 
     /**
-     * Set the hour that this pricing band ends at.
-     * @param endHour the hour that this pricing band ends at
+     * Set the hour that this pricing band starts from.
+     * @param startHour the hour that this pricing band starts from
      */
-    public void setHour(int endHour)
+    public void setHour(int startHour)
     {
-        if (endHour < HOUR_MIN || endHour > HOUR_MAX)
+        if (startHour < HOUR_MIN || startHour > HOUR_MAX)
         {
-            String message = "endHour out of bounds: " + endHour
-                           + "\nendHour must be between " + HOUR_MIN + " and " + HOUR_MAX + " inclusive";
+            String message = "startHour out of bounds: " + startHour
+                           + "\nstartHour must be between " + HOUR_MIN + " and " + HOUR_MAX + " inclusive";
             throw new IllegalArgumentException(message);
         }
-        this.hour = endHour;
+        this.hour = startHour;
     }
 
     /**
@@ -73,17 +79,17 @@ public class PriceBand
 
     /**
      * Set the minutes that this pricing band ends at.
-     * @param endMinute the minutes that this pricing band ends at
+     * @param startMinute the minutes that this pricing band ends at
      */
-    public void setMinute(int endMinute)
+    public void setMinute(int startMinute)
     {
-        if (minute < MINUTE_MIN || minute > MINUTE_MAX)
+        if (startMinute < MINUTE_MIN || startMinute > MINUTE_MAX)
         {
-            String message = "endMinute out of bounds: " + endMinute
-                             + "\nendMinute must be between " + MINUTE_MIN + " and " + MINUTE_MAX + " inclusive";
+            String message = "startMinute out of bounds: " + startMinute
+                             + "\nstartMinute must be between " + MINUTE_MIN + " and " + MINUTE_MAX + " inclusive";
             throw new IllegalArgumentException(message);
         }
-        this.minute = endMinute;
+        this.minute = startMinute;
     }
 
     /**
@@ -117,5 +123,11 @@ public class PriceBand
     public String toString()
     {
         return "PriceBand{" + "hour=" + hour + ", minute=" + minute + ", pricingRate=" + pricingRate + "}";
+    }
+
+    @Override
+    public int compareTo(PriceBand other)
+    {
+        return Integer.compare(this.getTimeInMinutes(), other.getTimeInMinutes());
     }
 }

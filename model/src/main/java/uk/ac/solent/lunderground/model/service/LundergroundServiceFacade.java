@@ -4,6 +4,7 @@ import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LundergroundServiceFacade
@@ -77,4 +78,5 @@ public interface LundergroundServiceFacade
     void addTicketMachine(TicketMachine newTicketMachine);
     TicketMachine getTicketMachine(String uuid);
     void updateTicketMachine(TicketMachine ticketMachine);
+    Double getJourneyPrice(int zonesTravelled, Date issueDate);
 }
