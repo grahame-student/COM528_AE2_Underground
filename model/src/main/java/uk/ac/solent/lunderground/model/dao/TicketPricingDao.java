@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.model.dao;
 import uk.ac.solent.lunderground.model.dto.PriceBand;
 import uk.ac.solent.lunderground.model.dto.PricingDetails;
 import uk.ac.solent.lunderground.model.dto.Rate;
+import uk.ac.solent.lunderground.model.dto.Station;
 
 import java.util.Date;
 
@@ -19,4 +20,5 @@ public interface TicketPricingDao
 
     void addPriceBand(PriceBand newBand);
     void deleteAllPriceBands();
+    Double getJourneyPrice(Station startStation, Station destinationStation, Date issueDate);
 }

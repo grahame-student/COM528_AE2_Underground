@@ -5,6 +5,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dto.Rate;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
@@ -32,15 +34,21 @@ public class TicketSalesController
     @RequestMapping(value="/checkout", method=RequestMethod.POST)
     public String CheckoutPage(final ModelMap map, @RequestParam("stationName") final String destination)
     {
-        TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
-        Station destinationStation  = WebClientObjectFactory.getStationList()
-                                                            .stream()
-                                                            .filter(station -> destination.equals(station.getName()))
-                                                            .findAny()
-                                                            .orElse(new Station());
         Date issueDate = new Date();
-        Rate rateBand = facade.getRateBand(issueDate);
-        Double price = facade.getJourneyPrice(WebClientObjectFactory.getStationName(), destination, issueDate);
+        TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
+        StationDao stationDao = facade.getStationDao();
+        TicketPricingDao ticketPricingDao = facade.getTicketPricingDao();
+
+        Station startStation = stationDao.getStation(WebClientObjectFactory.getStationName());
+        Station destinationStation = stationDao.getStation(destination);
+        Rate rateBand = ticketPricingDao.getRateBand(issueDate);
+        Double getJourneyPrice = ticketPricingDao.getJourneyPrice(startStation, destinationStation, issueDate);
+
+
+//        Double getJourneyPrice(String stationName, String destination, Date issueDate);
+
+//        Rate rateBand = facade.getRateBand(issueDate);
+//        Double price = facade.getJourneyPrice(WebClientObjectFactory.getStationName(), destination, issueDate);
 
         map.addAttribute("startStation", WebClientObjectFactory.getStationName());
         map.addAttribute("startZone", WebClientObjectFactory.getStationZone());
@@ -48,7 +56,7 @@ public class TicketSalesController
         map.addAttribute("destZone", destinationStation.getZone());
         map.addAttribute("timeStamp", issueDate);
         map.addAttribute("rateBand", rateBand);
-        map.addAttribute("price", price);
+//        map.addAttribute("price", price);
 
 //                    <li>Display travel summary</li>
 //                    <li>Display ticket price</li>

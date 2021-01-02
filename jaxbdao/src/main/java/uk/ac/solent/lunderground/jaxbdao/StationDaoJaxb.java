@@ -39,21 +39,48 @@ public final class StationDaoJaxb implements StationDao
     /**
      * Constructor for the JAXB StationDao implementation.
      *
-     * @param resourceName URL pointing to an XML file that should be marshalled to or
-     *                    unmarshalled from.
+     * @param resource the XML file to use. This can be either the name of a file in the classPath or
+     *                 the path to an XML file. The full path takes precedence over the filename.
      */
-    public StationDaoJaxb(@NotNull final String resourceName)
+    public StationDaoJaxb(@NotNull final String resource)
     {
-        InputStream tmpFile = null;
+        InputStream tmpFile = getStreamFromPath(resource);
+        if (tmpFile == null)
+        {
+            tmpFile = getStreamFromClassPath(resource);
+        }
+
+        resourceFile = tmpFile;
+    }
+
+    private InputStream getStreamFromPath(String resource)
+    {
+        File file = new File(resource);
+
+        InputStream tmpStream = null;
         try
         {
-            tmpFile = new ClassPathResource(resourceName).getInputStream();
+            tmpStream = new FileInputStream(file);
+        }
+        catch (FileNotFoundException e)
+        {
+            LOG.debug("No station list at: " + resource);
+        }
+        return tmpStream;
+    }
+
+    private InputStream getStreamFromClassPath(String resource)
+    {
+        InputStream tmpStream = null;
+        try
+        {
+            tmpStream = new ClassPathResource(resource).getInputStream();
         }
         catch (IOException e)
         {
-            LOG.error("unable to find " + resourceName + " in the class path");
+            LOG.error("unable to find " + resource + " in the class path");
         }
-        resourceFile = tmpFile;
+        return tmpStream;
     }
 
     @Override
@@ -201,8 +228,7 @@ public final class StationDaoJaxb implements StationDao
     @Override
     public Station getStation(final String stationName)
     {
-        LOG.debug("Not implemented, as not required by any client use cases");
-        return null;
+        return stationMap.get(stationName);
     }
 
     @Override

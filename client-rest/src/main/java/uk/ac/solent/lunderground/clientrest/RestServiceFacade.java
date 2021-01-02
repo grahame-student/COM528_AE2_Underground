@@ -1,13 +1,16 @@
 package uk.ac.solent.lunderground.clientrest;
 
 import org.springframework.web.client.RestTemplate;
-import uk.ac.solent.lunderground.model.dto.Rate;
+import uk.ac.solent.lunderground.jaxbdao.StationDaoJaxb;
+import uk.ac.solent.lunderground.jaxbdao.TicketPricingDaoJaxb;
+import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
-import java.util.Date;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +19,15 @@ import org.apache.logging.log4j.Logger;
 
 public class RestServiceFacade implements TicketMachineFacade
 {
+    private final static String TMP_DIR = System.getProperty("java.io.tmpdir");
+    private final static String STATION_PATH = TMP_DIR + File.separator
+                                            + "ticket_machine_client" + File.separator + "clientStationList.xml";
+    private final static String PRICING_PATH = TMP_DIR + File.separator
+                                               + "ticket_machine_client" + File.separator + "clientPricingDetails.xml";
+
+    private static StationDao stationDAO = null;
+    private static TicketPricingDaoJaxb ticketPricingDao = null;
+
     private Runnable configChangedCallback = null;
     /**
      * Logger instance for the TicketMachineController implementation.
@@ -83,37 +95,6 @@ public class RestServiceFacade implements TicketMachineFacade
         configUpdated();
     }
 
-    @Override
-    public Double getJourneyPrice(String startStation, String destinationStation, Date issueDate)
-    {
-        Station start = getStation(startStation);
-        Station dest = getStation(destinationStation);
-        Integer zonesTravelled = Math.abs(start.getZone() - dest.getZone());
-        Double basePrice = getBasePrice(zonesTravelled, issueDate);
-
-        return basePrice * zonesTravelled;
-    }
-
-    @Override
-    public Rate getRateBand(Date issueDate)
-    {
-        // TODO:
-        return null;
-    }
-
-    private Double getBasePrice(Integer zonesTravelled, Date issueDate)
-    {
-        final String uri = baseUrl + "price/{zones}/{issueDate}";
-
-        RestTemplate template = new RestTemplate();
-        Map<String, String> params = new HashMap<>();
-        params.put("zones", zonesTravelled.toString());
-        params.put("issueDate", issueDate.toString());
-
-        return 0.0;
-        // return template.getForObject(uri, Double.class, params);
-    }
-
     private TicketMachine getTicketMachine(String uuid)
     {
         final String uri = baseUrl + "ticketMachine/{uuid}";
@@ -149,5 +130,33 @@ public class RestServiceFacade implements TicketMachineFacade
         {
             configChangedCallback.run();
         }
+    }
+
+    @Override
+    public StationDao getStationDao()
+    {
+        if (stationDAO == null) {
+            LOG.debug("creating new StationDAO ");
+            synchronized (this) {
+                if (stationDAO == null) {
+                    stationDAO = new StationDaoJaxb(STATION_PATH);
+                }
+            }
+        }
+        return stationDAO;
+    }
+
+    @Override
+    public TicketPricingDao getTicketPricingDao()
+    {
+        if (ticketPricingDao == null) {
+            LOG.debug("creating new priceCalculatorDAO ");
+            synchronized (this) {
+                if (ticketPricingDao == null) {
+                    ticketPricingDao = new TicketPricingDaoJaxb(PRICING_PATH);
+                }
+            }
+        }
+        return ticketPricingDao;
     }
 }

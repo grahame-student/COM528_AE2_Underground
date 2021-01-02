@@ -64,6 +64,16 @@ public class StationDaoJaxbTest
      */
     private static final int TWO_ELEMENTS = 2;
 
+    @Test
+    public void getStationReturnsStationWithPassedInName()
+    {
+        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
+        dao.load();
+
+        Station station = dao.getStation(STATION_1_NAME);
+
+        assertThat(station.getName(), equalTo(STATION_1_NAME));
+    }
 
     @Test
     public void deleteAllRemovesAllStations()

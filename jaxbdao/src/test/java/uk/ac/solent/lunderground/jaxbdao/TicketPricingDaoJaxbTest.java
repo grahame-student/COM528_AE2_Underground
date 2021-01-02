@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.jaxbdao;
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.dto.PriceBand;
 import uk.ac.solent.lunderground.model.dto.Rate;
+import uk.ac.solent.lunderground.model.dto.Station;
 
 import java.io.File;
 import java.util.Calendar;
@@ -21,6 +22,11 @@ public class TicketPricingDaoJaxbTest
     private static final Double SOME_RATE = 1.0;
     private static final int ZERO_ELEMENTS = 0;
     private static final int TWO_ELEMENTS = 2;
+    private static final Double PEAK_RATE = 5.0;
+    private static final Double OFFPEAK_RATE = 2.5;
+    private static final int ZONE_1 = 1;
+    private static final int ZONE_6 = 6;
+    private static final int SIX_ZONES = 6;
 
     private final String testXmlUrl = "pricingTest.xml";
 
@@ -93,6 +99,91 @@ public class TicketPricingDaoJaxbTest
         assertThat(dao.getRateBand(date), equalTo(Rate.OffPeak));
     }
 
+    @Test
+    public void getPricePerZoneReturnsOffPeakRateWhenPassedInTimeInOffPeakBand()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.setOffPeakRate(OFFPEAK_RATE);
+        dao.setPeakRate(PEAK_RATE);
+
+        assertThat(dao.getPricePerZone(new Date()), equalTo(OFFPEAK_RATE));
+    }
+
+    @Test
+    public void getPricePerZoneReturnsPeakRateWhenPassedInTimeInPeakBand()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.addPriceBand(getBand(6, 30, Rate.Peak));
+        dao.setOffPeakRate(OFFPEAK_RATE);
+        dao.setPeakRate(PEAK_RATE);
+
+        assertThat(dao.getPricePerZone(new Date()), equalTo(PEAK_RATE));
+    }
+
+    @Test
+    public void getJourneyPriceReturnsOffPeakPriceWhenDestinationInSameZone()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.setOffPeakRate(OFFPEAK_RATE);
+        Station start = new Station();
+        start.setZone(ZONE_1);
+        Station dest = new Station();
+        dest.setZone(ZONE_1);
+
+        Double price = dao.getJourneyPrice(start, dest, new Date());
+
+        assertThat(price, equalTo(OFFPEAK_RATE));
+    }
+
+    @Test
+    public void getJourneyPriceReturnsOffPeakPriceTimesNumberOfZonesCrossed()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.setOffPeakRate(OFFPEAK_RATE);
+        Station start = new Station();
+        start.setZone(ZONE_1);
+        Station dest = new Station();
+        dest.setZone(ZONE_6); // Travel in 6 zones 1 through 6 inclusive
+
+        Double price = dao.getJourneyPrice(start, dest, new Date());
+
+        Double expected_price = OFFPEAK_RATE * SIX_ZONES;
+        assertThat(price, equalTo(expected_price));
+    }
+
+    @Test
+    public void getJourneyPriceReturnsPeakPriceWhenDestinationInSameZoneAndInPeakTimeBand()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.setPeakRate(PEAK_RATE);
+        dao.addPriceBand(getBand(6, 30, Rate.Peak));
+        Station start = new Station();
+        start.setZone(ZONE_1);
+        Station dest = new Station();
+        dest.setZone(ZONE_1);
+
+        Double price = dao.getJourneyPrice(start, dest, getDate(6, 31));
+
+        assertThat(price, equalTo(PEAK_RATE));
+    }
+
+    @Test
+    public void getJourneyPriceReturnsPeakPriceTimesZonesTravelledWhenInPeakTimeBand()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+        dao.setPeakRate(PEAK_RATE);
+        dao.addPriceBand(getBand(6, 30, Rate.Peak));
+        Station start = new Station();
+        start.setZone(ZONE_1);
+        Station dest = new Station();
+        dest.setZone(ZONE_6);
+
+        Double price = dao.getJourneyPrice(start, dest, getDate(6, 31));
+        Double expected_price = PEAK_RATE * SIX_ZONES;
+
+        assertThat(price, equalTo(expected_price));
+    }
+
     /**
      * Check that the stationTest.xml can be unmarshalled into a List of all Stations.
      */
@@ -106,6 +197,34 @@ public class TicketPricingDaoJaxbTest
         List<?> list = dao.getPricingDetails()
                           .getPriceBands();
         assertThat(list.size(), equalTo(TWO_ELEMENTS));
+    }
+
+    /**
+     * Check that the peak rate is unmarshalled correctly.
+     */
+    @Test
+    public void loadUnmarshalsPeakRateFromXmlFile()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+
+        dao.load();
+
+        Double price = dao.getPricingDetails().getPeakRate();
+        assertThat(price, equalTo(PEAK_RATE));
+    }
+
+    /**
+     * Check that the peak rate is unmarshalled correctly.
+     */
+    @Test
+    public void loadUnmarshalsOffPeakRateFromXmlFile()
+    {
+        TicketPricingDaoJaxb dao = new TicketPricingDaoJaxb(testXmlUrl);
+
+        dao.load();
+
+        Double price = dao.getPricingDetails().getOffPeakRate();
+        assertThat(price, equalTo(OFFPEAK_RATE));
     }
 
     @Test

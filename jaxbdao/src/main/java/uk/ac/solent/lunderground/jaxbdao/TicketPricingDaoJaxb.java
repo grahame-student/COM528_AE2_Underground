@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.ac.solent.lunderground.model.dto.Station;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBContext;
@@ -90,7 +91,7 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     @Override
     public synchronized Double getPricePerZone(Date date)
     {
-        return null;
+        return getRateBand(date) == Rate.OffPeak ? offPeakRate : peakRate;
     }
 
     @Override
@@ -110,6 +111,19 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     public synchronized void deleteAllPriceBands()
     {
         priceBands.clear();
+    }
+
+    @Override
+    public Double getJourneyPrice(Station startStation, Station destinationStation, Date issueDate)
+    {
+        int zonesTravelled = getZonesTravelled(startStation, destinationStation);
+        return getPricePerZone(issueDate) * zonesTravelled;
+    }
+
+    private int getZonesTravelled(Station startStation, Station destinationStation)
+    {
+        // We add 1 because we always travel in at least one zone.
+        return Math.abs(startStation.getZone() - destinationStation.getZone()) + 1;
     }
 
     @Override
