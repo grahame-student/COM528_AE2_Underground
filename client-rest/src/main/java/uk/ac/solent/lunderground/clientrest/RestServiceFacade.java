@@ -22,7 +22,12 @@ public class RestServiceFacade implements TicketMachineFacade
      */
     private static final Logger LOG = LogManager.getLogger(RestServiceFacade.class);
 
-    static final String baseUrl = "http://localhost/lunderground/rest/v1/";
+    private final String baseUrl;
+
+    public RestServiceFacade(String baseRestUrl)
+    {
+        this.baseUrl = baseRestUrl;
+    }
 
     @Override
     public void ticketMachineConfigChanged(Runnable callback)

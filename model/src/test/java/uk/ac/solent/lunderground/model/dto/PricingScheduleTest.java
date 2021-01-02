@@ -29,6 +29,16 @@ public class PricingScheduleTest
         assertThat(schedule.getRateBand(date), equalTo(Rate.Peak));
     }
 
+    @Test
+    public void getRateBandReturnsOffPeakWhenPassedInTimeAfterStartOfOffPeakPriceBand()
+    {
+        PricingSchedule schedule = new PricingSchedule();
+        schedule.addPriceBand(getBand(6, 30, Rate.Peak));
+        schedule.addPriceBand(getBand(9, 30, Rate.OffPeak));
+
+        Date date = getDate(9, 31);
+        assertThat(schedule.getRateBand(date), equalTo(Rate.OffPeak));
+    }
 
     // Helper methods to simplify test cases
     private Date getDate(int hour, int minute)

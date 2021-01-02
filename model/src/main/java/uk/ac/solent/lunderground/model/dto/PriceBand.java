@@ -1,5 +1,6 @@
 package uk.ac.solent.lunderground.model.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -126,7 +127,7 @@ public class PriceBand implements Comparable<PriceBand>
     }
 
     @Override
-    public int compareTo(PriceBand other)
+    public int compareTo(@NotNull PriceBand other)
     {
         return Integer.compare(this.getTimeInMinutes(), other.getTimeInMinutes());
     }

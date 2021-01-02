@@ -3,7 +3,6 @@ package uk.ac.solent.lunderground.model.dto;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
@@ -130,7 +129,11 @@ public class PriceBandTest
         band.setHour(SOME_HOUR);
         band.setMinute(SOME_MINUTE);
 
-        assertThat(band.compareTo(band), equalTo(0));
+        PriceBand other = new PriceBand();
+        other.setHour(SOME_HOUR);
+        other.setMinute(SOME_MINUTE);
+
+        assertThat(band.compareTo(other), equalTo(0));
     }
 
     @Test

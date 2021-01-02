@@ -7,6 +7,13 @@ import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
 public class RestClientObjectFactory implements ServiceObjectFactory
 {
+    static final String baseUrl = "http://localhost/lunderground/rest/v1/";
+
+    /**
+     * Instance of the LundergroundServiceFacade to use to access the London underground service.
+     */
+    private RestServiceFacade restFacade;
+
     @Override
     public LundergroundServiceFacade getLundergroundFacade()
     {
@@ -22,6 +29,17 @@ public class RestClientObjectFactory implements ServiceObjectFactory
     @Override
     public TicketMachineFacade getTicketMachineFacade()
     {
-        return new RestServiceFacade();
+        if (restFacade == null)
+        {
+            synchronized (this)
+            {
+                if (restFacade == null)
+                {
+                    this.restFacade = new RestServiceFacade(baseUrl);
+                }
+            }
+        }
+
+        return restFacade;
     }
 }

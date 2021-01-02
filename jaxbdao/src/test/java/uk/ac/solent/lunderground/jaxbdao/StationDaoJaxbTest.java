@@ -3,8 +3,7 @@ package uk.ac.solent.lunderground.jaxbdao;
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.dto.Station;
 
-import java.io.IOException;
-import java.net.URL;
+import java.io.File;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,6 +15,16 @@ import static org.hamcrest.Matchers.equalTo;
  */
 public class StationDaoJaxbTest
 {
+    /*
+     *  These tests are not strictly unit tests as we are testing
+     *  that station instances are being persisted to the disk
+     *  As a result these tests are relatively slow.
+     */
+
+    private final static String TMP_DIR = System.getProperty("java.io.tmpdir");
+    private final static String FILE_PATH = TMP_DIR + File.separator + "test" + File.separator;
+    private static final int ZERO_ELEMENTS = 0;
+
     /**
      * Path to test XML file unmarshalling. Doesn't need to be super robust for testing purposes.
      *
@@ -23,8 +32,7 @@ public class StationDaoJaxbTest
      *     Abbey Road, Zone 2
      *     Acton Town, Zone 3
      */
-    private final String testXmlUrl = "test.xml";
-    private final String testXml2Url = "test2.xml";
+    private final String testXmlUrl = "stationTest.xml";
 
     /**
      * Expected name of the first station in the StationList.
@@ -57,12 +65,11 @@ public class StationDaoJaxbTest
     private static final int TWO_ELEMENTS = 2;
 
     /**
-     * Check that the test.xml can be unmarshalled into a List of all Stations.
+     * Check that the stationTest.xml can be unmarshalled into a List of all Stations.
      */
     @Test
-    public void LoadUnmarshalsStationsFromXmlFile() throws IOException
+    public void loadUnmarshalsStationsFromXmlFile()
     {
-        assert testXmlUrl != null;
         StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
 
         dao.load();
@@ -75,9 +82,8 @@ public class StationDaoJaxbTest
      * Check that the station name is unmarshalled correctly.
      */
     @Test
-    public void LoadUnmarshalsStationNameFromXmlFile()
+    public void loadUnmarshalsStationNameFromXmlFile()
     {
-        assert testXmlUrl != null;
         StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
 
         dao.load();
@@ -91,9 +97,8 @@ public class StationDaoJaxbTest
      * Check that the station zone is unmarshalled correctly.
      */
     @Test
-    public void LoadUnmarshalsStationZoneFromXmlFile()
+    public void loadUnmarshalsStationZoneFromXmlFile()
     {
-        assert testXmlUrl != null;
         StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
 
         dao.load();
@@ -103,29 +108,75 @@ public class StationDaoJaxbTest
         assertThat(firstStation.getZone(), equalTo(STATION_1_ZONE));
     }
 
-//    /**
-//     * Check that we can round trip a StationList using the DAO.
-//     */
-//    @Test
-//    public void SaveMarshalsStationListToXMLFile()
-//    {
-//        assert testXml2Url != null;
-//        StationDaoJaxb dao = new StationDaoJaxb(testXml2Url);
-//
-//        Station station1 = new Station();
-//        station1.setName(STATION_1_NAME);
-//        station1.setZone(STATION_1_ZONE);
-//        dao.addStation(station1);
-//        Station station2 = new Station();
-//        station2.setName(STATION_2_NAME);
-//        station2.setZone(STATION_2_ZONE);
-//        dao.addStation(station2);
-//        dao.save();
-//        List<Station> before = dao.retrieveAll();
-//
-//        dao.load();
-//        List<Station> after = dao.retrieveAll();
-//
-//        assertThat(after, equalTo(before));
-//    }
+    @Test
+    public void saveCreatesFileInSpecifiedPath()
+    {
+        String testPath = FILE_PATH + "testFile.xml";
+        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
+        dao.load();
+
+        dao.save(testPath);
+
+        File file = new File(testPath);
+        assertThat(file.exists(), equalTo(true));
+    }
+
+    @Test
+    public void savePopulatesFileWithStationList()
+    {
+        String testPath = FILE_PATH + "testFile.xml";
+        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
+        dao.load();
+        List<Station> before = dao.retrieveAll();
+
+        dao.save(testPath);
+        dao.deleteAll();
+
+        dao.load(testPath);
+        List<Station> after = dao.retrieveAll();
+        assertThat(after, equalTo(before));
+    }
+
+    @Test
+    public void deleteAllRemovesAllStations()
+    {
+        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
+        dao.load();
+        System.out.println(dao.retrieveAll());
+
+        dao.deleteAll();
+        System.out.println(dao.retrieveAll());
+
+        assertThat(dao.retrieveAll().size(), equalTo(ZERO_ELEMENTS));
+    }
+
+    /**
+     * Check that we can round trip a StationList using the DAO.
+     */
+    @Test
+    public void SaveMarshalsStationListToXMLFile()
+    {
+        String testPath = FILE_PATH + "testFile.xml";
+        String testXml2Url = "stationTest2.xml";
+        StationDaoJaxb dao = new StationDaoJaxb(testXml2Url);
+
+        Station station1 = new Station();
+        station1.setName(STATION_1_NAME);
+        station1.setZone(STATION_1_ZONE);
+        dao.addStation(station1);
+        Station station2 = new Station();
+        station2.setName(STATION_2_NAME);
+        station2.setZone(STATION_2_ZONE);
+        dao.addStation(station2);
+        dao.save(testPath);
+        List<Station> before = dao.retrieveAll();
+        System.out.println(before);
+        dao.deleteAll();
+
+        dao.load(testPath);
+        List<Station> after = dao.retrieveAll();
+        System.out.println(after);
+
+        assertThat(after, equalTo(before));
+    }
 }
