@@ -63,4 +63,6 @@ public class PricingDetails
                ", peakRate=" + peakRate +
                '}';
     }
+
+
 }

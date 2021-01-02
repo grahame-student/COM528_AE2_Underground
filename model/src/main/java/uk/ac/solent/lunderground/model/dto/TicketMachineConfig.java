@@ -19,7 +19,7 @@ public class TicketMachineConfig
     @XmlElement(name = "Station")
     private List<Station> stationList;
 
-    private PricingSchedule pricingSchedule;
+    private PricingDetails pricingDetails;
 
     public String getUuid()
     {
@@ -70,14 +70,14 @@ public class TicketMachineConfig
         this.stationList = stationList;
     }
 
-    public PricingSchedule getPricingSchedule()
+    public PricingDetails getPricingDetails()
     {
-        return pricingSchedule;
+        return pricingDetails;
     }
 
-    public void setPricingSchedule(PricingSchedule pricingSchedule)
+    public void setPricingDetails(PricingDetails newDetails)
     {
-        this.pricingSchedule = pricingSchedule;
+        this.pricingDetails = newDetails;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TicketMachineConfig
                ", stationName='" + stationName + '\'' +
                ", stationZone=" + stationZone +
                ", stationList=" + stationList +
-               ", pricingSchedule=" + pricingSchedule +
+               ", pricingSchedule=" + pricingDetails +
                '}';
     }
 }

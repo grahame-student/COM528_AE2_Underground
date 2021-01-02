@@ -163,4 +163,13 @@ public class PriceBandTest
 
         assertThat(band.compareTo(other), lessThan(0));
     }
+
+    @Test
+    public void equalsReturnsTrueWhenInstancesHaveSameConfiguration()
+    {
+        PriceBand band = new PriceBand();
+        PriceBand other = new PriceBand();
+
+        assertThat(band, equalTo(other));
+    }
 }

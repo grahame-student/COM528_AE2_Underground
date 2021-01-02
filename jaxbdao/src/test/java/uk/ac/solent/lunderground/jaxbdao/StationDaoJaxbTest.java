@@ -22,7 +22,7 @@ public class StationDaoJaxbTest
      */
 
     private final static String TMP_DIR = System.getProperty("java.io.tmpdir");
-    private final static String FILE_PATH = TMP_DIR + File.separator + "test" + File.separator;
+    private final static String FILE_PATH = TMP_DIR + File.separator + "station_test" + File.separator;
     private static final int ZERO_ELEMENTS = 0;
 
     /**
@@ -63,6 +63,20 @@ public class StationDaoJaxbTest
      * Number of elements to expect in a collection.
      */
     private static final int TWO_ELEMENTS = 2;
+
+
+    @Test
+    public void deleteAllRemovesAllStations()
+    {
+        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
+        dao.load();
+        System.out.println(dao.retrieveAll());
+
+        dao.deleteAll();
+        System.out.println(dao.retrieveAll());
+
+        assertThat(dao.retrieveAll().size(), equalTo(ZERO_ELEMENTS));
+    }
 
     /**
      * Check that the stationTest.xml can be unmarshalled into a List of all Stations.
@@ -135,19 +149,6 @@ public class StationDaoJaxbTest
         dao.load(testPath);
         List<Station> after = dao.retrieveAll();
         assertThat(after, equalTo(before));
-    }
-
-    @Test
-    public void deleteAllRemovesAllStations()
-    {
-        StationDaoJaxb dao = new StationDaoJaxb(testXmlUrl);
-        dao.load();
-        System.out.println(dao.retrieveAll());
-
-        dao.deleteAll();
-        System.out.println(dao.retrieveAll());
-
-        assertThat(dao.retrieveAll().size(), equalTo(ZERO_ELEMENTS));
     }
 
     /**

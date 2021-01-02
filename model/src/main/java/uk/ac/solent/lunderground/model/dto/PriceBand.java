@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @XmlRootElement(name = "PriceBand")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -130,5 +131,28 @@ public class PriceBand implements Comparable<PriceBand>
     public int compareTo(@NotNull PriceBand other)
     {
         return Integer.compare(this.getTimeInMinutes(), other.getTimeInMinutes());
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        PriceBand priceBand = (PriceBand) o;
+        return hour == priceBand.hour
+               && minute == priceBand.minute
+               && pricingRate == priceBand.pricingRate;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(hour, minute, pricingRate);
     }
 }

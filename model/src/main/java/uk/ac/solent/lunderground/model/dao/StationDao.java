@@ -19,6 +19,7 @@ public interface StationDao
      * @param newStation The Station to be saved to the database
      */
     void addStation(Station newStation);
+    void setStationList(List<Station> stationList);
 
     /**
      * Remove the station with passed in ID from the database.

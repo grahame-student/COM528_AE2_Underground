@@ -2,7 +2,9 @@ package uk.ac.solent.lunderground.clientrest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.ac.solent.lunderground.model.dto.PricingSchedule;
+import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
+import uk.ac.solent.lunderground.model.dto.PricingDetails;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
@@ -29,8 +31,12 @@ public class ConfigurationPoller
     private Date lastUpdateTime = null;
     private String stationName = "";
     private int stationZone = 0;
+
     private List<Station> stationList = null;
-    private PricingSchedule pricingSchedule = null;
+    private StationDao stationDao = null;
+
+    private PricingDetails pricingDetails = null;
+    private TicketPricingDao ticketPricingDao = null;
 
     public ConfigurationPoller(TicketMachineFacade ticketFacade)
     {
@@ -113,7 +119,11 @@ public class ConfigurationPoller
             stationZone = config.getStationZone();
             stationList = config.getStationList();
 
-            pricingSchedule = config.getPricingSchedule();
+            stationDao.deleteAll();
+            stationDao.setStationList(config.getStationList());
+
+            ticketPricingDao.deleteAllPriceBands();
+            ticketPricingDao.setPricingDetails(config.getPricingDetails());
         }
         catch (Exception ex)
         {

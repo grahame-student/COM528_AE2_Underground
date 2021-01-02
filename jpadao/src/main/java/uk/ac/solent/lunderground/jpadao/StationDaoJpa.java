@@ -45,6 +45,15 @@ public final class StationDaoJpa implements StationDao
     }
 
     @Override
+    public void setStationList(List<Station> stationList)
+    {
+        for (Station station : stationList)
+        {
+            addStation(station);
+        }
+    }
+
+    @Override
     public void deleteStation(final long stationId)
     {
         entityManager.getTransaction()

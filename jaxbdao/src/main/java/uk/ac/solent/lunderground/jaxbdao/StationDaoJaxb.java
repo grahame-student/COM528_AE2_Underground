@@ -56,13 +56,38 @@ public final class StationDaoJaxb implements StationDao
         resourceFile = tmpFile;
     }
 
+    @Override
+    public synchronized List<Station> retrieveAll()
+    {
+        return new ArrayList<>(stationMap.values());
+    }
+
+    @Override
+    public synchronized void addStation(final Station newStation)
+    {
+        stationMap.put(newStation.getName(), newStation);
+    }
+
+    @Override
+    public void setStationList(List<Station> stationList)
+    {
+        storeStationList(stationList);
+    }
+
+    @Override
+    public void deleteAll()
+    {
+        LOG.debug("Removed all stations");
+        stationMap.clear();
+    }
+
     /**
      * Load a list of stations from XML.
      */
     public void load()
     {
         StationList stationList = getStationsFromStream(resourceFile);
-        storeStationList(stationList);
+        storeStationList(stationList.getStationList());
     }
 
     public void load(String path)
@@ -74,7 +99,7 @@ public final class StationDaoJaxb implements StationDao
             InputStream stream = new FileInputStream(file);
 
             StationList stationList = getStationsFromStream(stream);
-            storeStationList(stationList);
+            storeStationList(stationList.getStationList());
         }
         catch (FileNotFoundException e)
         {
@@ -100,12 +125,12 @@ public final class StationDaoJaxb implements StationDao
         return stationList;
     }
 
-    private void storeStationList(final StationList stationList)
+    private void storeStationList(final List<Station> stationList)
     {
         stationMap.clear();
         if (stationList != null)
         {
-            for (Station station : stationList.getStationList())
+            for (Station station : stationList)
             {
                 stationMap.put(station.getName(), station);
             }
@@ -120,7 +145,7 @@ public final class StationDaoJaxb implements StationDao
      * Save the configured station list to the directory specified
      * @param savePath Path to the directory to save the station list to
      */
-    public void save(String savePath)
+    public void save(final String savePath)
     {
         File file = new File(savePath);
         LOG.debug("Saving to: " + file.getAbsolutePath());
@@ -168,28 +193,9 @@ public final class StationDaoJaxb implements StationDao
     }
 
     @Override
-    public synchronized List<Station> retrieveAll()
-    {
-        return new ArrayList<>(stationMap.values());
-    }
-
-    @Override
-    public synchronized void addStation(final Station newStation)
-    {
-        stationMap.put(newStation.getName(), newStation);
-    }
-
-    @Override
     public void deleteStation(final long stationId)
     {
         LOG.debug("Not implemented, as not required by any client use cases");
-    }
-
-    @Override
-    public void deleteAll()
-    {
-        LOG.debug("Removed all stations");
-        stationMap.clear();
     }
 
     @Override
