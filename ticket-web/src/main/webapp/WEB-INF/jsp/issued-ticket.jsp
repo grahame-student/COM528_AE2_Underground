@@ -14,9 +14,19 @@
             <%@ include file="common/header.jsp" %>
 
             <div id="main-content">
+                <form method="get">
+                    <c:if test="${empty ticket.validationCode}">
+                        <p class="message">${xmlTicket}</p>
+                    </c:if>
+                    <c:if test="${not empty ticket.validationCode}">
+                        <label for="ticket"></label>
+                        <textarea id="ticket" readonly rows="20">${xmlTicket}</textarea>
+                    </c:if>
+
+                    <button type="submit" formaction="sales">Return to Sales Screen</button>
+                </form>
 
 
-                <button type="submit" formaction="sales" formmethod="get"></button>
             </div>
 
             <%@ include file="common/footer.jsp" %>

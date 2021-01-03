@@ -12,6 +12,12 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
 
+        <File name="LogToFile" fileName="./logs/tomcat.log">
+            <PatternLayout>
+                <PatternLayout pattern="${LOG_PATTERN}"/>
+            </PatternLayout>
+        </File>
+
     </Appenders>
     <Loggers>
 
@@ -19,11 +25,18 @@
         <!-- i.e. in our config, classes in package names beginning uk.ac.solent.lunderground -->
         <Logger name="uk.ac.solent.lunderground" additivity="false" level="DEBUG">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogToFile" />
         </Logger>
 
-        <!-- this logs to  the Consol (System.out) -->
-        <Root level="DEBUG">
+        <Logger name="uk.ac.solent.lunderground.ticketweb.controllers.TicketSalesController" additivity="false" level="INFO">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogToFile" />
+        </Logger>
+
+
+        <!-- this logs to  the Console (System.out) -->
+        <Root level="DEBUG">
+            <AppenderRef ref="Console" />
         </Root>
     </Loggers>
 </Configuration>

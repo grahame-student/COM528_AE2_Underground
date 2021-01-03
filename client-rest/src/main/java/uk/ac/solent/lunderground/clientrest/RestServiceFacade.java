@@ -127,6 +127,32 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
+    public Ticket getTicket(String startStation, String destStation)
+    {
+        return getTicket(startStation, destStation, new Date());
+    }
+
+    @Override
+    public Ticket getTicket(String startStation, String destStation, Date issueDate)
+    {
+        stationDAO = getStationDao();
+        ticketPricingDao = getTicketPricingDao();
+        ticketDao = getTicketDao();
+
+        Ticket ticket = new Ticket();
+        ticket.setValidFrom(issueDate);
+        ticket.setValidTo(ticketPricingDao.getExpiryDate(ticket.getValidFrom()));
+        ticket.setStartStation(stationDAO.getStation(startStation));
+        ticket.setDestStation(stationDAO.getStation(destStation));
+        ticket.setRateBand(ticketPricingDao.getRateBand(ticket.getValidFrom()));
+        ticket.setPrice(ticketPricingDao.getJourneyPrice(ticket.getStartStation(),
+                ticket.getDestStation(),
+                ticket.getValidFrom()));
+
+        return ticket;
+    }
+
+    @Override
     public String encodeTicket(Ticket ticket)
     {
         ticketDao = getTicketDao();
@@ -197,25 +223,5 @@ public class RestServiceFacade implements TicketMachineFacade
             }
         }
         return ticketDao;
-    }
-
-    @Override
-    public Ticket getTicket(String startStation, String destStation)
-    {
-        stationDAO = getStationDao();
-        ticketPricingDao = getTicketPricingDao();
-        ticketDao = getTicketDao();
-
-        Ticket ticket = new Ticket();
-        ticket.setValidFrom(new Date());
-        ticket.setValidTo(ticketPricingDao.getExpiryDate(ticket.getValidFrom()));
-        ticket.setStartStation(stationDAO.getStation(startStation));
-        ticket.setDestStation(stationDAO.getStation(destStation));
-        ticket.setRateBand(ticketPricingDao.getRateBand(ticket.getValidFrom()));
-        ticket.setPrice(ticketPricingDao.getJourneyPrice(ticket.getStartStation(),
-                                                         ticket.getDestStation(),
-                                                         ticket.getValidFrom()));
-
-        return ticket;
     }
 }

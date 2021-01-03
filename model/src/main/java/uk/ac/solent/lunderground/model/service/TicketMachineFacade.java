@@ -34,5 +34,6 @@ public interface TicketMachineFacade
     StationDao getStationDao();
     TicketPricingDao getTicketPricingDao();
     Ticket getTicket(String startStation, String destStation);
+    Ticket getTicket(String startStation, String destStation, Date issueDate);
     String encodeTicket(Ticket ticket);
 }
