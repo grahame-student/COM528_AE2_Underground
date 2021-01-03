@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.jpadao;
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 
 import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
@@ -66,6 +67,13 @@ public final class DaoFactoryJpa implements DaoFactory
     public TicketMachineDao getTicketMachineDao()
     {
         return ticketMachineDao;
+    }
+
+    @Override
+    public TicketPricingDao getTicketPricingDao()
+    {
+        // Not implemented
+        return null;
     }
 
     @Override

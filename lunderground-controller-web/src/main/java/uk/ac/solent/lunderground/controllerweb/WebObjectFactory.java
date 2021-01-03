@@ -39,7 +39,7 @@ public final class WebObjectFactory
         return lundergroundFacade;
     }
 
-    public static DeveloperFacade getdeveloperFacade()
+    public static DeveloperFacade getDeveloperFacade()
     {
         if (devFacade == null)
         {

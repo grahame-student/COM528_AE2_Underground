@@ -21,4 +21,5 @@ public interface TicketPricingDao
     void addPriceBand(PriceBand newBand);
     void deleteAllPriceBands();
     Double getJourneyPrice(Station startStation, Station destinationStation, Date issueDate);
+    Date getExpiryDate(Date issueDate);
 }

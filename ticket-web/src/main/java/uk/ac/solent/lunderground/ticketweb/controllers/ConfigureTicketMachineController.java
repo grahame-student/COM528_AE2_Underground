@@ -5,7 +5,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 import uk.ac.solent.lunderground.ticketweb.WebClientObjectFactory;
 
@@ -44,7 +43,6 @@ public class ConfigureTicketMachineController
         TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
 
         // Added for initial testing
-        TicketMachineConfig config = facade.getTicketMachineConfig(WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentUuid", WebClientObjectFactory.getTicketMachineUuid());
         map.addAttribute("currentStationName", WebClientObjectFactory.getStationName());
         map.addAttribute("stationList", WebClientObjectFactory.getStationList());

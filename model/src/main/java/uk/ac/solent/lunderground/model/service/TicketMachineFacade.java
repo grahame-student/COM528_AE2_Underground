@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.model.service;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dto.Rate;
+import uk.ac.solent.lunderground.model.dto.Ticket;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
 import java.util.Date;
@@ -32,4 +33,6 @@ public interface TicketMachineFacade
 
     StationDao getStationDao();
     TicketPricingDao getTicketPricingDao();
+    Ticket getTicket(String startStation, String destStation);
+    String encodeTicket(Ticket ticket);
 }

@@ -5,6 +5,7 @@ import uk.ac.solent.lunderground.jpadao.DaoFactoryJpa;
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.service.DeveloperFacade;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
@@ -23,9 +24,13 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
      */
     private final DeveloperFacade developerFacade;
     /**
-     * Instance of the DaoFactory to use when creating Dao objects.
+     * Instance of the DaoFactory to use when creating Jpa Dao objects.
      */
-    private DaoFactory daoFactory = null;
+    private DaoFactory daoFactoryJpa = null;
+    /**
+     * Instance of the DaoFactory to use when creating Jpa Dao objects.
+     */
+    private DaoFactory daoFactoryJaxb = null;
     /**
      * Instance of the StationDao to use when accessing Station functionality.
      */
@@ -39,11 +44,11 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
      * Instance of the TicketMachineDao to use when accessing TicketMachine functionality.
      */
     private TicketMachineDao ticketMachineDao = null;
-
     /**
-     * Instance of the DaoFactory to use when creating Dao objects for dev purposes.
+     * Instance of the TicketPricingDao to use when accessing Schedule and Pricing functionality for dev purposes.
      */
-    private DaoFactory devDaoFactory = null;
+    private TicketPricingDao ticketPricingDao = null;
+
     /**
      * Instance of the StationDao to use when accessing Station functionality for dev purposes.
      */
@@ -58,26 +63,30 @@ public final class ServiceObjectFactoryImpl implements ServiceObjectFactory
         lundergroundFacade = facade;
         developerFacade = facade;
 
+        daoFactoryJpa = new DaoFactoryJpa();
+        daoFactoryJaxb = new DaoFactoryJaxb();
+
         initLundergroundFacade(facade);
         initDeveloperFacade(facade);
     }
 
     private void initLundergroundFacade(final LundergroundFacade facade)
     {
-        daoFactory = new DaoFactoryJpa();
-        stationDao = daoFactory.getStationDao();
-        zoneDao = daoFactory.getZoneDao();
-        ticketMachineDao = daoFactory.getTicketMachineDao();
+        stationDao = daoFactoryJpa.getStationDao();
+        zoneDao = daoFactoryJpa.getZoneDao();
+        ticketMachineDao = daoFactoryJpa.getTicketMachineDao();
+        ticketPricingDao = daoFactoryJaxb.getTicketPricingDao();
 
         facade.setStationDao(stationDao);
         facade.setZoneDao(zoneDao);
         facade.setTicketMachineDao(ticketMachineDao);
+        facade.setPricingDao(ticketPricingDao);
     }
 
     private void initDeveloperFacade(final DeveloperFacade facade)
     {
-        devDaoFactory = new DaoFactoryJaxb();
-        devStationDao = devDaoFactory.getStationDao();
+        devStationDao = daoFactoryJaxb.getStationDao();
+
         facade.setDevStationDao(devStationDao);
     }
 

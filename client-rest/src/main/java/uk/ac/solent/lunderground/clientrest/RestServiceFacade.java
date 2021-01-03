@@ -2,15 +2,19 @@ package uk.ac.solent.lunderground.clientrest;
 
 import org.springframework.web.client.RestTemplate;
 import uk.ac.solent.lunderground.jaxbdao.StationDaoJaxb;
+import uk.ac.solent.lunderground.jaxbdao.TicketDaoJaxb;
 import uk.ac.solent.lunderground.jaxbdao.TicketPricingDaoJaxb;
 import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dao.TicketDao;
 import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dto.Station;
+import uk.ac.solent.lunderground.model.dto.Ticket;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,12 +25,13 @@ public class RestServiceFacade implements TicketMachineFacade
 {
     private final static String TMP_DIR = System.getProperty("java.io.tmpdir");
     private final static String STATION_PATH = TMP_DIR + File.separator
-                                            + "ticket_machine_client" + File.separator + "clientStationList.xml";
+                                               + "ticket_machine_client" + File.separator + "clientStationList.xml";
     private final static String PRICING_PATH = TMP_DIR + File.separator
                                                + "ticket_machine_client" + File.separator + "clientPricingDetails.xml";
 
     private static StationDao stationDAO = null;
-    private static TicketPricingDaoJaxb ticketPricingDao = null;
+    private static TicketPricingDao ticketPricingDao = null;
+    private static TicketDao ticketDao = null;
 
     private Runnable configChangedCallback = null;
     /**
@@ -121,6 +126,13 @@ public class RestServiceFacade implements TicketMachineFacade
         return template.getForObject(uri, Station.class, params);
     }
 
+    @Override
+    public String encodeTicket(Ticket ticket)
+    {
+        ticketDao = getTicketDao();
+        return ticketDao.encodeTicket(ticket);
+    }
+
     /**
      * Execute the registered callback.
      */
@@ -132,13 +144,21 @@ public class RestServiceFacade implements TicketMachineFacade
         }
     }
 
+    /**
+     * Get an instance of a StationDao for the rest client instance to use
+     *
+     * @return
+     */
     @Override
     public StationDao getStationDao()
     {
-        if (stationDAO == null) {
-            LOG.debug("creating new StationDAO ");
-            synchronized (this) {
-                if (stationDAO == null) {
+        if (stationDAO == null)
+        {
+            synchronized (this)
+            {
+                if (stationDAO == null)
+                {
+                    LOG.debug("creating new StationDao");
                     stationDAO = new StationDaoJaxb(STATION_PATH);
                 }
             }
@@ -149,14 +169,53 @@ public class RestServiceFacade implements TicketMachineFacade
     @Override
     public TicketPricingDao getTicketPricingDao()
     {
-        if (ticketPricingDao == null) {
-            LOG.debug("creating new priceCalculatorDAO ");
-            synchronized (this) {
-                if (ticketPricingDao == null) {
+        if (ticketPricingDao == null)
+        {
+            synchronized (this)
+            {
+                if (ticketPricingDao == null)
+                {
+                    LOG.debug("creating new priceCalculatorDao");
                     ticketPricingDao = new TicketPricingDaoJaxb(PRICING_PATH);
                 }
             }
         }
         return ticketPricingDao;
+    }
+
+    private TicketDao getTicketDao()
+    {
+        if (ticketDao == null)
+        {
+            synchronized (this)
+            {
+                if (ticketDao == null)
+                {
+                    LOG.debug("creating new ticketDao");
+                    ticketDao = new TicketDaoJaxb();
+                }
+            }
+        }
+        return ticketDao;
+    }
+
+    @Override
+    public Ticket getTicket(String startStation, String destStation)
+    {
+        stationDAO = getStationDao();
+        ticketPricingDao = getTicketPricingDao();
+        ticketDao = getTicketDao();
+
+        Ticket ticket = new Ticket();
+        ticket.setValidFrom(new Date());
+        ticket.setValidTo(ticketPricingDao.getExpiryDate(ticket.getValidFrom()));
+        ticket.setStartStation(stationDAO.getStation(startStation));
+        ticket.setDestStation(stationDAO.getStation(destStation));
+        ticket.setRateBand(ticketPricingDao.getRateBand(ticket.getValidFrom()));
+        ticket.setPrice(ticketPricingDao.getJourneyPrice(ticket.getStartStation(),
+                                                         ticket.getDestStation(),
+                                                         ticket.getValidFrom()));
+
+        return ticket;
     }
 }

@@ -28,6 +28,8 @@ public final class StationDaoJaxb implements StationDao
      */
     private static final Logger LOG = LogManager.getLogger(StationDaoJaxb.class);
 
+    private boolean fromClassPath = false;
+    private final String path;
     private final InputStream resourceFile;
 
     /**
@@ -50,10 +52,12 @@ public final class StationDaoJaxb implements StationDao
             tmpFile = getStreamFromClassPath(resource);
         }
 
+        path = resource;
         resourceFile = tmpFile;
+        LOG.debug("Station list sourced from: " + resourceFile);
     }
 
-    private InputStream getStreamFromPath(String resource)
+    private InputStream getStreamFromPath(final String resource)
     {
         File file = new File(resource);
 
@@ -69,16 +73,18 @@ public final class StationDaoJaxb implements StationDao
         return tmpStream;
     }
 
-    private InputStream getStreamFromClassPath(String resource)
+    private InputStream getStreamFromClassPath(final String resource)
     {
         InputStream tmpStream = null;
         try
         {
             tmpStream = new ClassPathResource(resource).getInputStream();
+            fromClassPath = true;
         }
         catch (IOException e)
         {
             LOG.error("unable to find " + resource + " in the class path");
+            fromClassPath = false;
         }
         return tmpStream;
     }
@@ -93,12 +99,14 @@ public final class StationDaoJaxb implements StationDao
     public synchronized void addStation(final Station newStation)
     {
         stationMap.put(newStation.getName(), newStation);
+        save();
     }
 
     @Override
-    public void setStationList(List<Station> stationList)
+    public void setStationList(final List<Station> stationList)
     {
         storeStationList(stationList);
+        save();
     }
 
     @Override
@@ -106,6 +114,7 @@ public final class StationDaoJaxb implements StationDao
     {
         LOG.debug("Removed all stations");
         stationMap.clear();
+        save();
     }
 
     /**
@@ -117,7 +126,7 @@ public final class StationDaoJaxb implements StationDao
         storeStationList(stationList.getStationList());
     }
 
-    public void load(String path)
+    public void load(final String path)
     {
         File file = new File(path);
 
@@ -134,7 +143,7 @@ public final class StationDaoJaxb implements StationDao
         }
     }
 
-    private StationList getStationsFromStream(InputStream stream)
+    private StationList getStationsFromStream(final InputStream stream)
     {
         StationList stationList = null;
         try
@@ -166,6 +175,19 @@ public final class StationDaoJaxb implements StationDao
         {
             LOG.debug("Station list is null, unable to store.");
         }
+        save();
+    }
+
+    private void save()
+    {
+        // If the file has come from the class path it's likely to be embedded in a compiled jar file
+        // Trying to write to such a file will throw an error.
+        // This could be worked around but has not been deemed necessary for this assignment.
+        if (!fromClassPath)
+        {
+            LOG.debug("Saving changes to: " + path);
+            save(path);
+        }
     }
 
     /**
@@ -177,17 +199,17 @@ public final class StationDaoJaxb implements StationDao
         File file = new File(savePath);
         LOG.debug("Saving to: " + file.getAbsolutePath());
 
+        saveToFile(file);
+    }
+
+    private void saveToFile(final File file)
+    {
         if (file.exists())
         {
             LOG.debug("file already in specified location, removing it");
             file.delete();
         }
 
-        saveToFile(file);
-    }
-
-    private void saveToFile(File file)
-    {
         try
         {
             createSavePaths(file);
@@ -206,7 +228,7 @@ public final class StationDaoJaxb implements StationDao
         }
     }
 
-    private void createSavePaths(File file)
+    private void createSavePaths(final File file)
     {
         try
         {

@@ -145,6 +145,7 @@
         <module>coverage-report</module>
         <module>ticket-web</module>
         <module>client-rest</module>
+        <module>crypto</module>
     </modules>
 
     <properties>

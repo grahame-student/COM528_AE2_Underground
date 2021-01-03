@@ -23,7 +23,9 @@
                             <label class="col-label" for="stationName">Destination</label>
                             <select class="col-value" id="stationName" name="stationName" autocomplete="off">
                                 <c:forEach items="${stationList}" var="station" varStatus="tagStatus">
-                                    <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
+                                    <c:if test="${station.name != startStation}">
+                                        <option value="${station.name}">${station.name} - Zone ${station.zone}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </p>

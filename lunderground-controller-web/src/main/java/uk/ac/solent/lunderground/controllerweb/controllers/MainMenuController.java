@@ -32,7 +32,7 @@ public final class MainMenuController
     @RequestMapping(value = "/init", method = RequestMethod.GET)
     public String reinitialiseLundergroundSystem()
     {
-        this.devFacade = WebObjectFactory.getdeveloperFacade();
+        this.devFacade = WebObjectFactory.getDeveloperFacade();
         devFacade.reinitialise();
 
         return "redirect:/manage-stations";

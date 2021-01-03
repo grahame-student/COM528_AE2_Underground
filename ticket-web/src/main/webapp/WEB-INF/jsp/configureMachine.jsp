@@ -47,8 +47,8 @@
 
                 <c:if test="${not empty currentStationName}">
                     <section id="nav-home">
-                        <form method="get">
-                            <button type="submit" formaction="/home">Return to Main Menu</button>
+                        <form method="post">
+                            <button type="submit" formaction="home">Return to Main Menu</button>
                         </form>
                     </section>
                 </c:if>

@@ -28,7 +28,9 @@ import javax.xml.bind.Unmarshaller;
 
 public class TicketPricingDaoJaxb implements TicketPricingDao
 {
-    private final static Logger LOG = LogManager.getLogger(TicketPricingDaoJaxb.class);
+    private static final Logger LOG = LogManager.getLogger(TicketPricingDaoJaxb.class);
+
+    private static final int VALID_LENGTH = 2;
 
     private final InputStream resourceFile;
     private Double offPeakRate = 0.0;
@@ -98,10 +100,10 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     public synchronized void addPriceBand(PriceBand newBand)
     {
         priceBands.add(newBand);
-        setRequiredOrder();
+        setRequiredPriceBandOrder();
     }
 
-    private void setRequiredOrder()
+    private void setRequiredPriceBandOrder()
     {
         Collections.sort(priceBands);
         Collections.reverse(priceBands);
@@ -118,6 +120,16 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     {
         int zonesTravelled = getZonesTravelled(startStation, destinationStation);
         return getPricePerZone(issueDate) * zonesTravelled;
+    }
+
+    @Override
+    public Date getExpiryDate(Date issueDate)
+    {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(issueDate);
+        cal.add(Calendar.HOUR_OF_DAY, VALID_LENGTH);
+
+        return cal.getTime();
     }
 
     private int getZonesTravelled(Station startStation, Station destinationStation)
@@ -219,7 +231,7 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
             peakRate = pricingDetails.getPeakRate();
             offPeakRate = pricingDetails.getOffPeakRate();
             priceBands.addAll(pricingDetails.getPriceBands());
-            setRequiredOrder();
+            setRequiredPriceBandOrder();
         }
     }
 }

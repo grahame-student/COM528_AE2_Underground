@@ -112,6 +112,8 @@ public class ConfigurationPoller
         try
         {
             TicketMachineConfig config = facade.getTicketMachineConfig(ticketMachineUuid);
+            stationDao = facade.getStationDao();
+            ticketPricingDao = facade.getTicketPricingDao();
             lastUpdateTime = lastUpdateAttempt;
             LOG.debug("Acquired configuration at: " + lastUpdateTime.toString());
 

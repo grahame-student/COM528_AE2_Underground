@@ -3,6 +3,7 @@ package uk.ac.solent.lunderground.jaxbdao;
 import uk.ac.solent.lunderground.model.dao.DaoFactory;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.simpledao.ZoneDaoSimple;
 
@@ -11,7 +12,11 @@ public class DaoFactoryJaxb implements DaoFactory
     /**
      * URL to the master station list.
      */
-    private final String stationXml = "londonStations.xml";
+    private final String STATION_XML = "londonStations.xml";
+    /**
+     * URL to the master schedule and pricing list.
+     */
+    private final String PRICING_XML = "ticketPricing.xml";
 
     /**
      * DAO singleton used to access data related to the station entities.
@@ -19,9 +24,15 @@ public class DaoFactoryJaxb implements DaoFactory
     private static StationDao stationDao;
 
     /**
+     * DAO singleton used to access data related to the schedule and pricing entities.
+     */
+    private static TicketPricingDao ticketPricingDao;
+
+    /**
      * DAO singleton used to access data related to the zones.
      */
     private static ZoneDao zoneDao;
+
 
     @Override
     public StationDao getStationDao()
@@ -34,8 +45,7 @@ public class DaoFactoryJaxb implements DaoFactory
                 {
                     try
                     {
-                        assert stationXml != null;
-                        StationDaoJaxb stationDaoJaxb = new StationDaoJaxb(stationXml);
+                        StationDaoJaxb stationDaoJaxb = new StationDaoJaxb(STATION_XML);
                         stationDaoJaxb.load();
                         stationDao = stationDaoJaxb;
                     }
@@ -67,6 +77,24 @@ public class DaoFactoryJaxb implements DaoFactory
             }
         }
         return zoneDao;
+    }
+
+    @Override
+    public TicketPricingDao getTicketPricingDao()
+    {
+        if (ticketPricingDao == null)
+        {
+            synchronized (this)
+            {
+                if (ticketPricingDao == null)
+                {
+                    TicketPricingDaoJaxb ticketPricingDaoJaxb = new TicketPricingDaoJaxb(PRICING_XML);
+                    ticketPricingDaoJaxb.load();
+                    ticketPricingDao = ticketPricingDaoJaxb;
+                }
+            }
+        }
+        return ticketPricingDao;
     }
 
     @Override

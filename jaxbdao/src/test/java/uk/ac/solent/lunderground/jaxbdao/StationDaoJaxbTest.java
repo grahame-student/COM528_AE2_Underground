@@ -24,6 +24,7 @@ public class StationDaoJaxbTest
     private final static String TMP_DIR = System.getProperty("java.io.tmpdir");
     private final static String FILE_PATH = TMP_DIR + File.separator + "station_test" + File.separator;
     private static final int ZERO_ELEMENTS = 0;
+    private static final int EXPECTED_STATION_COUNT = 304;
 
     /**
      * Path to test XML file unmarshalling. Doesn't need to be super robust for testing purposes.
@@ -86,6 +87,17 @@ public class StationDaoJaxbTest
         System.out.println(dao.retrieveAll());
 
         assertThat(dao.retrieveAll().size(), equalTo(ZERO_ELEMENTS));
+    }
+
+    @Test
+    public void loadPopulatesMasterListOfStations()
+    {
+        StationDaoJaxb dao = new StationDaoJaxb("londonStations.xml");
+
+        dao.load();
+
+        List<?> list = dao.retrieveAll();
+        assertThat(list.size(), equalTo(EXPECTED_STATION_COUNT));
     }
 
     /**

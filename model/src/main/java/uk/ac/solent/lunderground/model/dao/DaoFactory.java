@@ -17,11 +17,18 @@ public interface DaoFactory
     ZoneDao getZoneDao();
 
     /**
-     * Get a refeernece to a TicketMachineDao instance
+     * Get a reference to a TicketMachineDao instance
      *
      * @return return a concrete instance of a TicketMachineDao
      */
     TicketMachineDao getTicketMachineDao();
+
+    /**
+     * Get a reference to a TicketPricingDao instance
+     *
+     * @return return a concrete instance of a TicketMachineDao
+     */
+    TicketPricingDao getTicketPricingDao();
 
     /**
      * Shutdown the DAO Factory safely

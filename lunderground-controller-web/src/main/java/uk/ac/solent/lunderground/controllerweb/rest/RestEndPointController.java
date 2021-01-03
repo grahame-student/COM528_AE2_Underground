@@ -16,8 +16,6 @@ import uk.ac.solent.lunderground.model.dto.TicketMachine;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.LundergroundServiceFacade;
 
-import java.util.Date;
-
 @RestController
 public class RestEndPointController
 {
@@ -43,16 +41,20 @@ public class RestEndPointController
         LOG.debug("Requested ticket machine config for machine with uuid: " + uuid);
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
 
-        return lunderGroundFacade.getTicketMachineConfig(uuid);
+        TicketMachineConfig config = lunderGroundFacade.getTicketMachineConfig(uuid);
+
+        return config;
     }
 
     @PostMapping(value = "/rest/v1/ticketMachine")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTicketMachine(@RequestBody final TicketMachine ticketMachine)
+    public TicketMachine addTicketMachine(@RequestBody final TicketMachine ticketMachine)
     {
         LOG.debug("Add ticket machine with uuid: " + ticketMachine.getUuid());
         this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
         lunderGroundFacade.addTicketMachine(ticketMachine);
+
+        return lunderGroundFacade.getTicketMachine(ticketMachine.getUuid());
     }
 
     @GetMapping(value = "/rest/v1/ticketMachine/{uuid}")
@@ -81,15 +83,5 @@ public class RestEndPointController
         LOG.debug("Set station zone to " + updatedMachine.getStation().getZone());
 
         lunderGroundFacade.updateTicketMachine(updatedMachine);
-    }
-
-    @GetMapping(value = "/rest/v1/price/{zones}/{issueDate}")
-    @ResponseStatus(HttpStatus.OK)
-    public Double getJourneyPrice(@PathVariable final int zones,
-                                  @PathVariable final Date issueDate)
-    {
-        this.lunderGroundFacade = WebObjectFactory.getServiceFacade();
-
-        return this.lunderGroundFacade.getJourneyPrice(zones, issueDate);
     }
 }

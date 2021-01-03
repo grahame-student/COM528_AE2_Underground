@@ -1,7 +1,10 @@
 package uk.ac.solent.lunderground.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketMachineDao;
+import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
 import uk.ac.solent.lunderground.model.dao.ZoneDao;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachine;
@@ -14,6 +17,11 @@ import java.util.List;
 
 public final class LundergroundFacade implements LundergroundServiceFacade, DeveloperFacade
 {
+    /**
+     * Logger instance for the Lunderground implementation.
+     */
+    private static final Logger LOG = LogManager.getLogger(LundergroundFacade.class);
+
     /**
      * StationDao instance used to access the database implementation.
      */
@@ -28,6 +36,11 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
      * TicketMachineDao instance used to access the database implementation.
      */
     private TicketMachineDao ticketMachineDao = null;
+
+    /**
+     * TicketPricingDao instance used during development activities.
+     */
+    private TicketPricingDao pricingDao = null;
 
     /**
      * StationDao instance used during development activities.
@@ -128,6 +141,9 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
             config.setStation(ticketMachine.getStation());
         }
         config.setStationList(stationDao.retrieveAll());
+        config.setPricingDetails(pricingDao.getPricingDetails());
+        LOG.debug("Prepared config for ticket machine UUID: " + uuid);
+        LOG.debug(config.toString());
         return config;
     }
 
@@ -150,16 +166,14 @@ public final class LundergroundFacade implements LundergroundServiceFacade, Deve
     }
 
     @Override
-    public Double getJourneyPrice(int zonesTravelled, Date issueDate)
-    {
-        // TODO: Implement pricing
-        return 0.0;
-    }
-
-    @Override
     public void setDevStationDao(StationDao newStationDao)
     {
         this.devStationDao = newStationDao;
+    }
+
+    public void setPricingDao(TicketPricingDao newTicketPricingDao)
+    {
+        this.pricingDao = newTicketPricingDao;
     }
 
     /**

@@ -15,11 +15,13 @@
         <module name="ticket-web" />
         <module name="model" />
         <module name="jpadao" />
+        <module name="crypto" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="client-rest" target="1.8" />
       <module name="coverage-report" target="1.8" />
+      <module name="crypto" target="1.8" />
       <module name="jaxbdao" target="1.8" />
       <module name="jaxbdao-old" target="1.8" />
       <module name="jpadao" target="1.8" />
