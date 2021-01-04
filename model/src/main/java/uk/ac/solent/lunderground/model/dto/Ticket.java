@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Objects;
 
 @XmlRootElement(name = "Ticket")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -85,5 +86,44 @@ public class Ticket
     public void setValidationCode(String validationCode)
     {
         this.validationCode = validationCode;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(startStation, ticket.startStation) &&
+               Objects.equals(destStation, ticket.destStation) &&
+               Objects.equals(validFrom, ticket.validFrom) && Objects.equals(validTo, ticket.validTo) &&
+               rateBand == ticket.rateBand && Objects.equals(price, ticket.price) &&
+               Objects.equals(validationCode, ticket.validationCode);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(startStation, destStation, validFrom, validTo, rateBand, price, validationCode);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Ticket{" +
+               "startStation=" + startStation +
+               ", destStation=" + destStation +
+               ", validFrom=" + validFrom +
+               ", validTo=" + validTo +
+               ", rateBand=" + rateBand +
+               ", price=" + price +
+               ", validationCode='" + validationCode + '\'' +
+               '}';
     }
 }

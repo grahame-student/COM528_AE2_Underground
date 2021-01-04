@@ -5,5 +5,6 @@ import uk.ac.solent.lunderground.model.dto.Ticket;
 public interface TicketDao
 {
     String encodeTicket(Ticket ticket);
-    boolean validateTicket(String encodedTicket);
+    Ticket getTicket(String ticketXml);
+    boolean validateTicket(Ticket encodedTicket);
 }

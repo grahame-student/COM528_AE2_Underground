@@ -14,7 +14,9 @@ import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,6 +159,40 @@ public class RestServiceFacade implements TicketMachineFacade
     {
         ticketDao = getTicketDao();
         return ticketDao.encodeTicket(ticket);
+    }
+
+    @Override
+    public Boolean verifyGateEntry(String ticketXml, String stationName, int hour, int minutes)
+    {
+        ticketDao = getTicketDao();
+        Boolean gateOpen = false;
+
+        Date date = getDate(hour, minutes);
+        Ticket ticket = ticketDao.getTicket(ticketXml);
+        if (ticketDao.validateTicket(ticket))
+        {
+
+        }
+
+        return gateOpen;
+    }
+
+    @Override
+    public Boolean verifyGateExit(String ticketXml, String stationName, int hour, int minutes)
+    {
+        Date date = getDate(hour, minutes);
+        return false;
+    }
+
+    private Date getDate(int hour, int minute)
+    {
+        Calendar refDate = new GregorianCalendar();
+        refDate.setTime(new Date());
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.set(refDate.get(Calendar.YEAR), refDate.get(Calendar.MONTH), refDate.get(Calendar.DAY_OF_MONTH),
+                hour, minute, refDate.get(Calendar.SECOND));
+        return calendar.getTime();
     }
 
     /**

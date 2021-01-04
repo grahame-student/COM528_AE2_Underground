@@ -19,8 +19,8 @@
                         <p class="message">${xmlTicket}</p>
                     </c:if>
                     <c:if test="${not empty ticket.validationCode}">
-                        <label for="ticket"></label>
-                        <textarea id="ticket" readonly rows="20">${xmlTicket}</textarea>
+                        <label for="ticket-xml"></label>
+                        <textarea id="ticket-xml" readonly rows="20">${xmlTicket}</textarea>
                     </c:if>
 
                     <button type="submit" formaction="sales">Return to Sales Screen</button>

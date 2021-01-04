@@ -24,6 +24,7 @@
                         <menu>
                             <li class="ticket-button"><a href="configure">Reconfigure Ticket Machine</a></li>
                             <li class="ticket-button"><a href="sales">Start Sales Kiosk</a></li>
+                            <li class="gate-button"><a href="gate">Gate Machine</a></li>
                         </menu>
                     </nav>
                 </c:if>

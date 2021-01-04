@@ -36,4 +36,8 @@ public interface TicketMachineFacade
     Ticket getTicket(String startStation, String destStation);
     Ticket getTicket(String startStation, String destStation, Date issueDate);
     String encodeTicket(Ticket ticket);
+
+    // Here for testing purposes
+    Boolean verifyGateEntry(String ticketXml, String stationName, int hour, int minutes);
+    Boolean verifyGateExit(String ticketXml, String stationName, int hour, int minutes);
 }
