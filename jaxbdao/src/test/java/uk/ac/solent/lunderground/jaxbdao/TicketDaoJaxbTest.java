@@ -2,7 +2,6 @@ package uk.ac.solent.lunderground.jaxbdao;
 
 import org.junit.Test;
 import uk.ac.solent.lunderground.model.dao.TicketDao;
-import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.Ticket;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -62,4 +61,9 @@ public class TicketDaoJaxbTest
 
         assertThat(ticketDao.validateTicket(decodedTicket), equalTo(false));
     }
+
+    // TODO: additional tests that should be added
+    //       -- check each field marshalled correctly
+    //       -- check each field unmarshalled correctly
+    //       -- check that changing fields in the generated XML causes validation to return false
 }

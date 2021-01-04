@@ -11,6 +11,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>uk.ac.solent.lunderground.crypto</groupId>
+                <artifactId>crypto</artifactId>
+                <classifier>private-key</classifier>
+                <version>1.1-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>uk.ac.solent.lunderground.crypto</groupId>
+                <artifactId>crypto</artifactId>
+                <classifier>public-key</classifier>
+                <version>1.1-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
             <!-- servelet and jsp api's - provided by tomcat -->
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>

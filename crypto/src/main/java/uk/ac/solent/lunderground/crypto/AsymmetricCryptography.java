@@ -11,11 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -80,6 +76,8 @@ public class AsymmetricCryptography
     // https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
     public PublicKey getPublic(String filename) throws Exception
     {
+
+
         if (filename == null)
         {
             throw new NullPointerException("filename should not be null");
@@ -89,6 +87,19 @@ public class AsymmetricCryptography
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return kf.generatePublic(spec);
     }
+
+//    // https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
+//    public PublicKey getPublic(String filename) throws Exception
+//    {
+//        if (filename == null)
+//        {
+//            throw new NullPointerException("filename should not be null");
+//        }
+//        byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
+//        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
+//        KeyFactory kf = KeyFactory.getInstance("RSA");
+//        return kf.generatePublic(spec);
+//    }
 
     // loads from classpath rather than absolute file location
     public PublicKey getPublicFromClassPath(String filename) throws Exception
