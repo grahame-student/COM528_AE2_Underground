@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -28,7 +27,7 @@ public class GenerateKeys
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
-    public GenerateKeys(int keylength) throws NoSuchAlgorithmException, NoSuchProviderException
+    public GenerateKeys(int keylength) throws NoSuchAlgorithmException
     {
         this.keyGen = KeyPairGenerator.getInstance("RSA");
         this.keyGen.initialize(keylength);

@@ -5,13 +5,8 @@ package uk.ac.solent.lunderground.crypto;
  * and open the template in the editor.
  */
 
-import java.io.File;
-import java.io.FileInputStream;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -43,19 +38,6 @@ public class AsymmetricCryptography
         this.cipher = Cipher.getInstance("RSA");
     }
 
-    // https://docs.oracle.com/javase/8/docs/api/java/security/spec/PKCS8EncodedKeySpec.html
-    public PrivateKey getPrivate(String filename) throws Exception
-    {
-        if (filename == null)
-        {
-            throw new NullPointerException("filename should not be null");
-        }
-        byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePrivate(spec);
-    }
-
     public PrivateKey getPrivateFromClassPath(String filename) throws Exception
     {
         if (filename == null)
@@ -72,34 +54,6 @@ public class AsymmetricCryptography
         KeyFactory kf = KeyFactory.getInstance("RSA");
         return kf.generatePrivate(spec);
     }
-
-    // https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
-    public PublicKey getPublic(String filename) throws Exception
-    {
-
-
-        if (filename == null)
-        {
-            throw new NullPointerException("filename should not be null");
-        }
-        byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        return kf.generatePublic(spec);
-    }
-
-//    // https://docs.oracle.com/javase/8/docs/api/java/security/spec/X509EncodedKeySpec.html
-//    public PublicKey getPublic(String filename) throws Exception
-//    {
-//        if (filename == null)
-//        {
-//            throw new NullPointerException("filename should not be null");
-//        }
-//        byte[] keyBytes = Files.readAllBytes(new File(filename).toPath());
-//        X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
-//        KeyFactory kf = KeyFactory.getInstance("RSA");
-//        return kf.generatePublic(spec);
-//    }
 
     // loads from classpath rather than absolute file location
     public PublicKey getPublicFromClassPath(String filename) throws Exception
@@ -120,8 +74,7 @@ public class AsymmetricCryptography
     }
 
     public String encryptText(String msg, PrivateKey key)
-            throws NoSuchAlgorithmException, NoSuchPaddingException,
-            UnsupportedEncodingException, IllegalBlockSizeException,
+            throws UnsupportedEncodingException, IllegalBlockSizeException,
             BadPaddingException, InvalidKeyException
     {
         this.cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -130,20 +83,11 @@ public class AsymmetricCryptography
     }
 
     public String decryptText(String msg, PublicKey key)
-            throws InvalidKeyException, UnsupportedEncodingException,
-            IllegalBlockSizeException, BadPaddingException
+            throws InvalidKeyException, IllegalBlockSizeException,
+            BadPaddingException
     {
         this.cipher.init(Cipher.DECRYPT_MODE, key);
         return new String(cipher.doFinal(Base64.getDecoder()
                                                .decode(msg)));
-    }
-
-    public byte[] getFileInBytes(File f) throws IOException
-    {
-        FileInputStream fis = new FileInputStream(f);
-        byte[] fbytes = new byte[(int) f.length()];
-        fis.read(fbytes);
-        fis.close();
-        return fbytes;
     }
 }

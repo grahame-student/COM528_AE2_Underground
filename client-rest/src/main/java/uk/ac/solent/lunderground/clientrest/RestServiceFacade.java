@@ -165,7 +165,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public Boolean verifyGateEntry(String ticketXml, int gateZone, int hour, int minutes)
+    public Boolean verifyGateEntry(final String ticketXml, final int gateZone, final  int hour, final  int minutes)
     {
         ticketDao = getTicketDao();
         boolean gateOpen;
@@ -199,10 +199,10 @@ public class RestServiceFacade implements TicketMachineFacade
 
     /**
      * Return a list of the zones that the ticket allows travel in
-     * @param ticket
-     * @return
+     * @param ticket Ticket instance to determine the journey zones for
+     * @return A list of the zones that the ticket allows travel within
      */
-    private List<Integer> getJourneyZones(Ticket ticket)
+    private List<Integer> getJourneyZones(final Ticket ticket)
     {
         return IntStream.rangeClosed(ticket.getStartStation().getZone(),
                                      ticket.getDestStation().getZone())
@@ -211,13 +211,13 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public Boolean verifyGateExit(String ticketXml, int stationZone, int hour, int minutes)
+    public Boolean verifyGateExit(final String ticketXml, final int stationZone, final int hour, final int minutes)
     {
         Date date = getDate(hour, minutes);
         return false;
     }
 
-    private Date getDate(int hour, int minute)
+    private Date getDate(final int hour, final int minute)
     {
         Calendar refDate = new GregorianCalendar();
         refDate.setTime(new Date());

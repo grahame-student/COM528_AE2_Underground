@@ -29,7 +29,7 @@ public class TicketDaoJaxb implements TicketDao
     private static final String PRIVATE_KEY_FILE = "privateKey";
 
     @Override
-    public String encodeTicket(Ticket ticket)
+    public String encodeTicket(final Ticket ticket)
     {
         String ticketXml = getMarshalledTicket(ticket);
         LOG.debug("Ticket to encode: \n" + ticketXml);
@@ -47,7 +47,7 @@ public class TicketDaoJaxb implements TicketDao
         return validatedTicketXml;
     }
 
-    private String getMarshalledTicket(Ticket ticket)
+    private String getMarshalledTicket(final Ticket ticket)
     {
         String ticketXml = null;
         //marshal ticket to xml
@@ -71,7 +71,7 @@ public class TicketDaoJaxb implements TicketDao
         return ticketXml;
     }
 
-    private String getHash(String ticketXml)
+    private String getHash(final String ticketXml)
     {
         String ticketXmlHash = null;
         try
@@ -90,7 +90,7 @@ public class TicketDaoJaxb implements TicketDao
         return ticketXmlHash;
     }
 
-    private String getEncodedHash(String ticketXmlHash)
+    private String getEncodedHash(final String ticketXmlHash)
     {
         String encodedHash = null;
         try
@@ -109,7 +109,7 @@ public class TicketDaoJaxb implements TicketDao
     }
 
     @Override
-    public Ticket getTicket(String ticketXml)
+    public Ticket getTicket(final String ticketXml)
     {
         Ticket decodedTicket = null;
         try
@@ -132,7 +132,7 @@ public class TicketDaoJaxb implements TicketDao
     }
 
     @Override
-    public boolean validateTicket(Ticket ticket)
+    public boolean validateTicket(final Ticket ticket)
     {
         // get the encodedTicketHash and set encodedTicketHash null
         String encodedTicketHash = ticket.getValidationCode();
@@ -148,7 +148,7 @@ public class TicketDaoJaxb implements TicketDao
         return (ticketHash.equals(decodedHash));
     }
 
-    private String getDecodedHash(String encodedHash)
+    private String getDecodedHash(final String encodedHash)
     {
         String hash = null;
         try
