@@ -50,3 +50,24 @@
 #ticket-xml {
   width: 100%;
 }
+
+.gate-button {
+  margin-top: 1em;
+  padding: 1em 2em;
+  font-size: large;
+}
+
+#gateStatus {
+  margin: 3em auto 0;
+  width: 100%;
+}
+
+#gate-closed {
+  background: indianred;
+  font-size: xxx-large;
+}
+
+#gate-open {
+  background: lightgreen;
+  font-size: xxx-large;
+}

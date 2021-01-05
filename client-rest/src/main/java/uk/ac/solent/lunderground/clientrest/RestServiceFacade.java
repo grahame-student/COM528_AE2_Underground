@@ -168,18 +168,24 @@ public class RestServiceFacade implements TicketMachineFacade
     public Boolean verifyGateEntry(String ticketXml, int gateZone, int hour, int minutes)
     {
         ticketDao = getTicketDao();
-        Boolean gateOpen = true;
+        boolean gateOpen;
 
         Date date = getDate(hour, minutes);
         Ticket ticket = ticketDao.getTicket(ticketXml);
-        if (ticketDao.validateTicket(ticket))
+        if ((ticket != null) && ticketDao.validateTicket(ticket))
         {
+            LOG.debug("Ticket Validation Passed");
+
             List<Integer> journeyZones = getJourneyZones(ticket);
-            gateOpen &= journeyZones.contains(gateZone);
+            gateOpen = journeyZones.contains(gateZone);
+            LOG.debug("Gate inside journey zone: " + gateOpen);
+
+            gateOpen &= ticket.getValidFrom().before(date);
+            LOG.debug("Gate time inside valid range: " + gateOpen);
         }
         else
         {
-            LOG.debug("Ticket validation code incorrect");
+            LOG.debug("Ticket is not valid");
             LOG.debug(ticketXml);
             gateOpen = false;
         }

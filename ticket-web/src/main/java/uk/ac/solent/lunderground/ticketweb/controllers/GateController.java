@@ -40,7 +40,7 @@ public class GateController
         StationDao stationDao = facade.getStationDao();
         Station gateStation = stationDao.getStation(stationName);
         Boolean gateOpen;
-        if (gateAccess == ENTRY_GATE)
+        if (gateAccess.equals(ENTRY_GATE))
         {
             gateOpen = facade.verifyGateEntry(ticketXml, gateStation.getZone(), hour, minutes);
         }

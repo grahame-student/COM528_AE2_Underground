@@ -42,6 +42,10 @@
                     </div>
                 </form>
 
+                <div id="gateStatus">
+                    <c:if test="${gateOpen}"><p id="gate-open">Gate open</p></c:if>
+                    <c:if test="${not gateOpen}"><p id="gate-closed">Gate closed</p></c:if>
+                </div>
             </div>
 
             <%@ include file="common/footer.jsp" %>

@@ -125,7 +125,7 @@ public class RestServiceFacadeTest
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenEntryTimeEarlierThanValidFromTime()
+    public void verifyGateEntryReturnsFalseWhenValidFromTimeAfterEnterGateTime()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -146,6 +146,7 @@ public class RestServiceFacadeTest
 
         boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, INVALID_ENTRY_HOUR, VALID_ENTRY_MIN);
 
+        assertThat(gateOpen, equalTo(false));
     }
 
     // TODO: Additional testing that should be added for verifyGateEntry
