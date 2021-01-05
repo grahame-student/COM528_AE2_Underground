@@ -52,19 +52,19 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     }
 
     @Override
-    public synchronized void setOffPeakRate(Double newRate)
+    public synchronized void setOffPeakRate(final Double newRate)
     {
         offPeakRate = newRate;
     }
 
     @Override
-    public synchronized void setPeakRate(Double newRate)
+    public synchronized void setPeakRate(final Double newRate)
     {
         peakRate = newRate;
     }
 
     @Override
-    public synchronized Rate getRateBand(Date date)
+    public synchronized Rate getRateBand(final Date date)
     {
         PriceBand testBand = getTestBand(date);
 
@@ -80,7 +80,7 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
         return rate;
     }
 
-    private PriceBand getTestBand(Date date)
+    private PriceBand getTestBand(final Date date)
     {
         Calendar cal = new GregorianCalendar();
         cal.setTime(date);
@@ -91,7 +91,7 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     }
 
     @Override
-    public synchronized Double getPricePerZone(Date date)
+    public synchronized Double getPricePerZone(final Date date)
     {
         return getRateBand(date) == Rate.OffPeak ? offPeakRate : peakRate;
     }
@@ -123,7 +123,7 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
     }
 
     @Override
-    public Date getExpiryDate(Date issueDate)
+    public Date getExpiryDate(final Date issueDate)
     {
         Calendar cal = new GregorianCalendar();
         cal.setTime(issueDate);
@@ -132,9 +132,11 @@ public class TicketPricingDaoJaxb implements TicketPricingDao
         return cal.getTime();
     }
 
-    private int getZonesTravelled(Station startStation, Station destinationStation)
+    private int getZonesTravelled(final Station startStation, final Station destinationStation)
     {
         // We add 1 because we always travel in at least one zone.
+        LOG.debug("Start station: " + startStation);
+        LOG.debug("Dest station:  " + destinationStation);
         return Math.abs(startStation.getZone() - destinationStation.getZone()) + 1;
     }
 

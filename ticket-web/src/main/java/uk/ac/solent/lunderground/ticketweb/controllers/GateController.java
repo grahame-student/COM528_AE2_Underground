@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uk.ac.solent.lunderground.model.dao.StationDao;
+import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
 import uk.ac.solent.lunderground.ticketweb.WebClientObjectFactory;
 
@@ -35,14 +37,16 @@ public class GateController
                                  @RequestParam("ticketXml") final String ticketXml)
     {
         TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
+        StationDao stationDao = facade.getStationDao();
+        Station gateStation = stationDao.getStation(stationName);
         Boolean gateOpen;
         if (gateAccess == ENTRY_GATE)
         {
-            gateOpen = facade.verifyGateEntry(ticketXml, stationName, hour, minutes);
+            gateOpen = facade.verifyGateEntry(ticketXml, gateStation.getZone(), hour, minutes);
         }
         else
         {
-            gateOpen = facade.verifyGateExit(ticketXml, stationName, hour, minutes);
+            gateOpen = facade.verifyGateExit(ticketXml, gateStation.getZone(), hour, minutes);
         }
 
         redirectAttributes.addAttribute("gateOpen", gateOpen);

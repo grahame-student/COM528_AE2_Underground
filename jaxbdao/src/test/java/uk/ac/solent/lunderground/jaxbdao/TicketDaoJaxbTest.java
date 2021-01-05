@@ -60,7 +60,7 @@ public class TicketDaoJaxbTest
     }
 
     @Test
-    public void validateTicketReturnsTrueWhenTicketHasInvalidValidationCode() throws TransformerException
+    public void validateTicketReturnsTrueWhenTicketHasInvalidValidationCode()
     {
         // We cannot simply use an XML string with a pre-generated validationCode.
         // This is due to the crypto keys being generated with different values if
@@ -108,7 +108,7 @@ public class TicketDaoJaxbTest
      * @param xmlDoc XML Document
      * @return String containing XML
      */
-    private String toXml(Document xmlDoc) throws TransformerException
+    private String toXml(Document xmlDoc)
     {
         String tmpString = null;
         try
@@ -131,4 +131,7 @@ public class TicketDaoJaxbTest
     //       -- check each field marshalled correctly
     //       -- check each field unmarshalled correctly
     //       -- check that changing fields in the generated XML causes validation to return false
+    //       -- should a ticket with missing fields, e.g. price, zones, stations, etc fail to encode?
+    //          This would have an impact on tests that use minimal ticket configuration in order to be more readable
+    //       --
 }

@@ -18,7 +18,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -162,23 +165,43 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public Boolean verifyGateEntry(String ticketXml, String stationName, int hour, int minutes)
+    public Boolean verifyGateEntry(String ticketXml, int gateZone, int hour, int minutes)
     {
         ticketDao = getTicketDao();
-        Boolean gateOpen = false;
+        Boolean gateOpen = true;
 
         Date date = getDate(hour, minutes);
         Ticket ticket = ticketDao.getTicket(ticketXml);
         if (ticketDao.validateTicket(ticket))
         {
-
+            List<Integer> journeyZones = getJourneyZones(ticket);
+            gateOpen &= journeyZones.contains(gateZone);
+        }
+        else
+        {
+            LOG.debug("Ticket validation code incorrect");
+            LOG.debug(ticketXml);
+            gateOpen = false;
         }
 
         return gateOpen;
     }
 
+    /**
+     * Return a list of the zones that the ticket allows travel in
+     * @param ticket
+     * @return
+     */
+    private List<Integer> getJourneyZones(Ticket ticket)
+    {
+        return IntStream.rangeClosed(ticket.getStartStation().getZone(),
+                                     ticket.getDestStation().getZone())
+                        .boxed()
+                        .collect(Collectors.toList());
+    }
+
     @Override
-    public Boolean verifyGateExit(String ticketXml, String stationName, int hour, int minutes)
+    public Boolean verifyGateExit(String ticketXml, int stationZone, int hour, int minutes)
     {
         Date date = getDate(hour, minutes);
         return false;
