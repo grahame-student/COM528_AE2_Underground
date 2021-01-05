@@ -10,18 +10,26 @@ import java.util.Date;
 public interface TicketMachineFacade
 {
     /**
-     * register a callback method to run when the ticket machine config is changed.
-     * @param configChangedCallback the method to run when the callback is triggered
-     */
-    void setTicketMachineConfigChangedCallback(Runnable configChangedCallback);
-
-    TicketMachineConfig getTicketMachineConfig(String uuid);
-
-    /**
      * Create and add a new ticket machine instance.
      * @param uuid The uuid of the new machine to create and add.
      */
     void addTicketMachine(String uuid);
+
+    String encodeTicket(Ticket ticket);
+
+    StationDao getStationDao();
+
+    Ticket getTicket(String startStation, String destStation);
+    Ticket getTicket(String startStation, String destStation, Date issueDate);
+
+    TicketMachineConfig getTicketMachineConfig(String uuid);
+    TicketPricingDao getTicketPricingDao();
+
+    /**
+     * register a callback method to run when the ticket machine config is changed.
+     * @param configChangedCallback the method to run when the callback is triggered
+     */
+    void setTicketMachineConfigChangedCallback(Runnable configChangedCallback);
 
     /**
      * Update the ticket machine with the passed in uuid.
@@ -30,11 +38,6 @@ public interface TicketMachineFacade
      */
     void updateTicketMachine(String uuid, String stationName);
 
-    StationDao getStationDao();
-    TicketPricingDao getTicketPricingDao();
-    Ticket getTicket(String startStation, String destStation);
-    Ticket getTicket(String startStation, String destStation, Date issueDate);
-    String encodeTicket(Ticket ticket);
 
     // Here for testing purposes
     Boolean verifyGateAccess(String ticketXml, int stationZone, int hour, int minutes);

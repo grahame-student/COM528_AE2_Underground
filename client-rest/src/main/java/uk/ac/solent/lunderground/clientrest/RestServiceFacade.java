@@ -46,19 +46,19 @@ public class RestServiceFacade implements TicketMachineFacade
 
     private final String baseUrl;
 
-    public RestServiceFacade(String baseRestUrl)
+    public RestServiceFacade(final String baseRestUrl)
     {
         this.baseUrl = baseRestUrl;
     }
 
     @Override
-    public void setTicketMachineConfigChangedCallback(Runnable callback)
+    public void setTicketMachineConfigChangedCallback(final Runnable callback)
     {
         configChangedCallback = callback;
     }
 
     @Override
-    public TicketMachineConfig getTicketMachineConfig(String uuid)
+    public TicketMachineConfig getTicketMachineConfig(final String uuid)
     {
         final String uri = baseUrl + "ticketMachineConfig/{uuid}";
 
@@ -72,7 +72,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public void addTicketMachine(String uuid)
+    public void addTicketMachine(final String uuid)
     {
         final String uri = baseUrl + "ticketMachine";
 
@@ -87,7 +87,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public void updateTicketMachine(String uuid, String stationName)
+    public void updateTicketMachine(final String uuid, final String stationName)
     {
         final String uri = baseUrl + "ticketMachine/{uuid}";
 
@@ -105,7 +105,7 @@ public class RestServiceFacade implements TicketMachineFacade
         configUpdated();
     }
 
-    private TicketMachine getTicketMachine(String uuid)
+    private TicketMachine getTicketMachine(final String uuid)
     {
         final String uri = baseUrl + "ticketMachine/{uuid}";
 
@@ -118,7 +118,7 @@ public class RestServiceFacade implements TicketMachineFacade
         return template.getForObject(uri, TicketMachine.class, params);
     }
 
-    private Station getStation(String stationName)
+    private Station getStation(final String stationName)
     {
         final String uri = baseUrl + "station/{name}";
 
@@ -132,13 +132,13 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public Ticket getTicket(String startStation, String destStation)
+    public Ticket getTicket(final String startStation, final String destStation)
     {
         return getTicket(startStation, destStation, new Date());
     }
 
     @Override
-    public Ticket getTicket(String startStation, String destStation, Date issueDate)
+    public Ticket getTicket(final String startStation, final String destStation, final Date issueDate)
     {
         stationDAO = getStationDao();
         ticketPricingDao = getTicketPricingDao();
@@ -158,7 +158,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public String encodeTicket(Ticket ticket)
+    public String encodeTicket(final Ticket ticket)
     {
         ticketDao = getTicketDao();
         return ticketDao.encodeTicket(ticket);

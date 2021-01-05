@@ -103,14 +103,14 @@ public final class StationDaoJaxb implements StationDao
     }
 
     @Override
-    public void setStationList(final List<Station> stationList)
+    public synchronized void setStationList(final List<Station> stationList)
     {
         storeStationList(stationList);
         save();
     }
 
     @Override
-    public void deleteAll()
+    public synchronized void deleteAll()
     {
         LOG.debug("Removed all stations");
         stationMap.clear();

@@ -29,6 +29,11 @@ public class ManageStationsController
      */
     private static final int DEFAULT_ZONE = 1;
 
+    // The following methods are all represented as 'getManageStationsPage' in the UML model as
+    // they all have the same essential functionality.
+    // The number of arguments to the original method were making if difficult to see the relatively
+    // simple operation taking place therefore it was broken down into a number of smaller methods.
+
     /**
      * Serve the page responsible for managing underground stations.
      *

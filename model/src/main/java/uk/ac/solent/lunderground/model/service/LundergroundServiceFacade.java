@@ -67,12 +67,6 @@ public interface LundergroundServiceFacade
      */
     List<Integer> getAllZones();
 
-//    /**
-//     * Get a ticket machine by UUID
-//     * @param uuid the UUID of the station to retrieve
-//     * @return TicketMachine instance. Null if no machine with the specified UUID found.
-//     */
-//    TicketMachine getTicketMachine(String uuid);
     TicketMachineConfig getTicketMachineConfig(String uuid);
     void addTicketMachine(TicketMachine newTicketMachine);
     TicketMachine getTicketMachine(String uuid);
