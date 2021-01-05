@@ -12,7 +12,7 @@ public class RestClientObjectFactory implements ServiceObjectFactory
     /**
      * Instance of the LundergroundServiceFacade to use to access the London underground service.
      */
-    private RestServiceFacade restFacade;
+    private TicketMachineFacade restFacade;
 
     @Override
     public LundergroundServiceFacade getLundergroundFacade()

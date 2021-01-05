@@ -52,7 +52,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public void ticketMachineConfigChanged(Runnable callback)
+    public void setTicketMachineConfigChangedCallback(Runnable callback)
     {
         configChangedCallback = callback;
     }

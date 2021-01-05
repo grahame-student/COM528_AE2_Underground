@@ -2,7 +2,6 @@ package uk.ac.solent.lunderground.model.service;
 
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
-import uk.ac.solent.lunderground.model.dto.Rate;
 import uk.ac.solent.lunderground.model.dto.Ticket;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 
@@ -14,7 +13,7 @@ public interface TicketMachineFacade
      * register a callback method to run when the ticket machine config is changed.
      * @param configChangedCallback the method to run when the callback is triggered
      */
-    void ticketMachineConfigChanged(Runnable configChangedCallback);
+    void setTicketMachineConfigChangedCallback(Runnable configChangedCallback);
 
     TicketMachineConfig getTicketMachineConfig(String uuid);
 

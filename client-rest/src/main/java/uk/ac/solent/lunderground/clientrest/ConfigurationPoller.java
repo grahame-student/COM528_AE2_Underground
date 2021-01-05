@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.solent.lunderground.model.dao.StationDao;
 import uk.ac.solent.lunderground.model.dao.TicketPricingDao;
-import uk.ac.solent.lunderground.model.dto.PricingDetails;
 import uk.ac.solent.lunderground.model.dto.Station;
 import uk.ac.solent.lunderground.model.dto.TicketMachineConfig;
 import uk.ac.solent.lunderground.model.service.TicketMachineFacade;
@@ -22,7 +21,7 @@ public class ConfigurationPoller
      */
     private static final Logger LOG = LogManager.getLogger(ConfigurationPoller.class);
 
-    TicketMachineFacade facade = null;
+    TicketMachineFacade facade;
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private String ticketMachineUuid = null;
@@ -35,7 +34,6 @@ public class ConfigurationPoller
     private List<Station> stationList = null;
     private StationDao stationDao = null;
 
-    private PricingDetails pricingDetails = null;
     private TicketPricingDao ticketPricingDao = null;
 
     public ConfigurationPoller(TicketMachineFacade ticketFacade)
@@ -45,7 +43,7 @@ public class ConfigurationPoller
         // We register with the facade's configuration changed callback
         // so that we can force a request of the ticket machine's
         // latest configuration.
-        facade.ticketMachineConfigChanged(this::getLatestConfig);
+        facade.setTicketMachineConfigChangedCallback(this::getLatestConfig);
     }
 
     public String getTicketMachineUuid()

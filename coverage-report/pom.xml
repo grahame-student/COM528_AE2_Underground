@@ -13,32 +13,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>uk.ac.solent.lunderground.model</groupId>
-            <artifactId>model</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.solent.lunderground.jpadao</groupId>
-            <artifactId>jpadao</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.solent.lunderground.jaxbdao</groupId>
-            <artifactId>jaxbdao</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.solent.lunderground.simpledao</groupId>
-            <artifactId>simpledao</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.solent.lunderground.service</groupId>
-            <artifactId>service</artifactId>
+            <groupId>uk.ac.solent.lunderground.clientrest</groupId>
+            <artifactId>clientrest</artifactId>
             <version>1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -49,8 +25,14 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>uk.ac.solent.lunderground.clientrest</groupId>
-            <artifactId>clientrest</artifactId>
+            <groupId>uk.ac.solent.lunderground.jaxbdao</groupId>
+            <artifactId>jaxbdao</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.jpadao</groupId>
+            <artifactId>jpadao</artifactId>
             <version>1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -60,6 +42,24 @@
             <version>1.1-SNAPSHOT</version>
             <type>war</type>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.model</groupId>
+            <artifactId>model</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.service</groupId>
+            <artifactId>service</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.ac.solent.lunderground.simpledao</groupId>
+            <artifactId>simpledao</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>uk.ac.solent.lunderground.ticketweb</groupId>

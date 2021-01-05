@@ -19,6 +19,12 @@ public interface StationDao
      * @param newStation The Station to be saved to the database
      */
     void addStation(Station newStation);
+
+    /**
+     * Add the passed in list of stations to the persistence database
+     *
+     * @param stationList The list of stations to be saved to the database
+     */
     void setStationList(List<Station> stationList);
 
     /**

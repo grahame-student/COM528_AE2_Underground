@@ -9,17 +9,14 @@ import java.util.Date;
 
 public interface TicketPricingDao
 {
-    void setOffPeakRate(Double newRate);
-    void setPeakRate(Double newRate);
-
-    Rate getRateBand(Date date);
-    Double getPricePerZone(Date date);
-
-    PricingDetails getPricingDetails();
-    void setPricingDetails(PricingDetails pricingDetails);
-
     void addPriceBand(PriceBand newBand);
     void deleteAllPriceBands();
-    Double getJourneyPrice(Station startStation, Station destinationStation, Date issueDate);
     Date getExpiryDate(Date issueDate);
+    Double getJourneyPrice(Station startStation, Station destinationStation, Date issueDate);
+    Double getPricePerZone(Date date);
+    PricingDetails getPricingDetails();
+    Rate getRateBand(Date date);
+    void setOffPeakRate(Double newRate);
+    void setPeakRate(Double newRate);
+    void setPricingDetails(PricingDetails pricingDetails);
 }
