@@ -36,10 +36,12 @@ public class RestServiceFacadeTest
 
     private static final int ISSUE_HOUR = 12;
     private static final int ISSUE_MIN = 30;
-    private static final int EXPIRE_HOUR = 12;
+    private static final int EXPIRE_HOUR = 14;
     private static final int EXPIRE_MIN = 30;
-    private static final int VALID_ENTRY_HOUR = 12;
-    private static final int INVALID_ENTRY_HOUR = VALID_ENTRY_HOUR - 1;
+    private static final int VALID_ENTRY_HOUR = ISSUE_HOUR + 1;
+    private static final int BEFORE_VALID_FROM = ISSUE_HOUR  - 1;
+    private static final int AFTER_VALID_TO    = EXPIRE_HOUR + 1;
+
     private static final int VALID_ENTRY_MIN = 31;
     private static final Double SOME_PRICE = 5.0;
 
@@ -51,7 +53,7 @@ public class RestServiceFacadeTest
         // Create valid ticket
         Ticket validTicket = new Ticket();
         validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
-        validTicket.setValidFrom(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
         validTicket.setRateBand(Rate.OffPeak);
         validTicket.setPrice(SOME_PRICE);
         Station start = new Station();
@@ -81,7 +83,7 @@ public class RestServiceFacadeTest
         // Create valid ticket
         Ticket validTicket = new Ticket();
         validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
-        validTicket.setValidFrom(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
         validTicket.setRateBand(Rate.OffPeak);
         validTicket.setPrice(SOME_PRICE);
         Station start = new Station();
@@ -106,7 +108,7 @@ public class RestServiceFacadeTest
         // Create valid ticket
         Ticket validTicket = new Ticket();
         validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
-        validTicket.setValidFrom(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
         validTicket.setRateBand(Rate.OffPeak);
         validTicket.setPrice(SOME_PRICE);
         Station start = new Station();
@@ -125,13 +127,13 @@ public class RestServiceFacadeTest
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenValidFromTimeAfterEnterGateTime()
+    public void verifyGateEntryReturnsFalseWhenValidFromTimeAfterEntryGateTime()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
         Ticket validTicket = new Ticket();
         validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
-        validTicket.setValidFrom(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
         validTicket.setRateBand(Rate.OffPeak);
         validTicket.setPrice(SOME_PRICE);
         Station start = new Station();
@@ -144,7 +146,32 @@ public class RestServiceFacadeTest
         validTicket.setDestStation(dest);
         String validXml = facade.encodeTicket(validTicket);
 
-        boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, INVALID_ENTRY_HOUR, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, BEFORE_VALID_FROM, VALID_ENTRY_MIN);
+
+        assertThat(gateOpen, equalTo(false));
+    }
+
+    @Test
+    public void verifyGateEntryReturnsFalseWhenValidToTimeBeforeEntryGateTime()
+    {
+        TicketMachineFacade facade = new RestServiceFacade("");
+        // Create valid ticket
+        Ticket validTicket = new Ticket();
+        validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setRateBand(Rate.OffPeak);
+        validTicket.setPrice(SOME_PRICE);
+        Station start = new Station();
+        start.setName(START_STATION);
+        start.setZone(START_ZONE);
+        validTicket.setStartStation(start);
+        Station dest = new Station();
+        dest.setName(DEST_STATION);
+        dest.setZone(DEST_ZONE);
+        validTicket.setDestStation(dest);
+        String validXml = facade.encodeTicket(validTicket);
+
+        boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, AFTER_VALID_TO, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
@@ -161,7 +188,9 @@ public class RestServiceFacadeTest
     private Date getDate(int hour, int minute)
     {
         Calendar calendar = new GregorianCalendar();
-        calendar.set(2020, Calendar.DECEMBER, 3, hour, minute, 33);
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
         return calendar.getTime();
     }
 

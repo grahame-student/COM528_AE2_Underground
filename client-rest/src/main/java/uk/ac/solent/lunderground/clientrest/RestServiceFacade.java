@@ -181,6 +181,10 @@ public class RestServiceFacade implements TicketMachineFacade
             LOG.debug("Gate inside journey zone: " + gateOpen);
 
             gateOpen &= ticket.getValidFrom().before(date);
+            gateOpen &= ticket.getValidTo().after(date);
+            LOG.debug("ValidFrom:       " + ticket.getValidFrom());
+            LOG.debug("ValidTo:         " + ticket.getValidTo());
+            LOG.debug("Entry Gate Time: " + date);
             LOG.debug("Gate time inside valid range: " + gateOpen);
         }
         else
