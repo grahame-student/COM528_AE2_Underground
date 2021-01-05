@@ -40,7 +40,7 @@ public class RestServiceFacade implements TicketMachineFacade
 
     private Runnable configChangedCallback = null;
     /**
-     * Logger instance for the TicketMachineController implementation.
+     * Logger instance for the RestServiceFacade implementation.
      */
     private static final Logger LOG = LogManager.getLogger(RestServiceFacade.class);
 
@@ -165,7 +165,7 @@ public class RestServiceFacade implements TicketMachineFacade
     }
 
     @Override
-    public Boolean verifyGateEntry(final String ticketXml, final int gateZone, final  int hour, final  int minutes)
+    public Boolean verifyGateAccess(final String ticketXml, final int gateZone, final int hour, final int minutes)
     {
         ticketDao = getTicketDao();
         boolean gateOpen;
@@ -182,9 +182,9 @@ public class RestServiceFacade implements TicketMachineFacade
 
             gateOpen &= ticket.getValidFrom().before(date);
             gateOpen &= ticket.getValidTo().after(date);
-            LOG.debug("ValidFrom:       " + ticket.getValidFrom());
-            LOG.debug("ValidTo:         " + ticket.getValidTo());
-            LOG.debug("Entry Gate Time: " + date);
+            LOG.debug("ValidFrom: " + ticket.getValidFrom());
+            LOG.debug("ValidTo:   " + ticket.getValidTo());
+            LOG.debug("Gate Time: " + date);
             LOG.debug("Gate time inside valid range: " + gateOpen);
         }
         else
@@ -208,13 +208,6 @@ public class RestServiceFacade implements TicketMachineFacade
                                      ticket.getDestStation().getZone())
                         .boxed()
                         .collect(Collectors.toList());
-    }
-
-    @Override
-    public Boolean verifyGateExit(final String ticketXml, final int stationZone, final int hour, final int minutes)
-    {
-        Date date = getDate(hour, minutes);
-        return false;
     }
 
     private Date getDate(final int hour, final int minute)

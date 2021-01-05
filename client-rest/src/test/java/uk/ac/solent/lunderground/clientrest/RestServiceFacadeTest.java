@@ -45,9 +45,35 @@ public class RestServiceFacadeTest
     private static final int VALID_ENTRY_MIN = 31;
     private static final Double SOME_PRICE = 5.0;
 
+    @Test
+    public void verifyGateAccessReturnsTrueWhenTicketValidAndJourneyValid()
+    {
+        TicketMachineFacade facade = new RestServiceFacade("");
+        // Create valid ticket
+        Ticket validTicket = new Ticket();
+        validTicket.setValidFrom(getDate(ISSUE_HOUR, ISSUE_MIN));
+        validTicket.setValidTo(getDate(EXPIRE_HOUR, EXPIRE_MIN));
+        validTicket.setRateBand(Rate.OffPeak);
+        validTicket.setPrice(SOME_PRICE);
+        Station start = new Station();
+        start.setName(START_STATION);
+        start.setZone(START_ZONE);
+        validTicket.setStartStation(start);
+        Station dest = new Station();
+        dest.setName(DEST_STATION);
+        dest.setZone(DEST_ZONE);
+        validTicket.setDestStation(dest);
+
+        // Invalidate the validation code
+        String validXml = facade.encodeTicket(validTicket);
+
+        boolean gateOpen = facade.verifyGateAccess(validXml, VALID_ZONE, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
+
+        assertThat(gateOpen, equalTo(true));
+    }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenTicketInvalid()
+    public void verifyGateAccessReturnsFalseWhenTicketInvalid()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -71,13 +97,13 @@ public class RestServiceFacadeTest
         doc.getElementsByTagName("validationCode").item(0).setTextContent("invalid code");
         String invalidXml = toXml(doc);
 
-        boolean gateOpen = facade.verifyGateEntry(invalidXml, START_ZONE, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateAccess(invalidXml, START_ZONE, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenLowGateZoneNotInJourneyZone()
+    public void verifyGateAccessReturnsFalseWhenLowGateZoneNotInJourneyZone()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -96,13 +122,13 @@ public class RestServiceFacadeTest
         validTicket.setDestStation(dest);
         String validXml = facade.encodeTicket(validTicket);
 
-        boolean gateOpen = facade.verifyGateEntry(validXml, INVALID_ZONE_LOW, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateAccess(validXml, INVALID_ZONE_LOW, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenHighGateZoneNotInJourneyZone()
+    public void verifyGateAccessReturnsFalseWhenHighGateZoneNotInJourneyZone()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -121,13 +147,13 @@ public class RestServiceFacadeTest
         validTicket.setDestStation(dest);
         String validXml = facade.encodeTicket(validTicket);
 
-        boolean gateOpen = facade.verifyGateEntry(validXml, INVALID_ZONE_HIGH, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateAccess(validXml, INVALID_ZONE_HIGH, VALID_ENTRY_HOUR, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenValidFromTimeAfterEntryGateTime()
+    public void verifyGateAccessReturnsFalseWhenValidFromTimeAfterEntryGateTime()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -146,13 +172,13 @@ public class RestServiceFacadeTest
         validTicket.setDestStation(dest);
         String validXml = facade.encodeTicket(validTicket);
 
-        boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, BEFORE_VALID_FROM, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateAccess(validXml, VALID_ZONE, BEFORE_VALID_FROM, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
 
     @Test
-    public void verifyGateEntryReturnsFalseWhenValidToTimeBeforeEntryGateTime()
+    public void verifyGateAccessReturnsFalseWhenValidToTimeBeforeEntryGateTime()
     {
         TicketMachineFacade facade = new RestServiceFacade("");
         // Create valid ticket
@@ -171,12 +197,12 @@ public class RestServiceFacadeTest
         validTicket.setDestStation(dest);
         String validXml = facade.encodeTicket(validTicket);
 
-        boolean gateOpen = facade.verifyGateEntry(validXml, VALID_ZONE, AFTER_VALID_TO, VALID_ENTRY_MIN);
+        boolean gateOpen = facade.verifyGateAccess(validXml, VALID_ZONE, AFTER_VALID_TO, VALID_ENTRY_MIN);
 
         assertThat(gateOpen, equalTo(false));
     }
 
-    // TODO: Additional testing that should be added for verifyGateEntry
+    // TODO: Additional testing that should be added for verifyGateAccess
     //       -- Gate zone is on the boundary of the travelled zones
     //       -- Start zone greater than dest zone
     //       -- Combinations of invalid entry hours / minutes

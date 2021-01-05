@@ -1,5 +1,7 @@
 package uk.ac.solent.lunderground.ticketweb.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,11 @@ import uk.ac.solent.lunderground.ticketweb.WebClientObjectFactory;
 @Controller
 public class GateController
 {
+    /**
+     * Logger instance for the GateController implementation.
+     */
+    private static final Logger LOG = LogManager.getLogger(GateController.class);
+
     private static final String ENTRY_GATE = "entry";
     private static final String EXIT_GATE  = "exit";
 
@@ -39,15 +46,23 @@ public class GateController
         TicketMachineFacade facade = WebClientObjectFactory.getServiceFacade();
         StationDao stationDao = facade.getStationDao();
         Station gateStation = stationDao.getStation(stationName);
-        Boolean gateOpen;
+        boolean gateOpen = facade.verifyGateAccess(ticketXml, gateStation.getZone(), hour, minutes);
+
         if (gateAccess.equals(ENTRY_GATE))
         {
-            gateOpen = facade.verifyGateEntry(ticketXml, gateStation.getZone(), hour, minutes);
+            LOG.debug("Entry gate accessed");
+        }
+        else if (gateAccess.equals(EXIT_GATE))
+        {
+            LOG.debug("Exit gate accessed");
         }
         else
         {
-            gateOpen = facade.verifyGateExit(ticketXml, gateStation.getZone(), hour, minutes);
+            // Belt and braces assertion for gate to remain closed
+            gateOpen = false;
+            LOG.error("Invalid Gate Access Request:" + gateAccess);
         }
+        LOG.debug("Gate opened: " + gateOpen);
 
         redirectAttributes.addAttribute("gateOpen", gateOpen);
         return "redirect:/gate";

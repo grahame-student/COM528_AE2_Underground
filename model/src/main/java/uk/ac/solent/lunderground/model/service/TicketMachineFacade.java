@@ -38,6 +38,5 @@ public interface TicketMachineFacade
     String encodeTicket(Ticket ticket);
 
     // Here for testing purposes
-    Boolean verifyGateEntry(String ticketXml, int stationZone, int hour, int minutes);
-    Boolean verifyGateExit(String ticketXml, int stationZone, int hour, int minutes);
+    Boolean verifyGateAccess(String ticketXml, int stationZone, int hour, int minutes);
 }
