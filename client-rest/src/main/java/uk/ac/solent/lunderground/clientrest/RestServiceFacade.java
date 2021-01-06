@@ -20,6 +20,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -145,6 +146,7 @@ public class RestServiceFacade implements TicketMachineFacade
         ticketDao = getTicketDao();
 
         Ticket ticket = new Ticket();
+        ticket.setId(UUID.randomUUID().toString());
         ticket.setValidFrom(issueDate);
         ticket.setValidTo(ticketPricingDao.getExpiryDate(ticket.getValidFrom()));
         ticket.setStartStation(stationDAO.getStation(startStation));

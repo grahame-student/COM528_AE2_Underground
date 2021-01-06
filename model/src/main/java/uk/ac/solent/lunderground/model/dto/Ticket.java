@@ -10,6 +10,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Ticket
 {
+    private String id;
     private Station startStation;
     private Station destStation;
     private Date validFrom;
@@ -125,5 +126,15 @@ public class Ticket
                ", price=" + price +
                ", validationCode='" + validationCode + '\'' +
                '}';
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
     }
 }
