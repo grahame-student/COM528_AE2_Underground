@@ -158,7 +158,7 @@
         <slf4j.version>1.7.30</slf4j.version>
 
         <!-- webapp -->
-        <javaee.version>7.0</javaee.version>
+        <javaee.version>8.0.1</javaee.version>
         <jsp-api.version>2.2</jsp-api.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.servlet.version>1.2</javax.servlet.version>
